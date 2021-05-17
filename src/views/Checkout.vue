@@ -12,109 +12,131 @@
 
       <div class="col-md-7 col-lg-8 text-left">
         <h4 class="mb-3 text-primary">Billing address</h4>
-        <form class="needs-validation" novalidate>
+
+        <b-form @submit.stop.prevent="onSubmit">
           <div class="row g-3">
             <div class="col-sm-6">
-              <label for="firstName" class="form-label">First name</label>
-              <b-form-input
-                v-model="name"
-                type="text"
-                debounce="500"
-              ></b-form-input>
-              <div class="invalid-feedback">
-                Valid first name is required.
-              </div>
+              <b-form-group id="name" label="Name" label-for="name-input">
+                <b-form-input
+                  id="name-input"
+                  name="name-input"
+                  v-model="$v.form.name.$model"
+                  :state="validateState('name')"
+                  aria-describedby="name-feedback"
+                ></b-form-input>
+
+                <b-form-invalid-feedback id="name-feedback"
+                  >Required field.</b-form-invalid-feedback
+                >
+              </b-form-group>
             </div>
 
             <div class="col-sm-6">
-              <label for="lastName" class="form-label">Last name</label>
-              <input
-                type="text"
-                class="form-control"
+              <b-form-group
                 id="lastName"
-                placeholder=""
-                value=""
-                required
-              />
-              <br />
-              <div class="invalid-feedback">
-                Valid last name is required.
-              </div>
+                label="Last Name"
+                label-for="lastname-input"
+              >
+                <b-form-input
+                  id="lastname-input"
+                  name="lastname-input"
+                  v-model="$v.form.lastName.$model"
+                  :state="validateState('lastName')"
+                  aria-describedby="lastname-feedback"
+                ></b-form-input>
+
+                <b-form-invalid-feedback id="lastname-feedback"
+                  >Required field.</b-form-invalid-feedback
+                >
+              </b-form-group>
             </div>
 
             <div class="col-12">
-              <label for="email" class="form-label">Email </label>
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                placeholder="you@example.com"
-              />
-              <br />
-              <div class="invalid-feedback">
-                Please enter a valid email address for shipping updates.
-              </div>
+              <b-form-group id="email" label="Email" label-for="email-input">
+                <b-form-input
+                  id="email-input"
+                  name="email-input"
+                  v-model="$v.form.email.$model"
+                  :state="validateState('email')"
+                  aria-describedby="email-feedback"
+                ></b-form-input>
+
+                <b-form-invalid-feedback id="email-feedback"
+                  >Required field.</b-form-invalid-feedback
+                >
+              </b-form-group>
             </div>
 
             <div class="col-6">
-              <label for="address" class="form-label">Address</label>
-              <input
-                type="text"
-                class="form-control"
+              <b-form-group
                 id="address"
-                placeholder="Bondegatan 10"
-                required
-              />
-              <div class="invalid-feedback">
-                Please enter your shipping address.
-              </div>
+                label="Address"
+                label-for="address-input"
+              >
+                <b-form-input
+                  id="address-input"
+                  name="address-input"
+                  v-model="$v.form.address.$model"
+                  :state="validateState('address')"
+                  aria-describedby="address-feedback"
+                ></b-form-input>
+
+                <b-form-invalid-feedback id="address-feedback"
+                  >Required field.</b-form-invalid-feedback
+                >
+              </b-form-group>
             </div>
 
             <div class="col-md-6">
-              <label for="country" class="form-label">Country</label>
-
-              <input
-                type="text"
-                class="form-control"
+              <b-form-group
                 id="country"
-                placeholder=""
-                value=""
-                required
-              />
-              <br />
+                label="Country"
+                label-for="country-input"
+              >
+                <b-form-input
+                  id="country-input"
+                  name="country-input"
+                  v-model="$v.form.country.$model"
+                  :state="validateState('country')"
+                  aria-describedby="country-feedback"
+                ></b-form-input>
 
-              <div class="invalid-feedback">
-                Please select a valid country.
-              </div>
+                <b-form-invalid-feedback id="country-feedback"
+                  >Required field.</b-form-invalid-feedback
+                >
+              </b-form-group>
             </div>
 
             <div class="col-md-6">
-              <label for="state" class="form-label">State</label>
-              <input
-                type="text"
-                class="form-control"
-                id="state"
-                placeholder=""
-                value=""
-                required
-              />
-              <div class="invalid-feedback">
-                Please provide a valid state.
-              </div>
+              <b-form-group id="state" label="State" label-for="state-input">
+                <b-form-input
+                  id="state-input"
+                  name="state-input"
+                  v-model="$v.form.state.$model"
+                  :state="validateState('state')"
+                  aria-describedby="state-feedback"
+                ></b-form-input>
+
+                <b-form-invalid-feedback id="state-feedback"
+                  >Required field.</b-form-invalid-feedback
+                >
+              </b-form-group>
             </div>
 
             <div class="col-md-6">
-              <label for="zip" class="form-label">Zip</label>
-              <input
-                type="text"
-                class="form-control"
-                id="zip"
-                placeholder=""
-                required
-              />
-              <div class="invalid-feedback">
-                Zip code required.
-              </div>
+              <b-form-group id="zip" label="Zip" label-for="zip-input">
+                <b-form-input
+                  id="zip-input"
+                  name="zip-input"
+                  v-model="$v.form.zip.$model"
+                  :state="validateState('zip')"
+                  aria-describedby="zip-feedback"
+                ></b-form-input>
+
+                <b-form-invalid-feedback id="zip-feedback"
+                  >Required field.</b-form-invalid-feedback
+                >
+              </b-form-group>
             </div>
           </div>
 
@@ -138,90 +160,121 @@
 
           <div class="row gy-3">
             <div class="col-md-6">
-              <label for="cc-name" class="form-label">Name on card</label>
-              <input
-                type="text"
-                class="form-control"
-                id="cc-name"
-                placeholder=""
-                required
-              />
-              <small class="text-muted">Full name as displayed on card</small>
-              <div class="invalid-feedback">
-                Name on card is required
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <label for="cc-number" class="form-label"
-                >Credit card number</label
+              <b-form-group
+                id="cardName"
+                label="Name on card"
+                label-for="cc-name-input"
               >
-              <input
-                type="text"
-                class="form-control"
-                id="cc-number"
-                placeholder=""
-                required
-              />
+                <b-form-input
+                  id="cc-name-input"
+                  name="cc-name-input"
+                  placeholder="Full name as displayed on card"
+                  v-model="$v.form.cardName.$model"
+                  :state="validateState('cardName')"
+                  aria-describedby="cc-name-feedback"
+                ></b-form-input>
 
-              <div class="invalid-feedback">
-                Credit card number is required
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="cc-month" class="form-label">Expiration Date:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="cc-month"
-                placeholder="Month"
-                required
-              />
-              <div class="invalid-feedback">
-                Expiration date required
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="cc-year" class="form-label"><br /></label>
-              <input
-                type="text"
-                class="form-control"
-                id="cc-year"
-                placeholder="Year"
-                required
-              />
-              <div class="invalid-feedback">
-                Expiration date required
-              </div>
+                <b-form-invalid-feedback id="cc-name-feedback"
+                  >Credit card name is required.</b-form-invalid-feedback
+                >
+              </b-form-group>
             </div>
 
             <div class="col-md-6">
-              <label for="cc-cvv" class="form-label">CVV</label>
-              <input
-                type="text"
-                class="form-control"
-                id="cc-cvv"
-                placeholder=""
-                required
-              />
+              <b-form-group
+                id="cardNumber"
+                label="Credit card number"
+                label-for="cc-number-input"
+              >
+                <b-form-input
+                  id="cc-number-input"
+                  name="cc-number-input"
+                  placeholder="1234 5678 9010 1112"
+                  v-model="$v.form.cardNumber.$model"
+                  :state="validateState('cardNumber')"
+                  aria-describedby="cc-number-feedback"
+                ></b-form-input>
 
-              <div class="invalid-feedback">
-                Security code required
-              </div>
+                <b-form-invalid-feedback id="cc-number-feedback"
+                  >Credit card number is required.</b-form-invalid-feedback
+                >
+              </b-form-group>
             </div>
-            <div class="col-md-6"></div>
+
+            <div class="col-md-3">
+              <b-form-group
+                id="cardDateMonth"
+                label="Card Expiration "
+                label-for="month-input"
+              >
+                <b-form-select
+                  id="month-input"
+                  name="month-input"
+                  placeholder="Month"
+                  v-model="$v.form.cardDateMonth.$model"
+                  :options="cardDateMonth"
+                  :state="validateState('cardDateMonth')"
+                  aria-describedby="month-feedback"
+                ></b-form-select>
+
+                <b-form-invalid-feedback id="month-feedback"
+                  >Expiration date required.</b-form-invalid-feedback
+                >
+              </b-form-group>
+            </div>
+
+            <div class="col-md-3">
+              <b-form-group
+                id="cardDateYear"
+                label="Date"
+                label-for="year-input"
+              >
+                <b-form-select
+                  id="year-input"
+                  name="year-input"
+                  placeholder="Year"
+                  v-model="$v.form.cardDateYear.$model"
+                  :options="cardDateYear"
+                  :state="validateState('cardDateYear')"
+                  aria-describedby="year-feedback"
+                ></b-form-select>
+
+                <b-form-invalid-feedback id="year-feedback"
+                  >Expiration date required.</b-form-invalid-feedback
+                >
+              </b-form-group>
+            </div>
+
+            <div class="col-md-6">
+              <b-form-group id="cardCVV" label="CVV" label-for="cvv-input">
+                <b-form-input
+                  id="cvv-input"
+                  name="cvv-input"
+                  placeholder="123"
+                  v-model="$v.form.cardCVV.$model"
+                  :state="validateState('cardCVV')"
+                  aria-describedby="cvv-feedback"
+                ></b-form-input>
+
+                <b-form-invalid-feedback id="cvv-feedback"
+                  >Security code required.</b-form-invalid-feedback
+                >
+              </b-form-group>
+            </div>
           </div>
 
           <hr class="my-4" />
 
-          <button class="w-100 btn btn-primary btn-lg" type="submit">
-            Continue to checkout
-          </button>
+          <b-button
+            type="submit"
+            variant="primary"
+            class="w-100 btn btn-primary btn-lg"
+            >Continue to checkout</b-button
+          >
+
           <br />
           <br />
-        </form>
+        </b-form>
       </div>
 
       <!-- Cart -->
@@ -266,13 +319,95 @@
 </template>
 
 <script>
+import { validationMixin } from "vuelidate";
+import { required, minLength } from "vuelidate/lib/validators";
+
 export default {
+  mixins: [validationMixin],
   data() {
     return {
-      name: "",
-      email: "",
-      address: "",
+      cardDateMonth: [
+        { value: null, text: "Month.." },
+        { value: "01", text: "01" },
+        { value: "02", text: "02" },
+        { value: "03", text: "03" },
+        { value: "04", text: "04" },
+        { value: "05", text: "05" },
+        { value: "06", text: "06" },
+        { value: "07", text: "07" },
+        { value: "08", text: "08" },
+        { value: "08", text: "09" },
+        { value: "10", text: "10" },
+        { value: "11", text: "11" },
+        { value: "12", text: "12" },
+      ],
+      cardDateYear: [
+        { value: null, text: "Year.." },
+        { value: "2021", text: "2021" },
+        { value: "2022", text: "2022" },
+        { value: "2023", text: "2023" },
+        { value: "2024", text: "2024" },
+        { value: "2025", text: "2025" },
+        { value: "2026", text: "2026" },
+        { value: "2027", text: "2027" },
+      ],
+      form: {
+        name: null,
+        lastName: null,
+        email: null,
+        address: null,
+        country: null,
+        state: null,
+        zip: null,
+        cardName: null,
+        cardNumber: null,
+        cardDateMonth: null,
+        cardDateYear: null,
+        cardCVV: null,
+        food: null,
+      },
     };
+  },
+  validations: {
+    form: {
+      name: {
+        required,
+        minLength: minLength(3),
+      },
+      lastName: {
+        required,
+        minLength: minLength(3),
+      },
+      email: {
+        required,
+      },
+      address: {
+        required,
+      },
+      country: { required },
+      state: { required },
+      zip: { required },
+      cardName: { required },
+      cardNumber: { required },
+      cardDateMonth: { required },
+      cardDateYear: { required },
+      cardCVV: { required },
+    },
+  },
+  methods: {
+    validateState(name) {
+      const { $dirty, $error } = this.$v.form[name];
+      return $dirty ? !$error : null;
+    },
+
+    onSubmit() {
+      this.$v.form.$touch();
+      if (this.$v.form.$anyError) {
+        return;
+      }
+
+      alert("Form submitted!");
+    },
   },
 };
 </script>
