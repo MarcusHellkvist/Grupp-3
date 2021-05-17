@@ -1,0 +1,34 @@
+{
+  "products": [
+    {
+      "id": "id0001",
+      "name": "name1",
+      "url": "linktopic",
+      "description": "bla bla bla",
+      "price": 1000,
+      "rating": 5,
+      "manufacturer": "i made this",
+      "saldo": 20
+    },
+    {
+      "id": "id0002",
+      "name": "name2",
+      "url": "linktopic2",
+      "description": "bla bla bla2",
+      "price": 3000,
+      "rating": 4,
+      "manufacturer": "i made this2",
+      "saldo": 202
+    },
+    {
+      "id": "id0003",
+      "name": "name3",
+      "url": "linktopic3",
+      "description": "bla bla bla3",
+      "price": 3000,
+      "rating": 3,
+      "manufacturer": "i made this3",
+      "saldo": 27
+    }
+  ]
+}
