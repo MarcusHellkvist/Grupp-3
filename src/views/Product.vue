@@ -21,23 +21,23 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {}
+export default {
+  data() {
+    return {};
+  },
+  created() {
+    this.fetchLocalData();
+  },
+  methods: {
+    fetchLocalData() {
+      fetch("products.json")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        });
     },
-    created() {
-      this.fetchLocalData()
-    },
-    methods: {
-      fetchLocalData() {
-        fetch('products.json')
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data)
-          })
-      }
-    }
-  }
+  },
+};
 </script>
 
 <style></style>
