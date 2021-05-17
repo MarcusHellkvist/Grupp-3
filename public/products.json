@@ -9,7 +9,8 @@
       "price": 1000,
       "rating": 5,
       "manufacturer": "i made this",
-      "saldo": 20
+      "saldo": 20,
+      "category": 1
     },
     {
       "id": "id0002",
@@ -20,7 +21,8 @@
       "price": 3000,
       "rating": 4,
       "manufacturer": "i made this2",
-      "saldo": 202
+      "saldo": 202,
+      "category": 1
     },
     {
       "id": "id0003",
@@ -31,7 +33,8 @@
       "price": 3000,
       "rating": 3,
       "manufacturer": "i made this3",
-      "saldo": 27
+      "saldo": 27,
+      "category": 1
     }
   ]
 }
