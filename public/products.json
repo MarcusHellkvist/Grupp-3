@@ -2,6 +2,7 @@
   "products": [
     {
       "id": "id0001",
+      "photo": "https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=757&q=80",
       "name": "name1",
       "url": "linktopic",
       "description": "bla bla bla",
@@ -12,6 +13,7 @@
     },
     {
       "id": "id0002",
+      "photo": "https://images.unsplash.com/photo-1547082299-de196ea013d6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
       "name": "name2",
       "url": "linktopic2",
       "description": "bla bla bla2",
@@ -22,6 +24,7 @@
     },
     {
       "id": "id0003",
+      "photo": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
       "name": "name3",
       "url": "linktopic3",
       "description": "bla bla bla3",
