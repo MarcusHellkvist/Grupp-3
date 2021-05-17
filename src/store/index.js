@@ -8,7 +8,11 @@ export default new Vuex.Store({
     products: [],
     cart: [],
   },
-  mutations: {},
+  mutations: {
+    fillWithProducts(state, products) {
+      state.products = products
+    },
+  },
   actions: {},
   modules: {},
 });

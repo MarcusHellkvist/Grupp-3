@@ -1,11 +1,9 @@
 <template>
   <div class="home">
     <h1>Start page - Home</h1>
+    <p>{{ $route.params.categoryId }}</p>
     <ol v-if="this.$store.state.products">
-      <li
-        v-for="product in this.$store.state.product.products"
-        :key="product.id"
-      >
+      <li v-for="product in this.$store.state.products" :key="product.id">
         {{ product.name }}
       </li>
     </ol>
@@ -29,7 +27,7 @@
           .then((response) => response.json())
           .then((data) => {
             this.$store.state.product = data
-            console.log(this.$store.state.product)
+            this.$store.commit('fillWithProducts', data.products)
           })
       }
     }
