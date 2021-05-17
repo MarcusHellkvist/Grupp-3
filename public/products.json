@@ -22,7 +22,7 @@
       "rating": 4,
       "manufacturer": "i made this2",
       "saldo": 202,
-      "category": 1
+      "category": 2
     },
     {
       "id": "id0003",
@@ -34,7 +34,7 @@
       "rating": 3,
       "manufacturer": "i made this3",
       "saldo": 27,
-      "category": 1
+      "category": 2
     }
   ]
 }
