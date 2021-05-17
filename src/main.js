@@ -10,6 +10,10 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 // sass
 import "./main.scss";
 
+// vuelidate
+import Vuelidate from "vuelidate";
+Vue.use(Vuelidate);
+
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
