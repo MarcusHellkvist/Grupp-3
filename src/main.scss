@@ -1,0 +1,22 @@
+// Bootstrap body background
+$body-bg: rgba(0, 0, 0, 0.9);
+
+// body foreground
+$body-color: seashell;
+
+//  theme colors
+$theme-colors: (
+  "primary": #b4654a,
+  "secondary": SteelBlue,
+);
+
+// Sass imports (The variables need to be set prior to importing)
+@import "~bootstrap";
+@import "~bootstrap-vue";
+
+// Unset default Vue CLI foreground color set in App.vue, to prevent override of
+// the color set in $body-color
+
+/* #app {
+  color: unset;
+} */
