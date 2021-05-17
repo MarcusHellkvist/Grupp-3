@@ -6,13 +6,24 @@ $body-color: seashell;
 
 //  theme colors
 $theme-colors: (
-  "primary": #b4654a,
-  "secondary": SteelBlue,
+  'primary': #b4654a,
+  'secondary': SteelBlue
 );
 
+/* #details {
+  top: 50%;
+  transform: translateY(-30%);
+
+  left: 50%;
+  transform: translateX(-50%);
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+} */
 // Sass imports (The variables need to be set prior to importing)
-@import "~bootstrap";
-@import "~bootstrap-vue";
+@import '~bootstrap';
+@import '~bootstrap-vue';
 
 // Unset default Vue CLI foreground color set in App.vue, to prevent override of
 // the color set in $body-color
