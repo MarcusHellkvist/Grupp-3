@@ -29,6 +29,7 @@
           .then((response) => response.json())
           .then((data) => {
             this.$store.state.product = data
+            console.log(this.$store.state.product)
           })
       }
     }
