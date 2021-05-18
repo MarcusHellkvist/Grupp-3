@@ -313,7 +313,7 @@
                 <b-icon
                   variant="danger"
                   icon="x-circle"
-                  @click="toDelete"
+                  @click="deleteProduct(product.id)"
                 ></b-icon>
               </div>
 
@@ -323,7 +323,7 @@
 
           <li class="list-group-item d-flex justify-content-between">
             <span>Total (USD)</span>
-            <strong>${{ sum }}</strong>
+            <strong>${{ sum }} </strong>
           </li>
         </ul>
       </div>
@@ -415,11 +415,19 @@ export default {
       cardCVV: { required },
     },
   },
-  computed: {},
+  computed: {
+    /* somchange() {
+      return this.total();
+    }, */
+  },
   created() {
     this.total();
   },
-  watch: {},
+  watch: {
+    sum() {
+      // return this.total();
+    },
+  },
   methods: {
     validateState(name) {
       const { $dirty, $error } = this.$v.form[name];
@@ -434,8 +442,11 @@ export default {
       console.log(this.form.name);
       alert("Form submitted!");
     },
-    toDelete() {
-      console.log("ready to delete item");
+    deleteProduct(id) {
+      this.$store.commit("deleteProduct", id);
+      this.sum = 0;
+      this.total();
+      console.log("ready to delete item" + id);
     },
     total() {
       for (let i = 0; i < this.cart.length; i++) {
