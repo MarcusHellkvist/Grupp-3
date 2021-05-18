@@ -35,6 +35,42 @@
       "manufacturer": "i made this3",
       "saldo": 27,
       "category": 2
+    },
+    {
+      "id": "id0004",
+      "photo": "https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=757&q=80",
+      "name": "Mac air 2.0",
+      "url": "linktopic",
+      "description": " bla air",
+      "price": 1000,
+      "rating": 5,
+      "manufacturer": "i made this",
+      "saldo": 20,
+      "category": 1
+    },
+    {
+      "id": "id0005",
+      "photo": "https://images.unsplash.com/photo-1547082299-de196ea013d6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
+      "name": "iMac 2.0",
+      "url": "linktopic2",
+      "description": "bla bla bla2",
+      "price": 3000,
+      "rating": 4,
+      "manufacturer": "i made this5",
+      "saldo": 202,
+      "category": 2
+    },
+    {
+      "id": "id0006",
+      "photo": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
+      "name": "Bronsålders dator",
+      "url": "linktopic3",
+      "description": "bla bla bla6",
+      "price": 3000,
+      "rating": 3,
+      "manufacturer": "i made this6",
+      "saldo": 27,
+      "category": 2
     }
   ]
 }

@@ -2,7 +2,7 @@
   <div class="home">
     <h1>Start page - Home</h1>
     <p>{{ $route.params.categoryId }}</p>
-    <div class="container">
+    <!-- <div class="container" v-if="this.filteredArray.length === 0">
       <div class="row">
         <div
           class="col"
@@ -18,10 +18,12 @@
           ></product-small>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="container" v-if="filteredArray !== null">
-      <h2 v-if="this.filteredArray.length > 0">--- KATEGORI ---</h2>
+      <h2 v-if="this.filteredArray.length > 0">
+        --- KATEGORI --- {{ $route.params.categoryId }}
+      </h2>
       <div class="row">
         <div class="col" v-for="filtered in filteredArray" :key="filtered.id">
           <product-small
@@ -34,6 +36,32 @@
         </div>
       </div>
     </div>
+
+    <div class="container" v-if="this.filteredArray.length === 0">
+      <div class="row">
+        <div class="col" v-for="product in allProducts" :key="product.id">
+          <product-small
+            :productId="product.id"
+            :name="product.name"
+            :description="product.description"
+            :price="product.price"
+            :productImage="product.photo"
+          ></product-small>
+        </div>
+      </div>
+    </div>
+
+    <div class="overflow-auto">
+      <b-pagination
+        v-if="this.filteredArray.length === 0"
+        class="mt-3"
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        aria-controls="my-table"
+        align="center"
+      ></b-pagination>
+    </div>
   </div>
 </template>
 
@@ -45,7 +73,21 @@
     data() {
       return {
         product: null,
-        filteredArray: []
+        filteredArray: [],
+        perPage: 3,
+        currentPage: 1
+      }
+    },
+    computed: {
+      rows() {
+        return this.$store.state.products.length
+      },
+      allProducts() {
+        const items = this.$store.state.products
+        return items.slice(
+          (this.currentPage - 1) * this.perPage,
+          this.currentPage * this.perPage
+        )
       }
     },
 
