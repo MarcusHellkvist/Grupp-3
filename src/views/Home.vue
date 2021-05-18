@@ -2,6 +2,13 @@
   <div class="home">
     <h1>Start page - Home</h1>
     <p>{{ $route.params.categoryId }}</p>
+    <product-small
+      productId="id123"
+      name="product-title"
+      description="product-text"
+      :price="999"
+      productImage="urlToImage"
+    ></product-small>
     <div v-if="this.$store.state.products">
       <ol>
         <li v-for="product in this.$store.state.products" :key="product.id">
@@ -50,6 +57,7 @@
 </template>
 
 <script>
+<<<<<<< HEAD
   export default {
     name: 'Home',
     data() {
@@ -62,41 +70,49 @@
       }
     },
     props: {},
+=======
+import ProductSmall from "../components/ProductSmall.vue";
+export default {
+  components: { ProductSmall },
+  name: "Home",
+  data() {
+    return {
+      product: null,
+      filteredArray: [],
+    };
+  },
+>>>>>>> 414393eb580244d336f9aa887bd0baf7aed84a92
 
-    created() {
-      this.fetchLocalData()
+  created() {
+    this.fetchLocalData();
+  },
+  methods: {
+    fetchLocalData() {
+      fetch("products.json")
+        .then((response) => response.json())
+        .then((data) => {
+          this.$store.commit("fillWithProducts", data.products);
+        });
     },
-    methods: {
-      fetchLocalData() {
-        fetch('products.json')
-          .then((response) => response.json())
-          .then((data) => {
-            this.$store.commit('fillWithProducts', data.products)
-          })
-      },
-      filterArray() {
-        for (
-          let index = 0;
-          index < this.$store.state.products.length;
-          index++
+    filterArray() {
+      for (let index = 0; index < this.$store.state.products.length; index++) {
+        if (
+          JSON.stringify(this.$store.state.products[index].category) ===
+          this.$route.params.categoryId
         ) {
-          if (
-            JSON.stringify(this.$store.state.products[index].category) ===
-            this.$route.params.categoryId
-          ) {
-            this.filteredArray.push(this.$store.state.products[index])
-          }
+          this.filteredArray.push(this.$store.state.products[index]);
         }
       }
     },
-    watch: {
-      $route(to, from) {
-        if (to !== from) {
-          this.filteredArray = []
-          console.log('Changed route to: ' + to.params.categoryId)
-          this.filterArray()
-        }
+  },
+  watch: {
+    $route(to, from) {
+      if (to !== from) {
+        this.filteredArray = [];
+        console.log("Changed route to: " + to.params.categoryId);
+        this.filterArray();
       }
-    }
-  }
+    },
+  },
+};
 </script>
