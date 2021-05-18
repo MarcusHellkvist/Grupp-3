@@ -2,55 +2,36 @@
   <div class="home">
     <h1>Start page - Home</h1>
     <p>{{ $route.params.categoryId }}</p>
-    <product-small
-      productId="id123"
-      name="product-title"
-      description="product-text"
-      :price="999"
-      productImage="urlToImage"
-    ></product-small>
-    <div v-if="this.$store.state.products">
-      <ol>
-        <li v-for="product in this.$store.state.products" :key="product.id">
-          Name of product: {{ product.name }} <br />
-          Category of product: {{ product.category }}
-        </li>
-      </ol>
-      <ol>
-        <li v-for="filtered in filteredArray" :key="filtered.id">
-          {{ filtered.name }}
-        </li>
-      </ol>
-
-      <div>
-        <b-card
-          title="Card Title"
-          img-src="https://picsum.photos/600/300/?image=25"
-          img-alt="Image"
-          img-top
-          tag="article"
-          style="max-width: 20rem;"
-          class="mb-2"
+    <div class="container">
+      <div class="row">
+        <div
+          class="col"
           v-for="product in this.$store.state.products"
           :key="product.id"
-          no-gutters
         >
-          <b-card-text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </b-card-text>
-
-          <b-button href="#" variant="primary">Go somewhere</b-button>
-        </b-card>
+          <product-small
+            :productId="product.id"
+            :name="product.name"
+            :description="product.description"
+            :price="product.price"
+            :productImage="product.photo"
+          ></product-small>
+        </div>
       </div>
+    </div>
 
-      <div>
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="rows"
-          :per-page="perPage"
-          aria-controls="my-table"
-        ></b-pagination>
+    <div class="container" v-if="filteredArray !== null">
+      <h2 v-if="this.filteredArray.length > 0">--- KATEGORI ---</h2>
+      <div class="row">
+        <div class="col" v-for="filtered in filteredArray" :key="filtered.id">
+          <product-small
+            :productId="filtered.id"
+            :name="filtered.name"
+            :description="filtered.description"
+            :price="filtered.price"
+            :productImage="filtered.photo"
+          ></product-small>
+        </div>
       </div>
     </div>
   </div>

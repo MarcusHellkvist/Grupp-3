@@ -12,6 +12,7 @@ export default new Vuex.Store({
     fillWithProducts(state, products) {
       state.products = products;
     },
+
     deleteProduct(state, id) {
       for (let i = 0; i < state.products.length; i++) {
         if (state.products[i].id === id) {
@@ -21,6 +22,10 @@ export default new Vuex.Store({
           break;
         }
       }
+    },
+
+    addToCart(state, product) {
+      state.cart.push(product);
     },
   },
   actions: {},
