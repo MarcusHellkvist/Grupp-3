@@ -1,23 +1,25 @@
 <template>
   <div>
-    <p>products detail</p>
-    <p>{{ oneObject }}</p>
+    <b-button id="goToShoppingCartButton" href="#" variant="primary"
+      >Add to shopping cart</b-button
+    >
     <div style="width: 500px 500px ;">
       <b-card
-        title="Card Title"
-        img-src="https://picsum.photos/600/300/?image=25"
+        :title="productName"
+        :img-src="productPhoto"
         img-alt="Image"
         tag="article"
+        :footer-text-variant="productPrice"
         class="details"
       >
-        <b-card-text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content. Some quick example text to build on the
-          card title and make up the bulk of the card's content.
+        <b-card-text> {{ productDescription }} </b-card-text>
+        <b-card-text id="price">
+          {{ productPrice }}
         </b-card-text>
 
-        <b-button href="#" variant="success">Go somewhere</b-button>
-        <b-button href="#" variant="primary">Go somewhere</b-button>
+        <b-button id="addToShopingCart" href="#" variant="primary"
+          >Add to shopping cart</b-button
+        >
       </b-card>
     </div>
   </div>
@@ -27,38 +29,49 @@
   export default {
     data() {
       return {
-        products: [],
+        productName: '',
+        productPhoto: '',
+        productDescription: '',
+        productPrice: 0,
+        productsArr: [],
         productID: 'id0003',
-        oneObject: ''
+        oneObject: {}
       }
     },
     created() {
       this.fetchLocalData()
-      this.pickRightObject()
     },
     methods: {
       fetchLocalData() {
         fetch('products.json')
           .then((response) => response.json())
           .then((data) => {
-            this.products = data.products
+            this.productsArr = data.products
             /*  console.log('hi', data.products.id) */
-            console.log('hi ffffffff', this.products)
+            console.log('hi ffffffff', this.productsArr)
+            this.pickRightObject()
+            this.giveVAlueToObject()
           })
       },
       pickRightObject() {
-        for (let i = 0; i < this.products.length; i++) {
-          if (this.products[i].id === 'id0003') {
-            this.oneObject = this.products
+        for (let i = 0; i < this.productsArr.length; i++) {
+          if (this.productsArr[i].id === this.productID) {
+            this.oneObject = this.productsArr[i]
+            console.log(this.oneObject)
           }
         }
-        console.log('AAAAAAAAAA', this.products.id)
+      },
+      giveVAlueToObject() {
+        this.productName = this.oneObject.name
+        this.productPhoto = this.oneObject.photo
+        this.productDescription = this.oneObject.description
+        this.productPrice = 'Price:  ' + this.oneObject.price + '  SEK'
       }
     }
   }
 </script>
 
-<style>
+<style scoped>
   p {
     color: pink;
   }

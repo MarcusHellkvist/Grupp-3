@@ -10,6 +10,25 @@ $theme-colors: (
   'secondary': SteelBlue
 );
 
+#goToShoppingCartButton {
+  background-color: green;
+  height: 150px;
+  margin-left: 800px;
+
+  font-family: Marker Felt;
+  font-size: 30px;
+}
+
+#price {
+  color: black;
+  font-size: 30px;
+  font-family: Marker Felt;
+  margin-left: -700px;
+}
+
+#addToShopingCart {
+  margin-left: -700px;
+}
 // Sass imports (The variables need to be set prior to importing)
 @import '~bootstrap';
 @import '~bootstrap-vue';
