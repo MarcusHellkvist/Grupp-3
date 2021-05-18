@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p>{{ productID }}</p>
     <b-button id="goToShoppingCartButton" href="#" variant="primary"
       >Add to shopping cart</b-button
     >
@@ -17,7 +18,11 @@
           {{ productPrice }}
         </b-card-text>
 
-        <b-button id="addToShopingCart" href="#" variant="primary"
+        <b-button
+          id="addToShopingCart"
+          href="#"
+          variant="primary"
+          @click="$store.commit('addToCart', oneObject)"
           >Add to shopping cart</b-button
         >
       </b-card>
@@ -34,7 +39,7 @@
         productDescription: '',
         productPrice: 0,
         productsArr: [],
-        productID: 'id0003',
+        productID: this.$route.params.productId,
         oneObject: {}
       }
     },
@@ -56,14 +61,23 @@
       pickRightObject() {
         for (let i = 0; i < this.productsArr.length; i++) {
           if (this.productsArr[i].id === this.productID) {
-            this.oneObject = this.productsArr[i]
+            /* this.oneObject = this.productsArr[i] */
+
+            this.oneObject = {
+              productId: this.productsArr[i].id,
+              name: this.productsArr[i].name,
+              description: this.productsArr[i].description,
+              price: this.productsArr[i].price,
+              productImage: this.productsArr[i].photo
+            }
+
             console.log(this.oneObject)
           }
         }
       },
       giveVAlueToObject() {
         this.productName = this.oneObject.name
-        this.productPhoto = this.oneObject.photo
+        this.productPhoto = this.oneObject.productImage
         this.productDescription = this.oneObject.description
         this.productPrice = 'Price:  ' + this.oneObject.price + '  SEK'
       }
