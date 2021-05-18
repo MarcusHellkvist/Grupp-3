@@ -14,9 +14,9 @@ export default new Vuex.Store({
     },
 
     deleteProduct(state, id) {
-      for (let i = 0; i < state.products.length; i++) {
-        if (state.products[i].id === id) {
-          state.products.splice(i, 1);
+      for (let i = 0; i < state.cart.length; i++) {
+        if (state.cart[i].id === id) {
+          state.cart.splice(i, 1);
           console.log("ready fron store:" + id);
 
           break;

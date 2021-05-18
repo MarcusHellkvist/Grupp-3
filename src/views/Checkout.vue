@@ -345,7 +345,7 @@ export default {
   mixins: [validationMixin],
   data() {
     return {
-      cart: this.$store.state.products,
+      cart: this.$store.state.cart,
       sum: null,
       cardDateMonth: [
         { value: null, text: "Month.." },
@@ -385,7 +385,6 @@ export default {
         cardDateMonth: null,
         cardDateYear: null,
         cardCVV: null,
-        food: null,
       },
     };
   },
