@@ -18,9 +18,12 @@
     </div>
     <div v-else>
       <b-list-group>
-        <b-list-group-item v-for="product in cartArray" :key="product.id">
+        <b-list-group-item
+          v-for="product in cartArray"
+          :key="product.productId"
+        >
           <b-card
-            :productId="product.id"
+            :productId="product.productId"
             :title="product.name"
             :img-src="product.productImage"
             img-alt="Card image"
@@ -29,18 +32,22 @@
           >
             <b-card-text>
               <p>{{ product.description }}</p>
-              <!-- <label for="sb-inline">Inline spin button</label> -->
-              <!-- <b-form-spinbutton
-                :id="product.id"
+              <!-- <label for="demo-sb">Inline spin button</label> -->
+              <b-form-spinbutton
+                id="demo-sb"
                 :v-model="value"
+                placeholder="1"
+                @click="test(value, product.price)"
                 inline
-              ></b-form-spinbutton> -->
+              ></b-form-spinbutton>
               <div>
-                Pris: {{ product.price }}
+                <!-- <p>{{ sum }}</p> -->
+                <p>Pris: {{ product.price }}</p>
+
                 <b-icon
                   variant="danger"
                   icon="x-circle"
-                  @click="deleteProduct(product.id)"
+                  @click="deleteProduct(product.productId)"
                 ></b-icon>
               </div>
             </b-card-text>
@@ -62,7 +69,6 @@
 <script>
 export default {
   created() {
-    //glöm inte att ändra product till cart
     this.cartArray = this.$store.state.cart;
   },
   computed: {},
@@ -70,15 +76,16 @@ export default {
     return {
       cartArray: null,
       value: 1,
+      sum: null,
     };
   },
   methods: {
-    test() {},
+    test(value, price) {
+      console.log("det funkar");
+      this.sum = value * price;
+    },
     deleteProduct(id) {
       this.$store.commit("deleteProduct", id);
-      this.sum = 0;
-      this.total();
-      console.log("ready to delete item" + id);
     },
   },
 };
