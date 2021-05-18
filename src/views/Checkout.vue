@@ -290,16 +290,14 @@
       <div class="col-md-5 col-lg-4 ">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">Your cart</span>
-          <span class="badge bg-primary rounded-pill">{{
-            $store.state.products.length
-          }}</span>
+          <span class="badge bg-primary rounded-pill">{{ cart.length }}</span>
         </h4>
 
         <label for="">Product info</label>
         <ul v-if="cart" class="list-group mb-3">
           <li
             v-for="product in cart"
-            :key="product.id"
+            :key="product.productId"
             class="list-group-item d-flex justify-content-between lh-sm"
           >
             <div>
@@ -312,8 +310,8 @@
               <div>
                 <b-icon
                   variant="danger"
-                  icon="x-circle"
-                  @click="deleteProduct(product.id)"
+                  icon="x-circle-fill"
+                  @click="deleteProduct(product.productId)"
                 ></b-icon>
               </div>
 
@@ -445,7 +443,6 @@ export default {
       this.$store.commit("deleteProduct", id);
       this.sum = 0;
       this.total();
-      console.log("ready to delete item" + id);
     },
     total() {
       for (let i = 0; i < this.cart.length; i++) {
