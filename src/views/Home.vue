@@ -2,11 +2,19 @@
   <div class="home">
     <h1>Start page - Home</h1>
     <p>{{ $route.params.categoryId }}</p>
-    <ol v-if="this.$store.state.products">
-      <li v-for="product in this.$store.state.products" :key="product.id">
-        {{ product.name }}
-      </li>
-    </ol>
+    <div v-if="this.$store.state.products">
+      <ol>
+        <li v-for="product in this.$store.state.products" :key="product.id">
+          Name of product: {{ product.name }} <br />
+          Category of product: {{ product.category }}
+        </li>
+      </ol>
+      <ol>
+        <li v-for="filtered in filteredArray" :key="filtered.id">
+          {{ filtered.name }}
+        </li>
+      </ol>
+    </div>
   </div>
 </template>
 
@@ -15,9 +23,11 @@
     name: 'Home',
     data() {
       return {
-        product: null
+        product: null,
+        filteredArray: []
       }
     },
+
     created() {
       this.fetchLocalData()
     },
@@ -26,9 +36,31 @@
         fetch('products.json')
           .then((response) => response.json())
           .then((data) => {
-            this.$store.state.product = data
             this.$store.commit('fillWithProducts', data.products)
           })
+      },
+      filterArray() {
+        for (
+          let index = 0;
+          index < this.$store.state.products.length;
+          index++
+        ) {
+          if (
+            JSON.stringify(this.$store.state.products[index].category) ===
+            this.$route.params.categoryId
+          ) {
+            this.filteredArray.push(this.$store.state.products[index])
+          }
+        }
+      }
+    },
+    watch: {
+      $route(to, from) {
+        if (to !== from) {
+          this.filteredArray = []
+          console.log('Changed route to: ' + to.params.categoryId)
+          this.filterArray()
+        }
       }
     }
   }
