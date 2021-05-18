@@ -4,6 +4,7 @@
       <div class="py-5 text-center">
         <h1>Checkout</h1>
         <h5 class="lead">add your address and card to checkout...</h5>
+        {{ $v.form.name.$model }}
       </div>
     </div>
 
@@ -20,6 +21,7 @@
                 <b-form-input
                   id="name-input"
                   name="name-input"
+                  type="text"
                   v-model="$v.form.name.$model"
                   :state="validateState('name')"
                   aria-describedby="name-feedback"
@@ -56,6 +58,7 @@
                 <b-form-input
                   id="email-input"
                   name="email-input"
+                  type="email"
                   v-model="$v.form.email.$model"
                   :state="validateState('email')"
                   aria-describedby="email-feedback"
@@ -189,6 +192,9 @@
                 <b-form-input
                   id="cc-number-input"
                   name="cc-number-input"
+                  type="text"
+                  pattern="\d*"
+                  maxlength="16"
                   placeholder="1234 5678 9010 1112"
                   v-model="$v.form.cardNumber.$model"
                   :state="validateState('cardNumber')"
@@ -204,7 +210,7 @@
             <div class="col-md-3">
               <b-form-group
                 id="cardDateMonth"
-                label="Card Expiration "
+                label="Expiration "
                 label-for="month-input"
               >
                 <b-form-select
@@ -251,6 +257,9 @@
                   id="cvv-input"
                   name="cvv-input"
                   placeholder="123"
+                  type="text"
+                  pattern="\d*"
+                  maxlength="3"
                   v-model="$v.form.cardCVV.$model"
                   :state="validateState('cardCVV')"
                   aria-describedby="cvv-feedback"
@@ -281,30 +290,40 @@
       <div class="col-md-5 col-lg-4 ">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">Your cart</span>
-          <span class="badge bg-primary rounded-pill">3</span>
+          <span class="badge bg-primary rounded-pill">{{
+            $store.state.products.length
+          }}</span>
         </h4>
 
         <label for="">Product info</label>
-        <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between lh-sm">
+        <ul v-if="cart" class="list-group mb-3">
+          <li
+            v-for="product in cart"
+            :key="product.id"
+            class="list-group-item d-flex justify-content-between lh-sm"
+          >
             <div>
-              <h6 class="my-0">Product name {{ $store.state.products }}</h6>
+              <h6 class="my-0">Product name {{ product.name }}</h6>
 
-              <small class="text-muted">Brief description </small>
+              <small class="text-muted">des: {{ product.description }}</small>
             </div>
 
             <div>
               <div>
-                <b-icon variant="danger" icon="x-circle"></b-icon>
+                <b-icon
+                  variant="danger"
+                  icon="x-circle"
+                  @click="toDelete"
+                ></b-icon>
               </div>
 
-              <span class="text-muted">$12</span>
+              <span class="text-muted">${{ product.price }}</span>
             </div>
           </li>
 
           <li class="list-group-item d-flex justify-content-between">
             <span>Total (USD)</span>
-            <strong>$20</strong>
+            <strong>${{ sum }}</strong>
           </li>
         </ul>
       </div>
@@ -326,6 +345,8 @@ export default {
   mixins: [validationMixin],
   data() {
     return {
+      cart: this.$store.state.products,
+      sum: null,
       cardDateMonth: [
         { value: null, text: "Month.." },
         { value: "01", text: "01" },
@@ -394,6 +415,11 @@ export default {
       cardCVV: { required },
     },
   },
+  computed: {},
+  created() {
+    this.total();
+  },
+  watch: {},
   methods: {
     validateState(name) {
       const { $dirty, $error } = this.$v.form[name];
@@ -405,8 +431,18 @@ export default {
       if (this.$v.form.$anyError) {
         return;
       }
-
+      console.log(this.form.name);
       alert("Form submitted!");
+    },
+    toDelete() {
+      console.log("ready to delete item");
+    },
+    total() {
+      for (let i = 0; i < this.cart.length; i++) {
+        this.sum += this.cart[i].price;
+        console.log(this.sum);
+      }
+      return this.sum;
     },
   },
 };
