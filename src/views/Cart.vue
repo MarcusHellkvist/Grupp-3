@@ -1,16 +1,6 @@
 <template>
   <div>
     <h1>Shopping cart</h1>
-
-    <!-- <b-button-toolbar key-nav aria-label="Toolbar with button groups">
-      <b-button variant="primary" @click="$router.push('/')"
-        >Continue shopping</b-button
-      >
-      <b-button variant="primary" @click="$router.push('/checkout')"
-        >Go to checkout</b-button
-      >
-    </b-button-toolbar> -->
-    <!-- <div v-if="$store.state.cart.length === 0"> -->
     <div v-if="cartArray.length === 0">
       <b-card
         title="Your cart is empty"
@@ -32,7 +22,7 @@
           <b-card
             :productId="product.id"
             :title="product.name"
-            :img-src="product.photo"
+            :img-src="product.productImage"
             img-alt="Card image"
             img-left
             class="mb-3"
