@@ -2,22 +2,24 @@
   <div>
     <p>products detail</p>
     <p>{{ oneObject }}</p>
+    <div style="width: 500px 500px ;">
+      <b-card
+        title="Card Title"
+        img-src="https://picsum.photos/600/300/?image=25"
+        img-alt="Image"
+        tag="article"
+        class="details"
+      >
+        <b-card-text>
+          Some quick example text to build on the card title and make up the
+          bulk of the card's content. Some quick example text to build on the
+          card title and make up the bulk of the card's content.
+        </b-card-text>
 
-    <b-card
-      title="Card Title"
-      img-src="https://picsum.photos/600/300/?image=25"
-      img-alt="Image"
-      tag="article"
-      style="max-width: 20rem;"
-      id="details"
-    >
-      <b-card-text>
-        Some quick example text to build on the card title and make up the bulk
-        of the card's content.
-      </b-card-text>
-
-      <b-button href="#" variant="primary">Go somewhere</b-button>
-    </b-card>
+        <b-button href="#" variant="success">Go somewhere</b-button>
+        <b-button href="#" variant="primary">Go somewhere</b-button>
+      </b-card>
+    </div>
   </div>
 </template>
 
