@@ -71,6 +71,30 @@
       "manufacturer": "i made this6",
       "saldo": 27,
       "category": 2
-    }
+    },
+     {
+       "id": "id0007",
+       "photo": "https://images.unsplash.com/photo-1610041321327-b794c052db27?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+       "name": "Headset",
+       "url": "linktopic3",
+       "description": "bla bla bla6",
+       "price": 300,
+       "rating": 3,
+       "manufacturer": "i made this7",
+       "saldo": 7,
+       "category": 3
+     },
+     {
+       "id": "id0008",
+       "photo": "https://images.unsplash.com/photo-1480506132288-68f7705954bd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1093&q=80",
+       "name": "Keyboard",
+       "url": "linktopic3",
+       "description": "bla bla bla8",
+       "price": 250,
+       "rating": 3,
+       "manufacturer": "i made this8",
+       "saldo": 18,
+       "category": 3
+     }
   ]
 }
