@@ -31,62 +31,68 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        productName: '',
-        productPhoto: '',
-        productDescription: '',
-        productPrice: 0,
-        productsArr: [],
-        productID: this.$route.params.productId,
-        oneObject: {}
-      }
+export default {
+  data() {
+    return {
+      productName: "",
+      productPhoto: "",
+      productDescription: "",
+      productPrice: 0,
+      productsArr: [],
+      productID: this.$route.params.productId,
+      oneObject: {},
+    };
+  },
+  created() {
+    this.fetchLocalData();
+  },
+  methods: {
+    fetchLocalData() {
+      fetch("products.json")
+        .then((response) => response.json())
+        .then((data) => {
+          this.productsArr = data.products;
+          /*  console.log('hi', data.products.id) */
+          console.log("hi ffffffff", this.productsArr);
+          this.pickRightObject();
+          this.giveVAlueToObject();
+        });
     },
-    created() {
-      this.fetchLocalData()
-    },
-    methods: {
-      fetchLocalData() {
-        fetch('products.json')
-          .then((response) => response.json())
-          .then((data) => {
-            this.productsArr = data.products
-            /*  console.log('hi', data.products.id) */
-            console.log('hi ffffffff', this.productsArr)
-            this.pickRightObject()
-            this.giveVAlueToObject()
-          })
-      },
-      pickRightObject() {
-        for (let i = 0; i < this.productsArr.length; i++) {
-          if (this.productsArr[i].id === this.productID) {
-            /* this.oneObject = this.productsArr[i] */
+    pickRightObject() {
+      for (let i = 0; i < this.productsArr.length; i++) {
+        if (this.productsArr[i].id === this.productID) {
+          /* this.oneObject = this.productsArr[i] */
 
-            this.oneObject = {
-              productId: this.productsArr[i].id,
-              name: this.productsArr[i].name,
-              description: this.productsArr[i].description,
-              price: this.productsArr[i].price,
-              productImage: this.productsArr[i].photo
-            }
+          this.oneObject = {
+            productId: this.productsArr[i].id,
+            name: this.productsArr[i].name,
+            description: this.productsArr[i].description,
+            price: this.productsArr[i].price,
+            productImage: this.productsArr[i].photo,
+          };
 
-            console.log(this.oneObject)
-          }
+          console.log(this.oneObject);
         }
-      },
-      giveVAlueToObject() {
-        this.productName = this.oneObject.name
-        this.productPhoto = this.oneObject.productImage
-        this.productDescription = this.oneObject.description
-        this.productPrice = 'Price:  ' + this.oneObject.price + '  SEK'
       }
-    }
-  }
+    },
+    giveVAlueToObject() {
+      this.productName = this.oneObject.name;
+      this.productPhoto = this.oneObject.productImage;
+      this.productDescription = this.oneObject.description;
+      this.productPrice = "Price:  " + this.oneObject.price + "  SEK";
+    },
+  },
+  watch: {
+    "$route.params.productId"(to, from) {
+      console.log(`params changed - to: ${to} from:${from}`);
+      // Fixa så det fungerar i realtid, just nu måste man uppdatera hemsidan manuellt för att ändringar ska ske.
+    },
+  },
+};
 </script>
 
 <style scoped>
-  p {
-    color: pink;
-  }
+p {
+  color: pink;
+}
 </style>
