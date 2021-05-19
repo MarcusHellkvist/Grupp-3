@@ -25,8 +25,28 @@ export default new Vuex.Store({
     },
 
     addToCart(state, product) {
+      for (let i = 0; i < state.cart.length; i++) {
+        if (state.cart[i].productId === product.productId) {
+          state.cart[i].quantity += 1
+          state.cart[i].total = state.cart[i].price * state.cart[i].quantity
+          console.log("denna produkt ligger redan i varukorgen")
+          return
+        }
+      }
+      product.quantity = 1
+      product.total = product.price
       state.cart.push(product);
+
     },
+
+    // quantity(state, id) {
+    //   for (let i = 0; i < state.cart.length; i++) {
+    //     if (state.cart[i].productId === id) {
+    //       console.log()
+
+    //     }
+    //   }
+    // }
   },
   actions: {},
   modules: {},
