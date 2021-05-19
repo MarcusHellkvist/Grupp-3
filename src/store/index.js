@@ -27,6 +27,12 @@ export default new Vuex.Store({
     addToCart(state, product) {
       state.cart.push(product);
     },
+    clearCart(state) {
+      while (state.cart.length > 0) {
+        state.cart.pop();
+        console.log("clear cart !");
+      }
+    },
   },
   actions: {},
   modules: {},
