@@ -47,6 +47,14 @@ export default new Vuex.Store({
     //     }
     //   }
     // }
+
+    clearCart(state) {
+      while (state.cart.length > 0) {
+        state.cart.pop();
+        console.log("clear cart !");
+      }
+    },
+
   },
   actions: {},
   modules: {},
