@@ -1,9 +1,12 @@
 <template>
   <div>
-    <p>{{ productID }}</p>
-    <b-button id="goToShoppingCartButton" href="#" variant="primary"
-      >Add to shopping cart</b-button
-    >
+    <!-- <p>{{ productID }}</p>
+    <ShoppingCartButton
+      :numberOfItems="this.$store.state.cart.length"
+    ></ShoppingCartButton> -->
+
+    <!-- <ShoppingCartButton></ShoppingCartButton> -->
+
     <div style="width: 500px 500px ;">
       <b-card
         :title="productName"
@@ -22,7 +25,7 @@
           id="addToShopingCart"
           href="#"
           variant="primary"
-          @click="$store.commit('addToCart', oneObject)"
+          @click="onClick"
           >Add to shopping cart</b-button
         >
       </b-card>
@@ -31,7 +34,10 @@
 </template>
 
 <script>
+  /* import ShoppingCartButton from '../components/ShoppingCartButton.vue' */
   export default {
+    /* components: { ShoppingCartButton },
+    name: 'Product', */
     data() {
       return {
         productName: '',
@@ -41,10 +47,12 @@
         productsArr: [],
         productID: this.$route.params.productId,
         oneObject: {}
+        /* numberOfItemsInCart: 0 */
       }
     },
     created() {
       this.fetchLocalData()
+      /*  this.numberOfItemsInCart = this.$store.state.cart.length */
     },
     methods: {
       fetchLocalData() {
@@ -80,6 +88,11 @@
         this.productPhoto = this.oneObject.productImage
         this.productDescription = this.oneObject.description
         this.productPrice = 'Price:  ' + this.oneObject.price + '  SEK'
+      },
+      onClick() {
+        this.$store.commit('addToCart', this.oneObject)
+        /* this.$store.state.cart.length++ */
+        /* console.log(this.numberOfItemsInCart) */
       }
     }
   }
