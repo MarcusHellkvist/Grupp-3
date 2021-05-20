@@ -27,7 +27,7 @@
               :name="filtered.name"
               :description="filtered.description"
               :price="filtered.price"
-              :productImage="filtered.photo"
+              :productImage="filtered.photo || defaultImage"
             ></product-small>
           </div>
         </b-row>
@@ -53,7 +53,7 @@
             :name="product.name"
             :description="product.description"
             :price="product.price"
-            :productImage="product.photo"
+            :productImage="product.photo || defaultImage"
           ></product-small>
         </div>
       </div>
@@ -71,6 +71,8 @@
         align="center"
       ></b-pagination>
     </div>
+
+    
   </div>
 </template>
 
@@ -87,6 +89,8 @@ export default {
       perPage: 4,
       currentPage: 1,
       currentPageFiltered: 1,
+      defaultImage: this.$store.state.defaultImage
+
     };
   },
   computed: {
