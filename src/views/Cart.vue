@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Shopping cart</h1>
-    <div v-if="cartArray.length === 0">
+    <div v-if="this.$store.state.cart.length === 0">
       <b-card
         title="Your cart is empty"
         img-src="https://freepikpsd.com/wp-content/uploads/2019/10/empty-cart-png-Transparent-Images.png"
@@ -19,7 +19,7 @@
     <div v-else>
       <b-list-group>
         <b-list-group-item
-          v-for="product in cartArray"
+          v-for="product in this.$store.state.cart"
           :key="product.productId"
         >
           <b-card
@@ -28,6 +28,8 @@
             :img-src="product.productImage"
             img-alt="Card image"
             img-left
+            img-height="250"
+            img-width="300"
             class="mb-3"
           >
             <b-card-text>
@@ -38,13 +40,14 @@
                   <b-icon
                     variant="Primary"
                     icon="file-minus"
-                    @click="quantity(product.productId)"
+                    @click="quantityMinus(product.productId)"
                   ></b-icon>
                   {{ product.quantity }}
+                  <!-- {{ test }} -->
                   <b-icon
                     variant="Primary"
                     icon="file-plus"
-                    @click="quantity(product.productId)"
+                    @click="quantityPlus(product.productId)"
                   ></b-icon>
                 </div>
 
@@ -75,20 +78,26 @@
 
 <script>
 export default {
-  created() {
-    this.cartArray = this.$store.state.cart;
+  // created() {
+  //   this.cartArray = this.$store.state.cart;
+  // },
+  computed: {
+    // test() {
+    //   return this.$store.state.cart[0].quantity;
+    // },
   },
-  computed: {},
   data() {
     return {
-      cartArray: null,
+      // cartArray: null,
     };
   },
   methods: {
-    // quantity(id) {
-    //   this.value += 1;
-    //   this.$store.commit("quantity", id);
-    // },
+    quantityPlus(id) {
+      this.$store.commit("quantityPlus", id);
+    },
+    quantityMinus(id) {
+      this.$store.commit("quantityMinus", id);
+    },
     deleteProduct(id) {
       this.$store.commit("deleteProduct", id);
     },
