@@ -198,7 +198,7 @@
                     pattern="\d*"
                     maxlength="16"
                     minlength="16"
-                    placeholder="1234 5678 9010 1112"
+                    placeholder="1234 5678 9101 1213"
                     v-model="$v.form.cardNumber.$model"
                     :state="validateState('cardNumber')"
                     aria-describedby="cc-number-feedback"
@@ -336,26 +336,26 @@
       <!-- success alert -->
       <b-alert show variant="success">
         <h4 class="alert-heading">SUCCESS!</h4>
-        <p>
-          Aww yeah, you will get order soon!!! yahhhh
-        </p>
+        <p>Aww yeah, you will get order soon!!! yahhhh</p>
         <hr />
         <!-- Cart -->
+        <div class="d-flex justify-content-between ">
+          <h5>> Invoice..</h5>
 
-        <label for="">Product info</label>
+          <button @click="print" variant="outline-dark" class="btn float-right">
+            <b-icon variant="dark" icon="printer" font-scale="2"></b-icon>
+          </button>
+        </div>
+
         <ul v-if="localCart" class="list-group mb-3">
           <li
             v-for="product in localCart"
             :key="product.productId"
             class="list-group-item d-flex justify-content-between "
           >
-            <div>
-              <h6 class="my-0">Product name {{ product.name }}</h6>
-            </div>
+            <h6 class="my-0">Product name {{ product.name }}</h6>
 
-            <div>
-              <span class="text-muted">${{ product.price }}</span>
-            </div>
+            <span class="text-muted">${{ product.price }}</span>
           </li>
 
           <li class="list-group-item d-flex justify-content-between">
@@ -370,10 +370,10 @@
           have a good day....
         </p>
       </b-alert>
-      <div class=" d-flex justify-content-around">
+      <!-- <div class="d-flex justify-content-around">
         <b-button @click="print">Print</b-button>
         <b-button @click="$router.push('/')">Home</b-button>
-      </div>
+      </div> -->
 
       <!-- success alert -->
     </div>
@@ -382,15 +382,22 @@
 
 <script>
 import { validationMixin } from "vuelidate";
-import { required, minLength } from "vuelidate/lib/validators";
+import {
+  required,
+  minLength,
+  maxLength,
+  email,
+  decimal,
+} from "vuelidate/lib/validators";
 
 export default {
   mixins: [validationMixin],
   data() {
     return {
       cart: this.$store.state.cart,
+      products: this.$store.state.products,
       localCart: [],
-      sum: null,
+      sum: 0,
       showAndHide: null,
       showAlert: "d-none",
 
@@ -445,31 +452,21 @@ export default {
         required,
         minLength: minLength(3),
       },
-      email: {
-        required,
-      },
-      address: {
-        required,
-      },
+      email: { required, email },
+      address: { required },
       country: { required },
       state: { required },
       zip: { required },
-      cardName: {
-        required,
-        minLength: minLength(3),
-      },
+      cardName: { required, minLength: minLength(3) },
       cardNumber: {
         required,
         minLength: minLength(16),
-        maxLength: minLength(16),
+        maxLength: maxLength(16),
+        decimal,
       },
       cardDateMonth: { required },
       cardDateYear: { required },
-      cardCVV: {
-        required,
-        minLength: minLength(3),
-        maxLength: minLength(3),
-      },
+      cardCVV: { required, decimal },
     },
   },
   computed: {
@@ -480,6 +477,7 @@ export default {
   created() {
     this.total();
     this.addTolocalCart();
+    this.maxPrice();
   },
   watch: {
     sum() {
@@ -487,12 +485,12 @@ export default {
     },
   },
   methods: {
-    //showAndHide() {},
     print() {
       window.print();
     },
-    validateState(name) {
-      const { $dirty, $error } = this.$v.form[name];
+
+    validateState(input) {
+      const { $dirty, $error } = this.$v.form[input];
       return $dirty ? !$error : null;
     },
 
@@ -505,36 +503,42 @@ export default {
         console.log(this.form.name);
         this.showAndHide = "d-none";
         this.showAlert = "";
-        // this.localCart = this.cart;
-        console.log("local cart : " + this.localCart.length);
-
         this.clearCart();
       }
     },
+
     deleteProduct(id) {
       console.log(id);
       this.$store.commit("deleteProduct", id);
       this.sum = 0;
       this.total();
     },
+
     clearCart() {
       this.$store.commit("clearCart");
     },
+
     total() {
       for (let i = 0; i < this.cart.length; i++) {
-        this.localCart.push(this.cart[i]);
-        console.log("i sum :" + this.localCart.length);
         this.sum += this.cart[i].price;
         console.log(this.sum);
       }
       return this.sum;
     },
+
     addTolocalCart() {
-      this.localCart = [];
+      this.localCart = []; //to clear localCart
       for (let i = 0; i < this.cart.length; i++) {
         this.localCart.push(this.cart[i]);
       }
       return this.localCart;
+    },
+    maxPrice() {
+      // sort by max price
+      this.products.sort(function(a, b) {
+        return a.price - b.price;
+      });
+      console.log(this.products);
     },
   },
 };
