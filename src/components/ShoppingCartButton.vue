@@ -46,8 +46,9 @@
         font-scale="3"
       ></b-icon>
       <span
+        id="cart-check-number"
         class="position-absolute  translate-middle badge rounded-pill bg-secondary"
-        style=" top: 0; right: 15px; "
+        style=" top: 0; right: 3px; color: white; "
         >{{ numberOfItems }}
       </span>
     </b-button>

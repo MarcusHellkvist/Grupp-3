@@ -7,7 +7,7 @@
 
     <!-- <ShoppingCartButton></ShoppingCartButton> -->
 
-    <div style="width: 500px 500px ;">
+    <div style="width: 500px; 500px;">
       <b-card
         :title="productName"
         :img-src="productPhoto"
@@ -15,16 +15,28 @@
         tag="article"
         class="details"
       >
-        <b-card-text> {{ productDescription }} </b-card-text>
-        <b-card-text id="price"> Price: {{ productPrice }} SEK </b-card-text>
+        <b-card-text>
+          {{ productDescription }}
+        </b-card-text>
 
-        <b-button
-          id="addToShopingCart"
-          href="#"
-          variant="primary"
-          @click="onClick"
-          >Add to shopping cart</b-button
+        <b-card-text
+          id="price"
+          class=" bg-info text-left"
+          style="width: 200px;"
         >
+          Price: {{ productPrice }} SEK
+        </b-card-text>
+        <div class="text-left">
+          <b-button
+            id="addToShopingCart"
+            class="mx-auto "
+            style="width: 200px;"
+            href="#"
+            variant="primary"
+            @click="onClick"
+            >Add to shopping cart</b-button
+          >
+        </div>
       </b-card>
     </div>
   </div>
@@ -105,6 +117,9 @@
 </script>
 
 <style scoped>
+  /* .mx-auto {
+    margin-left: -100px;
+  } */
   p {
     color: pink;
   }
