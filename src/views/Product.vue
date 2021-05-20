@@ -13,13 +13,10 @@
         :img-src="productPhoto"
         img-alt="Image"
         tag="article"
-        :footer-text-variant="productPrice"
         class="details"
       >
         <b-card-text> {{ productDescription }} </b-card-text>
-        <b-card-text id="price">
-          {{ productPrice }}
-        </b-card-text>
+        <b-card-text id="price"> Price: {{ productPrice }} SEK </b-card-text>
 
         <b-button
           id="addToShopingCart"
@@ -87,7 +84,7 @@
         this.productName = this.oneObject.name
         this.productPhoto = this.oneObject.productImage
         this.productDescription = this.oneObject.description
-        this.productPrice = 'Price:  ' + this.oneObject.price + '  SEK'
+        this.productPrice = this.oneObject.price
       },
       onClick() {
         this.$store.commit('addToCart', this.oneObject)
