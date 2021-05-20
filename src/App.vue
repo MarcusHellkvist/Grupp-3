@@ -23,6 +23,13 @@
                     >Category 3</router-link
                   ></b-nav-item
                 >
+                <!-- ALONA -->
+                <b-nav-item
+                  ><router-link to="/cart"
+                    ><ShoppingCartButton></ShoppingCartButton></router-link
+                ></b-nav-item>
+
+                <!-- ALONA -->
               </b-navbar-nav>
               <b-navbar-nav class="ml-auto">
                 <b-nav-form @submit="onSubmit">
@@ -59,62 +66,66 @@
 </template>
 
 <script>
-export default {
-  created() {
-    this.getLocalData();
-  },
-  data() {
-    return {
-      productNames: [],
-      searchQuery: null,
-    };
-  },
-  methods: {
-    getLocalData() {
-      fetch("products.json")
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data.products[0].name);
-          data.products.forEach((product) => {
-            this.productNames.push(product.id + ", " + product.name);
-          });
-          console.log(this.productNames);
-        });
+  import ShoppingCartButton from './components/ShoppingCartButton.vue'
+  export default {
+    name: 'App',
+    components: { ShoppingCartButton },
+
+    created() {
+      this.getLocalData()
     },
-    onSubmit() {
-      console.log(this.searchQuery);
-      var n = this.searchQuery.indexOf(",");
-      var trimmedQuery = this.searchQuery.slice(0, n);
-      this.$router.push({
-        name: "Product",
-        params: { productId: trimmedQuery },
-      });
-      this.searchQuery = "";
+    data() {
+      return {
+        productNames: [],
+        searchQuery: null
+      }
     },
-  },
-};
+    methods: {
+      getLocalData() {
+        fetch('products.json')
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data.products[0].name)
+            data.products.forEach((product) => {
+              this.productNames.push(product.id + ', ' + product.name)
+            })
+            console.log(this.productNames)
+          })
+      },
+      onSubmit() {
+        console.log(this.searchQuery)
+        var n = this.searchQuery.indexOf(',')
+        var trimmedQuery = this.searchQuery.slice(0, n)
+        this.$router.push({
+          name: 'Product',
+          params: { productId: trimmedQuery }
+        })
+        this.searchQuery = ''
+      }
+    }
+  }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+  }
 
-#nav {
-  padding: 30px;
-}
+  #nav {
+    padding: 30px;
+  }
 
-#nav a {
-  font-weight: normal;
-  color: #2c3e50;
-  margin: 0px;
-}
+  #nav a {
+    font-weight: normal;
+    color: #2c3e50;
+    margin: 0px;
+  }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+  #nav a.router-link-exact-active {
+    color: #42b983;
+  }
 </style>
