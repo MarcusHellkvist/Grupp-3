@@ -12,7 +12,7 @@
         >
       </b-dropdown>
     </div>
-    <!-- dropdown List -->
+    <!-- dropdown, List -->
     <div class="container" v-if="this.$route.params.categoryId">
       <h2>--- KATEGORI {{ $route.params.categoryId }} ---</h2>
       <div class="row">
