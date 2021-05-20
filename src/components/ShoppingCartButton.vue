@@ -46,7 +46,8 @@
         font-scale="3"
       ></b-icon>
       <span
-        class="position-absolute top-0 start-150  translate-middle badge rounded-pill bg-secondary"
+        class="position-absolute  translate-middle badge rounded-pill bg-secondary"
+        style=" top: 0; right: 15px; "
         >{{ numberOfItems }}
       </span>
     </b-button>

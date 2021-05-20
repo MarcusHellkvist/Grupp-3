@@ -2,21 +2,23 @@
   <div class="home">
     <h1>Start page - Home</h1>
     <div class="container" v-if="this.$route.params.categoryId">
-      <h2>--- KATEGORI --- {{ $route.params.categoryId }}</h2>
+      <h2>--- KATEGORI {{ $route.params.categoryId }} ---</h2>
       <div class="row">
-        <div
-          class="col"
-          v-for="filtered in sliceFilteredArray"
-          :key="filtered.id"
-        >
-          <product-small
-            :productId="filtered.id"
-            :name="filtered.name"
-            :description="filtered.description"
-            :price="filtered.price"
-            :productImage="filtered.photo"
-          ></product-small>
-        </div>
+        <b-row>
+          <div
+            class="col"
+            v-for="filtered in sliceFilteredArray"
+            :key="filtered.id"
+          >
+            <product-small
+              :productId="filtered.id"
+              :name="filtered.name"
+              :description="filtered.description"
+              :price="filtered.price"
+              :productImage="filtered.photo"
+            ></product-small>
+          </div>
+        </b-row>
       </div>
     </div>
 
@@ -27,9 +29,7 @@
         v-model="currentPageFiltered"
         :total-rows="filterRows"
         :per-page="perPage"
-        aria-controls="my-table"
         align="center"
-        active
       ></b-pagination>
     </div>
 
@@ -56,7 +56,6 @@
         v-model="currentPage"
         :total-rows="rows"
         :per-page="perPage"
-        aria-controls="my-table"
         align="center"
       ></b-pagination>
     </div>
@@ -72,7 +71,7 @@
       return {
         product: null,
         filteredArray: [],
-        perPage: 3,
+        perPage: 4,
         currentPage: 1,
         currentPageFiltered: 1
       }
@@ -124,7 +123,6 @@
             this.filteredArray.push(this.$store.state.products[index])
           }
         }
-        console.log('Before return: ' + this.filteredArray.length)
       }
     },
     watch: {

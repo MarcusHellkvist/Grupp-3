@@ -37,7 +37,7 @@
   /* import ShoppingCartButton from '../components/ShoppingCartButton.vue' */
   export default {
     /* components: { ShoppingCartButton },
-    name: 'Product', */
+      name: 'Product', */
     data() {
       return {
         productName: '',
@@ -96,6 +96,12 @@
       }
     }
   }
+  /* watch: {
+      "$route.params.productId"(to, from) {
+        console.log(`params changed - to: ${to} from:${from}`);
+        // Fixa så det fungerar i realtid, just nu måste man uppdatera hemsidan manuellt för att ändringar ska ske.
+      },
+    }, */
 </script>
 
 <style scoped>

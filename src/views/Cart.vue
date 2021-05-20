@@ -32,17 +32,24 @@
           >
             <b-card-text>
               <p>{{ product.description }}</p>
-              <!-- <label for="demo-sb">Inline spin button</label> -->
-              <b-form-spinbutton
-                id="demo-sb"
-                :v-model="value"
-                placeholder="1"
-                @click="test(value, product.price)"
-                inline
-              ></b-form-spinbutton>
+
               <div>
-                <!-- <p>{{ sum }}</p> -->
+                <div>
+                  <b-icon
+                    variant="Primary"
+                    icon="file-minus"
+                    @click="quantity(product.productId)"
+                  ></b-icon>
+                  {{ product.quantity }}
+                  <b-icon
+                    variant="Primary"
+                    icon="file-plus"
+                    @click="quantity(product.productId)"
+                  ></b-icon>
+                </div>
+
                 <p>Pris: {{ product.price }}</p>
+                <p>Total: {{ product.total }}</p>
 
                 <b-icon
                   variant="danger"
@@ -75,15 +82,13 @@ export default {
   data() {
     return {
       cartArray: null,
-      value: 1,
-      sum: null,
     };
   },
   methods: {
-    test(value, price) {
-      console.log("det funkar");
-      this.sum = value * price;
-    },
+    // quantity(id) {
+    //   this.value += 1;
+    //   this.$store.commit("quantity", id);
+    // },
     deleteProduct(id) {
       this.$store.commit("deleteProduct", id);
     },
