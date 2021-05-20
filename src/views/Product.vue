@@ -94,14 +94,17 @@
         /* this.$store.state.cart.length++ */
         /* console.log(this.numberOfItemsInCart) */
       }
+    },
+    watch: {
+      '$route.params.productId'(to, from) {
+        console.log(`params changed - to: ${to} from:${from}`)
+        this.productID = to
+        this.fetchLocalData()
+
+        // Fixa så det fungerar i realtid, just nu måste man uppdatera hemsidan manuellt för att ändringar ska ske.
+      }
     }
   }
-  /* watch: {
-      "$route.params.productId"(to, from) {
-        console.log(`params changed - to: ${to} from:${from}`);
-        // Fixa så det fungerar i realtid, just nu måste man uppdatera hemsidan manuellt för att ändringar ska ske.
-      },
-    }, */
 </script>
 
 <style scoped>
