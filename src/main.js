@@ -23,6 +23,7 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
 Vue.config.productionTip = false;
+store.dispatch('fetchLocalData')
 
 new Vue({
   router,

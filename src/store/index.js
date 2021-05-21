@@ -1,7 +1,7 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
@@ -13,6 +13,14 @@ export default new Vuex.Store({
   mutations: {
     fillWithProducts(state, products) {
       state.products = products
+    },
+    fetchLocalData(state) {
+      console.log('store mutation')
+      fetch('products.json')
+        .then((response) => response.json())
+        .then((data) => {
+          state.products = data.products
+        })
     },
 
     deleteProduct(state, id) {
@@ -56,6 +64,12 @@ export default new Vuex.Store({
       }
     }
   },
-  actions: {},
+  actions: {
+    fetchLocalData({ commit }) {
+      console.log('store action')
+      commit('fetchLocalData')
+    }
+  },
+
   modules: {}
 })
