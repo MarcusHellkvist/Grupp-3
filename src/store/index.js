@@ -43,19 +43,36 @@ export default new Vuex.Store({
           return
         }
       }
+      product = Object.assign(product)
       product.quantity = 1
       product.total = product.price
       state.cart.push(product)
     },
 
-    // quantity(state, id) {
-    //   for (let i = 0; i < state.cart.length; i++) {
-    //     if (state.cart[i].productId === id) {
-    //       console.log()
+    quantityPlus(state, id) {
+      for (let i = 0; i < state.cart.length; i++) {
+        if (state.cart[i].productId === id) {
 
-    //     }
-    //   }
-    // }
+          Vue.set(state.cart, i, {
+            ...state.cart[i],
+            quantity: state.cart[i].quantity += 1,
+            total: state.cart[i].price * state.cart[i].quantity
+          })
+
+        }
+      }
+
+    },
+
+    quantityMinus(state, id) {
+      for (let i = 0; i < state.cart.length; i++) {
+        if (state.cart[i].productId === id) {
+          state.cart[i].quantity -= 1
+          state.cart[i].total = state.cart[i].price * state.cart[i].quantity
+
+        }
+      }
+    },
 
     clearCart(state) {
       while (state.cart.length > 0) {
