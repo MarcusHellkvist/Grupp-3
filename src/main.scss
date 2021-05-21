@@ -19,17 +19,16 @@ $theme-colors: (
   font-size: 30px;
   
 } */
-
 #price {
   color: black;
   font-size: 30px;
-  font-family: Marker Felt;
-  margin-left: -700px;
+  font-family: 'Marker Felt';
 }
 
 #addToShopingCart {
-  margin-left: -700px;
+  background-color: blueviolet;
 }
+
 // Sass imports (The variables need to be set prior to importing)
 @import '~bootstrap';
 @import '~bootstrap-vue';
