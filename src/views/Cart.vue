@@ -20,7 +20,7 @@
       <b-list-group>
         <b-list-group-item
           v-for="product in this.$store.state.cart"
-          :key="product.productId"
+          :key="product.photo"
         >
           <b-card
             :productId="product.productId"
@@ -28,41 +28,46 @@
             :img-src="product.productImage"
             img-alt="Card image"
             img-left
-            img-height="250"
-            img-width="300"
+            img-height="150"
+            img-width="250"
             class="mb-3"
           >
             <b-card-text>
               <p>{{ product.description }}</p>
 
               <div>
-                <div>
-                  <b-icon
-                    variant="Primary"
-                    icon="file-minus"
-                    @click="quantityMinus(product.productId)"
-                  ></b-icon>
-                  {{ product.quantity }}
-                  <!-- {{ test }} -->
-                  <b-icon
-                    variant="Primary"
-                    icon="file-plus"
-                    @click="quantityPlus(product.productId)"
-                  ></b-icon>
-                </div>
+                <b-row>
+                  <b-col
+                    >Antal:
+                    <b-icon
+                      v-if="product.quantity >= 2"
+                      variant="Primary"
+                      icon="file-minus"
+                      @click="quantityMinus(product.productId)"
+                    ></b-icon>
+                    {{ product.quantity }}
+                    <b-icon
+                      variant="Primary"
+                      icon="file-plus"
+                      @click="quantityPlus(product.productId)"
+                    ></b-icon>
+                  </b-col>
 
-                <p>Pris: {{ product.price }}</p>
-                <p>Total: {{ product.total }}</p>
-
-                <b-icon
-                  variant="danger"
-                  icon="x-circle"
-                  @click="deleteProduct(product.productId)"
-                ></b-icon>
+                  <b-col>Pris: {{ product.price }}</b-col>
+                  <b-col>Total: {{ product.total }}</b-col>
+                  <b-col>
+                    <b-icon
+                      variant="danger"
+                      icon="x-circle"
+                      @click="deleteProduct(product.productId)"
+                    ></b-icon>
+                  </b-col>
+                </b-row>
               </div>
             </b-card-text>
           </b-card>
         </b-list-group-item>
+
         <b-button-toolbar key-nav aria-label="Toolbar with button groups">
           <b-button variant="primary" @click="$router.push('/')"
             >Continue shopping</b-button
@@ -87,9 +92,7 @@ export default {
     // },
   },
   data() {
-    return {
-      // cartArray: null,
-    };
+    return {};
   },
   methods: {
     quantityPlus(id) {
