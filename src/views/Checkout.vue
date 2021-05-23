@@ -270,6 +270,7 @@
               <!-- Payment -->
             </b-form>
           </b-col>
+
           <!-- Cart -->
           <b-col cols="4" class="text-left">
             <div class="d-flex justify-content-between">
@@ -287,7 +288,10 @@
                 <div>
                   <h6>Product name {{ product.name }}</h6>
                   <small class="text-muted"
-                    >des: {{ product.description }}</small
+                    >des: {{ product.description }}
+                  </small>
+                  <span class="badge badge-primary badge-pill"
+                    >{{ product.quantity }} quantity</span
                   >
                 </div>
                 <div>
@@ -296,7 +300,7 @@
                     icon="x-circle-fill"
                     @click="deleteProduct(product.productId)"
                   ></b-icon>
-                  <h6 class="text-muted text-right">${{ product.price }}</h6>
+                  <h6 class="text-muted text-right">${{ product.total }}</h6>
                 </div>
               </b-list-group-item>
             </b-list-group>
@@ -493,7 +497,7 @@ export default {
 
     total() {
       for (let i = 0; i < this.cart.length; i++) {
-        this.sum += this.cart[i].price;
+        this.sum += this.cart[i].total;
         console.log(this.sum);
       }
       return this.sum;
