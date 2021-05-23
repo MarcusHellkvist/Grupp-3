@@ -1,379 +1,352 @@
 <template>
   <div>
-    <div :class="showAndHide">
-      <div class="container">
-        <div class="py-5 text-center">
-          <h1>Checkout</h1>
-          <h5 class="lead">add your address and card to checkout...</h5>
-          {{ $v.form.name.$model }}
-        </div>
+    <div :class="showAndHide" class="container">
+      <!-- head -->
+      <div class="text-center">
+        <h1>Checkout</h1>
+        <h5>add your address and card to checkout...</h5>
+        {{ $v.form.name.$model }}
       </div>
-
-      <div class="row g-5">
-        <!--  -->
-
-        <div class="col-md-7 col-lg-8 text-left">
-          <h4 class="mb-3 text-primary">Billing address</h4>
-
-          <b-form @submit.stop.prevent="onSubmit">
-            <div class="row g-3">
-              <div class="col-sm-6">
-                <b-form-group id="name" label="Name" label-for="name-input">
-                  <b-form-input
-                    id="name-input"
-                    name="name-input"
-                    type="text"
-                    v-model="$v.form.name.$model"
-                    :state="validateState('name')"
-                    aria-describedby="name-feedback"
-                  ></b-form-input>
-
-                  <b-form-invalid-feedback id="name-feedback"
-                    >Required field.</b-form-invalid-feedback
-                  >
-                </b-form-group>
-              </div>
-
-              <div class="col-sm-6">
-                <b-form-group
-                  id="lastName"
-                  label="Last Name"
-                  label-for="lastname-input"
-                >
-                  <b-form-input
-                    id="lastname-input"
-                    name="lastname-input"
-                    v-model="$v.form.lastName.$model"
-                    :state="validateState('lastName')"
-                    aria-describedby="lastname-feedback"
-                  ></b-form-input>
-
-                  <b-form-invalid-feedback id="lastname-feedback"
-                    >Required field.</b-form-invalid-feedback
-                  >
-                </b-form-group>
-              </div>
-
-              <div class="col-12">
-                <b-form-group id="email" label="Email" label-for="email-input">
-                  <b-form-input
-                    id="email-input"
-                    name="email-input"
-                    type="email"
-                    class="form-control"
-                    v-model="$v.form.email.$model"
-                    :state="validateState('email')"
-                    aria-describedby="email-feedback"
-                  ></b-form-input>
-
-                  <b-form-invalid-feedback id="email-feedback"
-                    >Required field.</b-form-invalid-feedback
-                  >
-                </b-form-group>
-              </div>
-
-              <div class="col-6">
-                <b-form-group
-                  id="address"
-                  label="Address"
-                  label-for="address-input"
-                >
-                  <b-form-input
-                    id="address-input"
-                    name="address-input"
-                    v-model="$v.form.address.$model"
-                    :state="validateState('address')"
-                    aria-describedby="address-feedback"
-                  ></b-form-input>
-
-                  <b-form-invalid-feedback id="address-feedback"
-                    >Required field.</b-form-invalid-feedback
-                  >
-                </b-form-group>
-              </div>
-
-              <div class="col-md-6">
-                <b-form-group
-                  id="country"
-                  label="Country"
-                  label-for="country-input"
-                >
-                  <b-form-input
-                    id="country-input"
-                    name="country-input"
-                    v-model="$v.form.country.$model"
-                    :state="validateState('country')"
-                    aria-describedby="country-feedback"
-                  ></b-form-input>
-
-                  <b-form-invalid-feedback id="country-feedback"
-                    >Required field.</b-form-invalid-feedback
-                  >
-                </b-form-group>
-              </div>
-
-              <div class="col-md-6">
-                <b-form-group id="state" label="State" label-for="state-input">
-                  <b-form-input
-                    id="state-input"
-                    name="state-input"
-                    v-model="$v.form.state.$model"
-                    :state="validateState('state')"
-                    aria-describedby="state-feedback"
-                  ></b-form-input>
-
-                  <b-form-invalid-feedback id="state-feedback"
-                    >Required field.</b-form-invalid-feedback
-                  >
-                </b-form-group>
-              </div>
-
-              <div class="col-md-6">
-                <b-form-group id="zip" label="Zip" label-for="zip-input">
-                  <b-form-input
-                    id="zip-input"
-                    name="zip-input"
-                    v-model="$v.form.zip.$model"
-                    :state="validateState('zip')"
-                    aria-describedby="zip-feedback"
-                  ></b-form-input>
-
-                  <b-form-invalid-feedback id="zip-feedback"
-                    >Required field.</b-form-invalid-feedback
-                  >
-                </b-form-group>
-              </div>
-            </div>
-
-            <hr class="my-4" />
-
-            <h4 class="mb-3">Payment</h4>
-
-            <div class="my-3">
-              <div class="form-check">
-                <input
-                  id="credit"
-                  name="paymentMethod"
-                  type="radio"
-                  class="form-check-input"
-                  checked
-                  required
-                />
-                <label class="form-check-label" for="credit">Credit card</label>
-              </div>
-            </div>
-
-            <div class="row gy-3">
-              <div class="col-md-6">
-                <b-form-group
-                  id="cardName"
-                  label="Name on card"
-                  label-for="cc-name-input"
-                >
-                  <b-form-input
-                    id="cc-name-input"
-                    name="cc-name-input"
-                    placeholder="Full name as displayed on card"
-                    v-model="$v.form.cardName.$model"
-                    :state="validateState('cardName')"
-                    aria-describedby="cc-name-feedback"
-                  ></b-form-input>
-
-                  <b-form-invalid-feedback id="cc-name-feedback"
-                    >Credit card name is required.</b-form-invalid-feedback
-                  >
-                </b-form-group>
-              </div>
-
-              <div class="col-md-6">
-                <b-form-group
-                  id="cardNumber"
-                  label="Credit card number"
-                  label-for="cc-number-input"
-                >
-                  <b-form-input
-                    id="cc-number-input"
-                    name="cc-number-input"
-                    type="text"
-                    pattern="\d*"
-                    maxlength="16"
-                    minlength="16"
-                    placeholder="1234 5678 9101 1213"
-                    v-model="$v.form.cardNumber.$model"
-                    :state="validateState('cardNumber')"
-                    aria-describedby="cc-number-feedback"
-                  ></b-form-input>
-
-                  <b-form-invalid-feedback id="cc-number-feedback"
-                    >Credit card number is required.</b-form-invalid-feedback
-                  >
-                </b-form-group>
-              </div>
-
-              <div class="col-md-3">
-                <b-form-group
-                  id="cardDateMonth"
-                  label="Expiration "
-                  label-for="month-input"
-                >
-                  <b-form-select
-                    id="month-input"
-                    name="month-input"
-                    placeholder="Month"
-                    v-model="$v.form.cardDateMonth.$model"
-                    :options="cardDateMonth"
-                    :state="validateState('cardDateMonth')"
-                    aria-describedby="month-feedback"
-                  ></b-form-select>
-
-                  <b-form-invalid-feedback id="month-feedback"
-                    >Expiration date required.</b-form-invalid-feedback
-                  >
-                </b-form-group>
-              </div>
-
-              <div class="col-md-3">
-                <b-form-group
-                  id="cardDateYear"
-                  label="Date"
-                  label-for="year-input"
-                >
-                  <b-form-select
-                    id="year-input"
-                    name="year-input"
-                    placeholder="Year"
-                    v-model="$v.form.cardDateYear.$model"
-                    :options="cardDateYear"
-                    :state="validateState('cardDateYear')"
-                    aria-describedby="year-feedback"
-                  ></b-form-select>
-
-                  <b-form-invalid-feedback id="year-feedback"
-                    >Expiration date required.</b-form-invalid-feedback
-                  >
-                </b-form-group>
-              </div>
-
-              <div class="col-md-6">
-                <b-form-group id="cardCVV" label="CVV" label-for="cvv-input">
-                  <b-form-input
-                    id="cvv-input"
-                    name="cvv-input"
-                    placeholder="123"
-                    type="text"
-                    pattern="\d*"
-                    maxlength="3"
-                    v-model="$v.form.cardCVV.$model"
-                    :state="validateState('cardCVV')"
-                    aria-describedby="cvv-feedback"
-                  ></b-form-input>
-
-                  <b-form-invalid-feedback id="cvv-feedback"
-                    >Security code required.</b-form-invalid-feedback
-                  >
-                </b-form-group>
-              </div>
-            </div>
-
-            <hr class="my-4" />
-
-            <b-button
-              type="submit"
-              variant="primary"
-              class="w-100 btn btn-primary btn-lg"
-              >Continue to checkout</b-button
-            >
-
+      <br />
+      <br />
+      <!-- head -->
+      <!-- Address and card -->
+      <b-container fluid>
+        <b-form-row>
+          <b-col cols="8">
+            <h4>Billing Address</h4>
             <br />
+            <b-form @submit.stop.prevent="onSubmit">
+              <b-row class="text-left">
+                <b-col md="6">
+                  <b-form-group id="name" label="Name" label-for="name-input">
+                    <b-form-input
+                      id="name-input"
+                      name="name-input"
+                      type="text"
+                      v-model="$v.form.name.$model"
+                      :state="validateState('name')"
+                      aria-describedby="name-feedback"
+                    ></b-form-input>
+
+                    <b-form-invalid-feedback id="name-feedback"
+                      >Required field.</b-form-invalid-feedback
+                    >
+                  </b-form-group>
+                </b-col>
+                <b-col md="6">
+                  <b-form-group
+                    id="lastName"
+                    label="Last Name"
+                    label-for="lastname-input"
+                  >
+                    <b-form-input
+                      id="lastname-input"
+                      name="lastname-input"
+                      v-model="$v.form.lastName.$model"
+                      :state="validateState('lastName')"
+                      aria-describedby="lastname-feedback"
+                    ></b-form-input>
+
+                    <b-form-invalid-feedback id="lastname-feedback"
+                      >Required field.</b-form-invalid-feedback
+                    >
+                  </b-form-group>
+                </b-col>
+                <b-col md="12">
+                  <b-form-group
+                    id="email"
+                    label="Email"
+                    label-for="email-input"
+                  >
+                    <b-form-input
+                      id="email-input"
+                      name="email-input"
+                      type="email"
+                      class="form-control"
+                      v-model="$v.form.email.$model"
+                      :state="validateState('email')"
+                      aria-describedby="email-feedback"
+                    ></b-form-input>
+
+                    <b-form-invalid-feedback id="email-feedback"
+                      >Required field.</b-form-invalid-feedback
+                    >
+                  </b-form-group>
+                </b-col>
+                <b-col md="6">
+                  <b-form-group
+                    id="address"
+                    label="Address"
+                    label-for="address-input"
+                  >
+                    <b-form-input
+                      id="address-input"
+                      name="address-input"
+                      v-model="$v.form.address.$model"
+                      :state="validateState('address')"
+                      aria-describedby="address-feedback"
+                    ></b-form-input>
+
+                    <b-form-invalid-feedback id="address-feedback"
+                      >Required field.</b-form-invalid-feedback
+                    >
+                  </b-form-group>
+                </b-col>
+                <b-col md="6">
+                  <b-form-group
+                    id="country"
+                    label="Country"
+                    label-for="country-input"
+                  >
+                    <b-form-input
+                      id="country-input"
+                      name="country-input"
+                      v-model="$v.form.country.$model"
+                      :state="validateState('country')"
+                      aria-describedby="country-feedback"
+                    ></b-form-input>
+
+                    <b-form-invalid-feedback id="country-feedback"
+                      >Required field.</b-form-invalid-feedback
+                    >
+                  </b-form-group>
+                </b-col>
+                <b-col md="6">
+                  <b-form-group
+                    id="state"
+                    label="State"
+                    label-for="state-input"
+                  >
+                    <b-form-input
+                      id="state-input"
+                      name="state-input"
+                      v-model="$v.form.state.$model"
+                      :state="validateState('state')"
+                      aria-describedby="state-feedback"
+                    ></b-form-input>
+
+                    <b-form-invalid-feedback id="state-feedback"
+                      >Required field.</b-form-invalid-feedback
+                    >
+                  </b-form-group>
+                </b-col>
+                <b-col md="6">
+                  <b-form-group id="zip" label="Zip" label-for="zip-input">
+                    <b-form-input
+                      id="zip-input"
+                      name="zip-input"
+                      v-model="$v.form.zip.$model"
+                      :state="validateState('zip')"
+                      aria-describedby="zip-feedback"
+                    ></b-form-input>
+
+                    <b-form-invalid-feedback id="zip-feedback"
+                      >Required field.</b-form-invalid-feedback
+                    >
+                  </b-form-group>
+                </b-col>
+              </b-row>
+
+              <!-- Payment -->
+              <hr class="my-4" />
+              <h4 class="text-left">Payment</h4>
+              <b-row class="text-left">
+                <b-col cols="6" md="6">
+                  <b-form-group
+                    id="cardName"
+                    label="Name on card"
+                    label-for="cc-name-input"
+                  >
+                    <b-form-input
+                      id="cc-name-input"
+                      name="cc-name-input"
+                      placeholder="Full name as displayed on card"
+                      v-model="$v.form.cardName.$model"
+                      :state="validateState('cardName')"
+                      aria-describedby="cc-name-feedback"
+                    ></b-form-input>
+
+                    <b-form-invalid-feedback id="cc-name-feedback"
+                      >Credit card name is required.</b-form-invalid-feedback
+                    >
+                  </b-form-group>
+                </b-col>
+                <b-col cols="6" md="6">
+                  <b-form-group
+                    id="cardNumber"
+                    label="Credit card number"
+                    label-for="cc-number-input"
+                  >
+                    <b-form-input
+                      id="cc-number-input"
+                      name="cc-number-input"
+                      type="text"
+                      pattern="\d*"
+                      maxlength="16"
+                      minlength="16"
+                      placeholder="1234 5678 9101 1213"
+                      v-model="$v.form.cardNumber.$model"
+                      :state="validateState('cardNumber')"
+                      aria-describedby="cc-number-feedback"
+                    ></b-form-input>
+
+                    <b-form-invalid-feedback id="cc-number-feedback"
+                      >Credit card number is required.</b-form-invalid-feedback
+                    >
+                  </b-form-group>
+                </b-col>
+                <b-col cols="3" md="3"
+                  ><b-form-group
+                    id="cardDateMonth"
+                    label="Expiration "
+                    label-for="month-input"
+                  >
+                    <b-form-select
+                      id="month-input"
+                      name="month-input"
+                      placeholder="Month"
+                      v-model="$v.form.cardDateMonth.$model"
+                      :options="cardDateMonth"
+                      :state="validateState('cardDateMonth')"
+                      aria-describedby="month-feedback"
+                    ></b-form-select>
+
+                    <b-form-invalid-feedback id="month-feedback"
+                      >Expiration date required.</b-form-invalid-feedback
+                    >
+                  </b-form-group></b-col
+                >
+                <b-col cols="3" md="3"
+                  ><b-form-group
+                    id="cardDateYear"
+                    label="Date"
+                    label-for="year-input"
+                  >
+                    <b-form-select
+                      id="year-input"
+                      name="year-input"
+                      placeholder="Year"
+                      v-model="$v.form.cardDateYear.$model"
+                      :options="cardDateYear"
+                      :state="validateState('cardDateYear')"
+                      aria-describedby="year-feedback"
+                    ></b-form-select>
+
+                    <b-form-invalid-feedback id="year-feedback"
+                      >Expiration date required.</b-form-invalid-feedback
+                    >
+                  </b-form-group></b-col
+                >
+                <b-col cols="6" md="6">
+                  <b-form-group id="cardCVV" label="CVV" label-for="cvv-input">
+                    <b-form-input
+                      id="cvv-input"
+                      name="cvv-input"
+                      placeholder="123"
+                      type="text"
+                      pattern="\d*"
+                      maxlength="3"
+                      v-model="$v.form.cardCVV.$model"
+                      :state="validateState('cardCVV')"
+                      aria-describedby="cvv-feedback"
+                    ></b-form-input>
+
+                    <b-form-invalid-feedback id="cvv-feedback"
+                      >Security code required.</b-form-invalid-feedback
+                    >
+                  </b-form-group></b-col
+                >
+              </b-row>
+              <hr class="my-4" />
+
+              <b-button
+                type="submit"
+                variant="primary"
+                class="w-100 btn btn-primary btn-lg"
+                >Continue to checkout</b-button
+              >
+
+              <!-- Payment -->
+            </b-form>
+          </b-col>
+          <!-- Cart -->
+          <b-col cols="4" class="text-left">
+            <div class="d-flex justify-content-between">
+              <h4>Your Cart</h4>
+              <strong>{{ cart.length }}</strong>
+            </div>
             <br />
-          </b-form>
-        </div>
-
-        <!-- Cart -->
-        <div class="col-md-5 col-lg-4 ">
-          <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-primary">Your cart</span>
-            <span class="badge bg-primary rounded-pill">{{ cart.length }}</span>
-          </h4>
-
-          <label for="">Product info</label>
-          <ul v-if="cart" class="list-group mb-3">
-            <li
-              v-for="product in cart"
-              :key="product.productId"
-              class="list-group-item d-flex justify-content-between lh-sm"
-            >
-              <div>
-                <h6 class="my-0">Product name {{ product.name }}</h6>
-
-                <small class="text-muted">des: {{ product.description }}</small>
-              </div>
-
-              <div>
+            <label for="">Product Info</label>
+            <b-list-group v-if="cart">
+              <b-list-group-item
+                v-for="product in cart"
+                :key="product.productId"
+                class="d-flex justify-content-between"
+              >
+                <div>
+                  <h6>Product name {{ product.name }}</h6>
+                  <small class="text-muted"
+                    >des: {{ product.description }}</small
+                  >
+                </div>
                 <div>
                   <b-icon
                     variant="danger"
                     icon="x-circle-fill"
                     @click="deleteProduct(product.productId)"
                   ></b-icon>
+                  <h6 class="text-muted text-right">${{ product.price }}</h6>
                 </div>
-
-                <span class="text-muted">${{ product.price }}</span>
-              </div>
-            </li>
-
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total (USD)</span>
-              <strong>${{ sum }} </strong>
-            </li>
-          </ul>
-        </div>
-
-        <!--  -->
-      </div>
+              </b-list-group-item>
+            </b-list-group>
+            <b-list-group>
+              <b-list-group-item class="d-flex justify-content-between ">
+                <span>Total (USD)</span>
+                <strong>${{ sum }} </strong>
+              </b-list-group-item>
+            </b-list-group>
+          </b-col>
+          <!-- Cart -->
+        </b-form-row>
+      </b-container>
+      <!-- Address and card -->
+      <br />
+      <br />
     </div>
+
+    <!-- success alert -->
     <div :class="showAlert">
-      <!-- success alert -->
       <b-alert show variant="success">
-        <h4 class="alert-heading">SUCCESS!</h4>
+        <h4>SUCCESS!</h4>
         <p>Aww yeah, you will get order soon!!! yahhhh</p>
         <hr />
-        <!-- Cart -->
         <div class="d-flex justify-content-between ">
-          <h5>> Invoice..</h5>
+          <h5>Invoice..</h5>
 
           <button @click="print" variant="outline-dark" class="btn float-right">
             <b-icon variant="dark" icon="printer" font-scale="2"></b-icon>
           </button>
         </div>
-
-        <ul v-if="localCart" class="list-group mb-3">
-          <li
+        <b-list-group v-if="localCart">
+          <b-list-group-item
             v-for="product in localCart"
             :key="product.productId"
             class="list-group-item d-flex justify-content-between "
           >
             <h6 class="my-0">Product name {{ product.name }}</h6>
-
             <span class="text-muted">${{ product.price }}</span>
-          </li>
-
-          <li class="list-group-item d-flex justify-content-between">
+          </b-list-group-item>
+          <b-list-group-item
+            class="list-group-item d-flex justify-content-between "
+          >
             <span>Total (USD)</span>
             <strong>${{ sum }} </strong>
-          </li>
-        </ul>
-
-        <!--  -->
+          </b-list-group-item>
+        </b-list-group>
         <hr />
-        <p class="mb-0">
-          have a good day....
-        </p>
+        <p>have a good day....</p>
       </b-alert>
-      <!-- <div class="d-flex justify-content-around">
-        <b-button @click="print">Print</b-button>
-        <b-button @click="$router.push('/')">Home</b-button>
-      </div> -->
 
       <!-- success alert -->
     </div>
