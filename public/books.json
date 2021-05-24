@@ -149,6 +149,81 @@
       "genre": "romance",
       "language": "english",
       "image": "https://s2.adlibris.com/images/46232128/red-white-royal-blue.jpg"
+    },
+    {
+      "isbn": "9781472280831",
+      "title": "Greenlights",
+      "author": "Matthew McConaughey",
+      "price": 25,
+      "plot": "I've been in this life for fifty years, been trying to work out its riddle for forty-two, and been keeping diaries of clues to that riddle for the last thirty-five. Notes about successes and failures, joys and sorrows, things that made me marvel, and things that made me laugh out loud. How to be fair. How to have less stress. How to have fun. How to hurt people less. How to get hurt less. How to be a good man. How to have meaning in life. How to be more me.",
+      "pages": 304,
+      "publisher": "Headline Book Publishing",
+      "published": "2020-10-01",
+      "stock": 10,
+      "rating": 0,
+      "genre": "biographies & memoirs",
+      "language": "english",
+      "image": "https://s2.adlibris.com/images/58724496/greenlights.jpg"
+    },
+    {
+      "isbn": "9780374201234",
+      "title": "The Mamba Mentality",
+      "author": "Kobe Bryant",
+      "price": 35,
+      "plot": "How I Play is Kobe Bryant's personal perspective of his life and career on the basketball court and his exceptional, insightful style of playing the game--a fitting legacy from the late Los Angeles Laker superstar.In the wake of his retirement from professional basketball, Kobe The Black Mamba Bryant decided to share his vast knowledge and understanding of the game to take readers on an unprecedented journey to the core of the legendary Mamba mentality.",
+      "pages": 208,
+      "publisher": "Farrar, Straus Giroux Inc",
+      "published": "2020-02-01",
+      "stock": 10,
+      "rating": 0,
+      "genre": "biographies & memoirs",
+      "language": "english",
+      "image": "https://s1.adlibris.com/images/44323740/the-mamba-mentality.jpg"
+    },
+    {
+      "isbn": "9781524763169",
+      "title": "A Promised Land",
+      "author": "Barack Obama",
+      "price": 42,
+      "plot": "In the stirring, highly anticipated first volume of his presidential memoirs, Barack Obama tells the story of his improbable odyssey from young man searching for his identity to leader of the free world, describing in strikingly personal detail both his political education and the landmark moments of the first term of his historic presidency--a time of dramatic transformation and turmoil.",
+      "pages": 768,
+      "publisher": "Crown Publishing Group (NY)",
+      "published": "2020-11-01",
+      "stock": 15,
+      "rating": 0,
+      "genre": "biographies & memoirs",
+      "language": "english",
+      "image": "https://s1.adlibris.com/images/58890476/a-promised-land.jpg"
+    },
+    {
+      "isbn": "9781787460614",
+      "title": "Mindhunter",
+      "author": "John Douglas, Mark Olshaker",
+      "price": 13,
+      "plot": "FBI Special Agent and expert in criminal profiling and behavioural science, John Douglas, is a man who has looked evil in the eye and made a vocation of understanding it. Now retired, Douglas can let us inside the FBI elite serial crime unit and into the disturbed minds of some of the most savage serial killers in the world.",
+      "pages": 420,
+      "publisher": "Random House UK",
+      "published": "2017-11-02",
+      "stock": 25,
+      "rating": 0,
+      "genre": "biographies & memoirs",
+      "language": "english",
+      "image": "https://s1.adlibris.com/images/31988435/mindhunter.jpg"
+    },
+    {
+      "isbn": "9781785035142",
+      "title": "Pablo Escobar: My Father",
+      "author": "Juan Pablo Escobar",
+      "price": 16,
+      "plot": "Until now, we believed that everything had been said about the rise and fall of the most infamous drug lord of all time, Pablo Escobar from books to film to the cult series Narcos. But these versions have always been told from the outside, only capturing half the truth, and never from the intimacy of his own home. Now, more than two decades after the full-fledged manhunt finally caught up with Escobar, his son brings us the dramatic truth as never before",
+      "pages": 368,
+      "publisher": "Random House UK",
+      "published": "2017-07-13",
+      "stock": 30,
+      "rating": 0,
+      "genre": "biographies & memoirs",
+      "language": "english",
+      "image": "https://s1.adlibris.com/images/29645029/pablo-escobar-my-father.jpg"
     }
   ],
   "genre": [
@@ -156,6 +231,7 @@
     "fiction",
     "crime and thriller",
     "fantasy and science fiction",
-    "romance"
+    "romance",
+    "biographies & memoirs"
   ]
 }

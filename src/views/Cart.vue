@@ -1,98 +1,112 @@
 <template>
   <div>
     <h1>Shopping cart</h1>
-    <div v-if="this.$store.state.cart.length === 0">
-      <b-card
-        title="Your cart is empty"
-        img-src="https://freepikpsd.com/wp-content/uploads/2019/10/empty-cart-png-Transparent-Images.png"
-        img-alt="Card image"
-        img-left
-        class="mb-3"
-      >
-        <b-card-text>
-          <b-button variant="primary" @click="$router.push('/')"
-            >Continue shopping</b-button
-          >
-        </b-card-text>
-      </b-card>
-    </div>
-    <div v-else>
-      <b-list-group>
-        <b-list-group-item
-          v-for="product in this.$store.state.cart"
-          :key="product.photo"
-        >
-          <b-card
-            :productId="product.productId"
-            :title="product.name"
-            :img-src="product.productImage"
-            img-alt="Card image"
-            img-left
-            img-height="150"
-            img-width="250"
-            class="mb-3"
-          >
-            <b-card-text>
-              <p>{{ product.description }}</p>
+    <b-container fluid>
+      <b-form-row>
+        <b-col lg="12" md="12" sm="4">
+          <div v-if="this.$store.state.cart.length === 0">
+            <b-card
+              title="Your cart is empty"
+              img-src="https://freepikpsd.com/wp-content/uploads/2019/10/empty-cart-png-Transparent-Images.png"
+              img-alt="Card image"
+              img-left
+              class="mb-3"
+            >
+              <b-card-text>
+                <b-button variant="primary" @click="$router.push('/')"
+                  >Continue shopping</b-button
+                >
+              </b-card-text>
+            </b-card>
+          </div>
+          <div v-else>
+            <b-list-group>
+              <b-list-group-item
+                v-for="product in this.$store.state.cart"
+                :key="product.photo"
+              >
+                <b-card
+                  :productId="product.productId"
+                  :title="product.name"
+                  :img-src="product.productImage"
+                  img-alt="Card image"
+                  img-left
+                  img-height="150"
+                  img-width="250"
+                  class="mb-3"
+                >
+                  <b-card-text>
+                    <p>{{ product.description }}</p>
 
-              <div>
-                <b-row>
-                  <b-col
-                    >Antal:
-                    <b-icon
-                      v-if="product.quantity >= 2"
-                      variant="Primary"
-                      icon="file-minus"
-                      @click="quantityMinus(product.productId)"
-                    ></b-icon>
-                    {{ product.quantity }}
-                    <b-icon
-                      variant="Primary"
-                      icon="file-plus"
-                      @click="quantityPlus(product.productId)"
-                    ></b-icon>
-                  </b-col>
+                    <div>
+                      <b-row>
+                        <b-col
+                          >Antal:
+                          <b-icon
+                            v-if="product.quantity >= 2"
+                            variant="Primary"
+                            icon="file-minus"
+                            @click="quantityMinus(product.productId)"
+                          ></b-icon>
+                          {{ product.quantity }}
+                          <b-icon
+                            variant="Primary"
+                            icon="file-plus"
+                            @click="quantityPlus(product.productId)"
+                          ></b-icon>
+                        </b-col>
 
-                  <b-col>Pris: {{ product.price }}</b-col>
-                  <b-col>Total: {{ product.total }}</b-col>
-                  <b-col>
-                    <b-icon
-                      variant="danger"
-                      icon="x-circle"
-                      @click="deleteProduct(product.productId)"
-                    ></b-icon>
-                  </b-col>
-                </b-row>
-              </div>
-            </b-card-text>
-          </b-card>
-        </b-list-group-item>
+                        <b-col>Pris: {{ product.price }}</b-col>
+                        <b-col>Total: {{ product.total }}</b-col>
+                        <b-col>
+                          <b-icon
+                            variant="danger"
+                            icon="x-circle"
+                            @click="deleteProduct(product.productId)"
+                          ></b-icon>
+                        </b-col>
+                      </b-row>
+                    </div>
+                  </b-card-text>
+                </b-card>
+              </b-list-group-item>
 
-        <b-button-toolbar key-nav aria-label="Toolbar with button groups">
-          <b-button variant="primary" @click="$router.push('/')"
-            >Continue shopping</b-button
-          >
-          <b-button variant="primary" @click="$router.push('/checkout')"
-            >Go to checkout</b-button
-          >
-        </b-button-toolbar>
-      </b-list-group>
-    </div>
+              <b-row align-h="between">
+                <b-col lg="4" md="12" sm="4"
+                  ><b-button
+                    class="btn btn-primary btn-lg btn-block"
+                    variant="primary"
+                    @click="$router.push('/')"
+                    >Continue shopping</b-button
+                  ></b-col
+                >
+                <b-col lg="4" md="12" sm="12"
+                  ><b-button
+                    class="btn btn-primary btn-lg btn-block"
+                    variant="primary"
+                    @click="$router.push('/checkout')"
+                  >
+                    Go to checkout</b-button
+                  ></b-col
+                >
+              </b-row>
+            </b-list-group>
+          </div>
+        </b-col>
+      </b-form-row>
+    </b-container>
   </div>
 </template>
 
 <script>
 export default {
-  // created() {
-  //   this.cartArray = this.$store.state.cart;
-  // },
-  computed: {
-    // test() {
-    //   return this.$store.state.cart[0].quantity;
-    // },
-  },
+  created() {},
+  computed: {},
   data() {
-    return {};
+    return {
+      bild:
+        "https://listimg.pinclipart.com/picdir/s/201-2018325_img-empty-shopping-cart-gif-clipart.png",
+    };
   },
   methods: {
     quantityPlus(id) {
