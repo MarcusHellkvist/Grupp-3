@@ -1,6 +1,10 @@
 <template>
   <div class="home">
     <h1>Start page - Home</h1>
+
+    <!-- Carousel -->
+    <carousel></carousel>
+
     <!-- dropdown List -->
     <div>
       <b-dropdown text="Sort by">
@@ -41,44 +45,46 @@
 </template>
 
 <script>
-  import ProductSmall from '../components/ProductSmall.vue'
-  export default {
-    components: { ProductSmall },
-    name: 'Home',
-    data() {
-      return {
-        products: this.$store.state.products, // all product "use to sort Price"
-        perPage: 4,
-        currentPage: 1,
-        defaultImage: this.$store.state.defaultImage
-      }
-    },
-    computed: {
-      rows() {
-        return this.$store.state.products.length
-      },
+import ProductSmall from "../components/ProductSmall.vue";
+import Carousel from "../components/Carousel.vue";
 
-      allProducts() {
-        return this.$store.state.products.slice(
-          (this.currentPage - 1) * this.perPage,
-          this.currentPage * this.perPage
-        )
-      }
+export default {
+  components: { ProductSmall, Carousel },
+  name: "Home",
+  data() {
+    return {
+      products: this.$store.state.products, // all product "use to sort Price"
+      perPage: 4,
+      currentPage: 1,
+      defaultImage: this.$store.state.defaultImage,
+    };
+  },
+  computed: {
+    rows() {
+      return this.$store.state.products.length;
     },
 
-    methods: {
-      maxPrice() {
-        this.products.sort(function(a, b) {
-          return b.price - a.price
-        })
-        console.log(this.products)
-      },
-      minPrice() {
-        this.products.sort(function(a, b) {
-          return a.price - b.price
-        })
-        console.log(this.products)
-      }
-    }
-  }
+    allProducts() {
+      return this.$store.state.products.slice(
+        (this.currentPage - 1) * this.perPage,
+        this.currentPage * this.perPage
+      );
+    },
+  },
+
+  methods: {
+    maxPrice() {
+      this.products.sort(function(a, b) {
+        return b.price - a.price;
+      });
+      console.log(this.products);
+    },
+    minPrice() {
+      this.products.sort(function(a, b) {
+        return a.price - b.price;
+      });
+      console.log(this.products);
+    },
+  },
+};
 </script>

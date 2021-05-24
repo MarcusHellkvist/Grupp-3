@@ -9,11 +9,12 @@
       </div>
       <br />
       <br />
+
       <!-- head -->
       <!-- Address and card -->
       <b-container fluid>
         <b-form-row>
-          <b-col cols="8">
+          <b-col lg="8" md="12" sm="12">
             <h4>Billing Address</h4>
             <br />
             <b-form @submit.stop.prevent="onSubmit">
@@ -272,7 +273,7 @@
           </b-col>
 
           <!-- Cart -->
-          <b-col cols="4" class="text-left">
+          <b-col lg="4" md="12" sm="12" class="text-left order-md-last">
             <div class="d-flex justify-content-between">
               <h4>Your Cart</h4>
               <strong>{{ cart.length }}</strong>
@@ -286,10 +287,8 @@
                 class="d-flex justify-content-between"
               >
                 <div>
-                  <h6>Product name {{ product.name }}</h6>
-                  <small class="text-muted"
-                    >des: {{ product.description }}
-                  </small>
+                  <h6>{{ product.name }}</h6>
+                  <small class="text-muted">{{ product.description }} </small>
                   <span class="badge badge-primary badge-pill"
                     >{{ product.quantity }} quantity</span
                   >
@@ -368,6 +367,7 @@ import {
 } from "vuelidate/lib/validators";
 
 export default {
+  components: {},
   mixins: [validationMixin],
   data() {
     return {
@@ -443,7 +443,7 @@ export default {
       },
       cardDateMonth: { required },
       cardDateYear: { required },
-      cardCVV: { required, decimal },
+      cardCVV: { required, decimal, minlength: minLength(3) },
     },
   },
   computed: {
