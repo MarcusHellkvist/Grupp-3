@@ -20,7 +20,11 @@
 
     <div class="container">
       <div class="row">
-        <div class="col" v-for="product in allProducts" :key="product.id">
+        <div
+          class="col-lg-2 col-md-4 col-sm-6"
+          v-for="product in data"
+          :key="product.id"
+        >
           <product-small
             @book-to-cart-alert="onBookToCartToast"
             :productId="product.id"
@@ -102,74 +106,75 @@
 </template>
 
 <script>
-  import ProductSmall from '../components/ProductSmall.vue'
-  import Carousel from '../components/Carousel.vue'
+import ProductSmall from "../components/ProductSmall.vue";
+import Carousel from "../components/Carousel.vue";
 
-  export default {
-    components: { ProductSmall, Carousel },
-    name: 'Home',
-    data() {
-      return {
-        slide: 0,
-        sliding: null,
-        products: this.$store.state.products, // all product "use to sort Price"
-        perPage: 4,
-        currentPage: 1,
-        defaultImage: this.$store.state.defaultImage,
-        value: 4,
-        startValue: 0
+export default {
+  components: { ProductSmall, Carousel },
+  name: "Home",
+  data() {
+    return {
+      data: this.$store.state.products,
+      slide: 0,
+      sliding: null,
+      products: this.$store.state.products, // all product "use to sort Price"
+      perPage: 4,
+      currentPage: 1,
+      defaultImage: this.$store.state.defaultImage,
+      value: 4,
+      startValue: 0,
+    };
+  },
+  computed: {
+    rows() {
+      return this.$store.state.products.length;
+    },
+    allProducts() {
+      return this.$store.state.products.slice(
+        (this.currentPage - 1) * this.perPage,
+        this.currentPage * this.perPage
+      );
+    },
+    showProducts() {
+      return this.$store.state.products.slice(this.startValue, this.value);
+    },
+  },
+  methods: {
+    onSlideStart() {
+      this.sliding = true;
+      this.startValue += 4;
+      this.value += 4;
+      if (this.value > this.$store.state.products.length) {
+        this.startValue = 0;
+        this.value = 4;
       }
     },
-    computed: {
-      rows() {
-        return this.$store.state.products.length
-      },
-      allProducts() {
-        return this.$store.state.products.slice(
-          (this.currentPage - 1) * this.perPage,
-          this.currentPage * this.perPage
-        )
-      },
-      showProducts() {
-        return this.$store.state.products.slice(this.startValue, this.value)
-      }
+    onSlideEnd() {
+      this.sliding = false;
     },
-    methods: {
-      onSlideStart() {
-        this.sliding = true
-        this.startValue += 4
-        this.value += 4
-        if (this.value > this.$store.state.products.length) {
-          this.startValue = 0
-          this.value = 4
-        }
-      },
-      onSlideEnd() {
-        this.sliding = false
-      },
-      maxPrice() {
-        this.products.sort(function(a, b) {
-          return b.price - a.price
-        })
-        console.log(this.products)
-      },
-      minPrice() {
-        this.products.sort(function(a, b) {
-          return a.price - b.price
-        })
-        console.log(this.products)
-      },
+    maxPrice() {
+      this.products.sort(function(a, b) {
+        return b.price - a.price;
+      });
+      console.log(this.products);
+    },
+    minPrice() {
+      this.products.sort(function(a, b) {
+        return a.price - b.price;
+      });
+      console.log(this.products);
+    },
 
-      onBookToCartToast(book) {
-        this.$bvToast.toast(`${book.title} was added to your cart`, {
-          title: 'Success',
-          autoHideDelay: 2000,
-          appendToast: true,
-          variant: 'success',
-          solid: true,
-          toaster: 'b-toaster-top-center'
-        })
-      }
-    }
-  }
+    onBookToCartToast(book) {
+      this.$bvToast.toast(`${book.title} was added to your cart`, {
+        title: "Success",
+        autoHideDelay: 2000,
+        appendToast: true,
+        variant: "success",
+        solid: true,
+        toaster: "b-toaster-top-center",
+      });
+    },
+  },
+};
 </script>

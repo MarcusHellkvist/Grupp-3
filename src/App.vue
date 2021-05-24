@@ -59,8 +59,8 @@
       </b-row>
     </div>
     <!-- footer -->
-    <b-row class="news-letter">
-      <b-col cols="12">
+    <b-row class="news-letter" align-h="center">
+      <b-col cols="8">
         <b-form inline>
           <span
             >Learn about new offers and get more deals by joining our
