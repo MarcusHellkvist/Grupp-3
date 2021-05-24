@@ -1,6 +1,10 @@
 <template>
   <div class="home">
     <h1>Start page - Home</h1>
+
+    <!-- Carousel -->
+    <carousel></carousel>
+
     <!-- dropdown List -->
     <div>
       <b-dropdown text="Sort by">
@@ -43,8 +47,11 @@
 
 <script>
 import ProductSmall from "../components/ProductSmall.vue";
+import Carousel from "../components/Carousel.vue";
+
 export default {
-  components: { ProductSmall },
+  components: { ProductSmall, Carousel },
+
   name: "Home",
   data() {
     return {
@@ -80,6 +87,7 @@ export default {
       });
       console.log(this.products);
     },
+
     onBookToCartToast(book) {
       this.$bvToast.toast(`${book.title} was added to your cart`, {
         title: "Success",
