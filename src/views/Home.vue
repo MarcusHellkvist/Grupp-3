@@ -1,6 +1,10 @@
 <template>
   <div class="home">
     <h1>Start page - Home</h1>
+
+    <!-- Carousel -->
+    <carousel></carousel>
+
     <!-- dropdown List -->
     <div>
       <b-dropdown text="Sort by">
@@ -18,6 +22,7 @@
       <div class="row">
         <div class="col" v-for="product in allProducts" :key="product.id">
           <product-small
+            @book-to-cart-alert="onBookToCartToast"
             :productId="product.id"
             :name="product.name"
             :description="product.description"
@@ -98,9 +103,10 @@
 
 <script>
   import ProductSmall from '../components/ProductSmall.vue'
+  import Carousel from '../components/Carousel.vue'
 
   export default {
-    components: { ProductSmall },
+    components: { ProductSmall, Carousel },
     name: 'Home',
     data() {
       return {
@@ -118,7 +124,6 @@
       rows() {
         return this.$store.state.products.length
       },
-
       allProducts() {
         return this.$store.state.products.slice(
           (this.currentPage - 1) * this.perPage,
@@ -129,7 +134,6 @@
         return this.$store.state.products.slice(this.startValue, this.value)
       }
     },
-
     methods: {
       onSlideStart() {
         this.sliding = true
@@ -138,12 +142,10 @@
         if (this.value > this.$store.state.products.length) {
           this.startValue = 0
           this.value = 4
-
         }
       },
       onSlideEnd() {
         this.sliding = false
-
       },
       maxPrice() {
         this.products.sort(function(a, b) {
@@ -156,12 +158,18 @@
           return a.price - b.price
         })
         console.log(this.products)
+      },
+
+      onBookToCartToast(book) {
+        this.$bvToast.toast(`${book.title} was added to your cart`, {
+          title: 'Success',
+          autoHideDelay: 2000,
+          appendToast: true,
+          variant: 'success',
+          solid: true,
+          toaster: 'b-toaster-top-center'
+        })
       }
     }
-    // watch: {
-    //   onSlideStart() {
-    //     this.value += 4
-    //   }
-    // }
   }
 </script>
