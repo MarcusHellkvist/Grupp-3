@@ -37,20 +37,81 @@
         align="center"
       ></b-pagination>
     </div>
+
+    <div>
+      <b-carousel
+        id="carousel-1"
+        v-model="slide"
+        :interval="400000"
+        controls
+        indicators
+        background="#ababab"
+        img-width="1024"
+        img-height="480"
+        style="text-shadow: 1px 1px 2px #333;"
+        @sliding-start="onSlideStart"
+        @sliding-end="onSlideEnd"
+      >
+        <!-- Text slides with image -->
+        <b-carousel-slide img-blank>
+          <div class="container">
+            <div class="row">
+              <div
+                class="col"
+                v-for="product in showProducts"
+                :key="product.id"
+              >
+                <product-small
+                  :productId="product.id"
+                  :name="product.name"
+                  :description="product.description"
+                  :price="product.price"
+                  :productImage="product.photo || defaultImage"
+                ></product-small>
+              </div>
+            </div>
+          </div>
+        </b-carousel-slide>
+        <b-carousel-slide img-blank>
+          <div class="container">
+            <div class="row">
+              <div
+                class="col"
+                v-for="product in showProducts"
+                :key="product.id"
+              >
+                <product-small
+                  :productId="product.id"
+                  :name="product.name"
+                  :description="product.description"
+                  :price="product.price"
+                  :productImage="product.photo || defaultImage"
+                ></product-small>
+              </div>
+            </div>
+          </div>
+        </b-carousel-slide>
+      </b-carousel>
+    </div>
   </div>
 </template>
 
 <script>
   import ProductSmall from '../components/ProductSmall.vue'
+
   export default {
     components: { ProductSmall },
     name: 'Home',
     data() {
       return {
+        slide: 0,
+        sliding: null,
         products: this.$store.state.products, // all product "use to sort Price"
         perPage: 4,
         currentPage: 1,
-        defaultImage: this.$store.state.defaultImage
+        defaultImage: this.$store.state.defaultImage,
+        value: 4,
+        startValue: 0
       }
     },
     computed: {
@@ -63,10 +124,27 @@
           (this.currentPage - 1) * this.perPage,
           this.currentPage * this.perPage
         )
+      },
+      showProducts() {
+        return this.$store.state.products.slice(this.startValue, this.value)
       }
     },
 
     methods: {
+      onSlideStart() {
+        this.sliding = true
+        this.startValue += 4
+        this.value += 4
+        if (this.value > this.$store.state.products.length) {
+          this.startValue = 0
+          this.value = 4
+
+        }
+      },
+      onSlideEnd() {
+        this.sliding = false
+
+      },
       maxPrice() {
         this.products.sort(function(a, b) {
           return b.price - a.price
@@ -80,5 +158,10 @@
         console.log(this.products)
       }
     }
+    // watch: {
+    //   onSlideStart() {
+    //     this.value += 4
+    //   }
+    // }
   }
 </script>
