@@ -15,13 +15,7 @@
         text="40% of all books"
       >
         <template #img>
-          <img
-            :img-src="product.photo"
-            class="w-100"
-            width="1024"
-            height="200"
-            :src="product.photo"
-          />
+          <img class="w-100" width="1024" height="200" :src="product.photo" />
         </template>
       </b-carousel-slide>
     </b-carousel>
