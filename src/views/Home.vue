@@ -22,16 +22,17 @@
       <div class="row">
         <div
           class="col-lg col-md-4 col-sm-6"
-          v-for="product in data"
-          :key="product.id"
+          v-for="book in allProducts"
+          :key="book.isbn"
         >
           <product-small
+            :key="book.isbn"
             @book-to-cart-alert="onBookToCartToast"
-            :productId="product.id"
-            :name="product.name"
-            :description="product.description"
-            :price="product.price"
-            :productImage="product.photo || defaultImage"
+            :isbn="book.isbn"
+            :title="book.title"
+            :author="book.author"
+            :price="book.price"
+            :image="book.image"
           ></product-small>
         </div>
       </div>
@@ -49,7 +50,6 @@
 
     <div class="container">
       <b-carousel
-        
         id="carousel-1"
         v-model="slide"
         :interval="400000"
@@ -64,17 +64,15 @@
         <b-carousel-slide img-blank>
           <div class="container">
             <div class="row">
-              <div
-                class="col"
-                v-for="product in showProducts"
-                :key="product.id"
-              >
+              <div class="col" v-for="book in showProducts" :key="book.isbn">
                 <product-small
-                  :productId="product.id"
-                  :name="product.name"
-                  :description="product.description"
-                  :price="product.price"
-                  :productImage="product.photo || defaultImage"
+                  :key="book.isbn"
+                  @book-to-cart-alert="onBookToCartToast"
+                  :isbn="book.isbn"
+                  :title="book.title"
+                  :author="book.author"
+                  :price="book.price"
+                  :image="book.image"
                 ></product-small>
               </div>
             </div>
@@ -89,11 +87,14 @@
                 :key="product.id"
               >
                 <product-small
-                  :productId="product.id"
-                  :name="product.name"
-                  :description="product.description"
-                  :price="product.price"
-                  :productImage="product.photo || defaultImage"
+                  v-for="book in books"
+                  :key="book.isbn"
+                  @book-to-cart-alert="onBookToCartToast"
+                  :isbn="book.isbn"
+                  :title="book.title"
+                  :author="book.author"
+                  :price="book.price"
+                  :image="book.image"
                 ></product-small>
               </div>
             </div>
@@ -113,11 +114,11 @@
     name: 'Home',
     data() {
       return {
-        data: this.$store.state.products,
+        data: this.$store.state.books,
         slide: 0,
         sliding: null,
-        products: this.$store.state.products, // all product "use to sort Price"
-        perPage: 4,
+        books: this.$store.state.books, // all product "use to sort Price"
+        perPage: 7,
         currentPage: 1,
         defaultImage: this.$store.state.defaultImage,
         value: 4,
@@ -126,16 +127,16 @@
     },
     computed: {
       rows() {
-        return this.$store.state.products.length
+        return this.$store.state.books.length
       },
       allProducts() {
-        return this.$store.state.products.slice(
+        return this.$store.state.books.slice(
           (this.currentPage - 1) * this.perPage,
           this.currentPage * this.perPage
         )
       },
       showProducts() {
-        return this.$store.state.products.slice(this.startValue, this.value)
+        return this.$store.state.books.slice(this.startValue, this.value)
       }
     },
     methods: {
@@ -143,7 +144,7 @@
         this.sliding = true
         this.startValue += 4
         this.value += 4
-        if (this.value > this.$store.state.products.length) {
+        if (this.value > this.$store.state.books.length) {
           this.startValue = 0
           this.value = 4
         }
@@ -152,16 +153,16 @@
         this.sliding = false
       },
       maxPrice() {
-        this.products.sort(function(a, b) {
+        this.books.sort(function(a, b) {
           return b.price - a.price
         })
-        console.log(this.products)
+        console.log(this.books)
       },
       minPrice() {
-        this.products.sort(function(a, b) {
+        this.books.sort(function(a, b) {
           return a.price - b.price
         })
-        console.log(this.products)
+        console.log(this.books)
       },
 
       onBookToCartToast(book) {
@@ -178,9 +179,7 @@
   }
 </script>
 <style scoped>
-
-.carousel >>> .carousel-item {
-  height: 450px;
-}
-
+  .carousel >>> .carousel-item {
+    height: 450px;
+  }
 </style>
