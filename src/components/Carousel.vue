@@ -15,7 +15,7 @@
         text="40% of all books"
       >
         <template #img>
-          <img class="w-100" width="1024" height="200" :src="product.photo" />
+          <img class="w-100" width="1024" height="200" :src="product.image" />
         </template>
         <button class="btn btn-outline-light" @click="shopNow">SHOP NOW</button>
       </b-carousel-slide>
@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       slide: 0,
-      sale: this.$store.state.products,
+      sale: this.$store.state.books,
     };
   },
   methods: {

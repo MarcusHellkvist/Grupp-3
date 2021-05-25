@@ -7,20 +7,23 @@
         <h5>add your address and card to checkout...</h5>
         {{ $v.form.name.$model }}
       </div>
-      <br />
-      <br />
 
       <!-- head -->
-      <!-- Address and card -->
+      <!-- Address and cart -->
       <b-container fluid>
         <b-form-row>
           <b-col lg="8" md="12" sm="12">
             <h4>Billing Address</h4>
-            <br />
+
             <b-form @submit.stop.prevent="onSubmit">
               <b-row class="text-left">
                 <b-col md="6">
-                  <b-form-group id="name" label="Name" label-for="name-input">
+                  <b-form-group
+                    id="name"
+                    label="Name"
+                    label-for="name-input"
+                    style="margin-bottom: 0rem;"
+                  >
                     <b-form-input
                       id="name-input"
                       name="name-input"
@@ -278,17 +281,17 @@
               <h4>Your Cart</h4>
               <strong>{{ cart.length }}</strong>
             </div>
-            <br />
+
             <label for="">Product Info</label>
             <b-list-group v-if="cart">
               <b-list-group-item
                 v-for="product in cart"
-                :key="product.productId"
+                :key="product.isbn"
                 class="d-flex justify-content-between"
               >
                 <div>
-                  <h6>{{ product.name }}</h6>
-                  <small class="text-muted">{{ product.description }} </small>
+                  <h6>{{ product.title }}</h6>
+                  <small class="text-muted">{{ product.author }} </small>
                   <span class="badge badge-primary badge-pill"
                     >{{ product.quantity }} quantity</span
                   >
@@ -297,7 +300,7 @@
                   <b-icon
                     variant="danger"
                     icon="x-circle-fill"
-                    @click="deleteProduct(product.productId)"
+                    @click="deleteProduct(product.isbn)"
                   ></b-icon>
                   <h6 class="text-muted text-right">${{ product.total }}</h6>
                 </div>
@@ -314,8 +317,6 @@
         </b-form-row>
       </b-container>
       <!-- Address and card -->
-      <br />
-      <br />
     </div>
 
     <!-- success alert -->
@@ -337,7 +338,7 @@
             :key="product.productId"
             class="list-group-item d-flex justify-content-between "
           >
-            <h6 class="my-0">Product name {{ product.name }}</h6>
+            <h6 class="my-0">Product name {{ product.title }}</h6>
             <span class="text-muted">${{ product.price }}</span>
           </b-list-group-item>
           <b-list-group-item
@@ -372,7 +373,7 @@ export default {
   data() {
     return {
       cart: this.$store.state.cart,
-      products: this.$store.state.products,
+      products: this.$store.state.books,
       localCart: [],
       sum: 0,
       showAndHide: null,
@@ -526,5 +527,20 @@ export default {
   max-width: 960px;
   text-align: left;
   padding: 1rem;
+}
+
+#name__BV_label_.d_block {
+  padding: 0px;
+  margin-bottom: 0 !important;
+}
+h6 {
+  margin-bottom: 0rem;
+}
+small {
+  margin-top: 0rem;
+}
+span {
+  margin-left: 0rem;
+  margin-top: 0rem;
 }
 </style>
