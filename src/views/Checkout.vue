@@ -18,12 +18,8 @@
             <b-form @submit.stop.prevent="onSubmit">
               <b-row class="text-left">
                 <b-col md="6">
-                  <b-form-group
-                    id="name"
-                    label="Name"
-                    label-for="name-input"
-                    style="margin-bottom: 0rem;"
-                  >
+                  <h6>Name</h6>
+                  <b-form-group id="name">
                     <b-form-input
                       id="name-input"
                       name="name-input"
@@ -39,11 +35,8 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group
-                    id="lastName"
-                    label="Last Name"
-                    label-for="lastname-input"
-                  >
+                  <h6>Last Name</h6>
+                  <b-form-group id="lastName">
                     <b-form-input
                       id="lastname-input"
                       name="lastname-input"
@@ -58,11 +51,8 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="12">
-                  <b-form-group
-                    id="email"
-                    label="Email"
-                    label-for="email-input"
-                  >
+                  <h6>Email</h6>
+                  <b-form-group id="email">
                     <b-form-input
                       id="email-input"
                       name="email-input"
@@ -79,11 +69,8 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group
-                    id="address"
-                    label="Address"
-                    label-for="address-input"
-                  >
+                  <h6>Address</h6>
+                  <b-form-group id="address">
                     <b-form-input
                       id="address-input"
                       name="address-input"
@@ -98,11 +85,8 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group
-                    id="country"
-                    label="Country"
-                    label-for="country-input"
-                  >
+                  <h6>Country</h6>
+                  <b-form-group id="country">
                     <b-form-input
                       id="country-input"
                       name="country-input"
@@ -117,11 +101,8 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group
-                    id="state"
-                    label="State"
-                    label-for="state-input"
-                  >
+                  <h6>State</h6>
+                  <b-form-group id="state">
                     <b-form-input
                       id="state-input"
                       name="state-input"
@@ -136,7 +117,8 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group id="zip" label="Zip" label-for="zip-input">
+                  <h6>Zip</h6>
+                  <b-form-group id="zip">
                     <b-form-input
                       id="zip-input"
                       name="zip-input"
@@ -157,11 +139,8 @@
               <h4 class="text-left">Payment</h4>
               <b-row class="text-left">
                 <b-col cols="6" md="6">
-                  <b-form-group
-                    id="cardName"
-                    label="Name on card"
-                    label-for="cc-name-input"
-                  >
+                  <h6>Name on Card</h6>
+                  <b-form-group id="cardName">
                     <b-form-input
                       id="cc-name-input"
                       name="cc-name-input"
@@ -177,11 +156,8 @@
                   </b-form-group>
                 </b-col>
                 <b-col cols="6" md="6">
-                  <b-form-group
-                    id="cardNumber"
-                    label="Credit card number"
-                    label-for="cc-number-input"
-                  >
+                  <h6>Credit Card Number</h6>
+                  <b-form-group id="cardNumber">
                     <b-form-input
                       id="cc-number-input"
                       name="cc-number-input"
@@ -200,12 +176,9 @@
                     >
                   </b-form-group>
                 </b-col>
-                <b-col cols="3" md="3"
-                  ><b-form-group
-                    id="cardDateMonth"
-                    label="Expiration "
-                    label-for="month-input"
-                  >
+                <b-col cols="3" md="3">
+                  <h6>Expiration</h6>
+                  <b-form-group id="cardDateMonth">
                     <b-form-select
                       id="month-input"
                       name="month-input"
@@ -221,12 +194,9 @@
                     >
                   </b-form-group></b-col
                 >
-                <b-col cols="3" md="3"
-                  ><b-form-group
-                    id="cardDateYear"
-                    label="Date"
-                    label-for="year-input"
-                  >
+                <b-col cols="3" md="3">
+                  <h6>Date</h6>
+                  <b-form-group id="cardDateYear">
                     <b-form-select
                       id="year-input"
                       name="year-input"
@@ -243,7 +213,8 @@
                   </b-form-group></b-col
                 >
                 <b-col cols="6" md="6">
-                  <b-form-group id="cardCVV" label="CVV" label-for="cvv-input">
+                  <h6>CVV</h6>
+                  <b-form-group id="cardCVV">
                     <b-form-input
                       id="cvv-input"
                       name="cvv-input"
@@ -282,7 +253,8 @@
               <strong>{{ cart.length }}</strong>
             </div>
 
-            <label for="">Product Info</label>
+            <h6>Product/s info</h6>
+
             <b-list-group v-if="cart">
               <b-list-group-item
                 v-for="product in cart"

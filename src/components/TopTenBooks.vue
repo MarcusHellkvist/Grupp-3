@@ -11,7 +11,9 @@
           href="#"
         >
           <div class="text-left">
-            <h6>{{ index + 1 }}. {{ product.title }}</h6>
+            <h6>
+              <span class="top-ten">{{ index + 1 }}.</span> {{ product.title }}
+            </h6>
             <small>{{ product.author }}</small>
             <p>Price: ${{ product.price }}</p>
           </div>
@@ -48,5 +50,8 @@ p {
 }
 small {
   margin-top: 0rem;
+}
+.top-ten {
+  color: red;
 }
 </style>
