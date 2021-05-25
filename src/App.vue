@@ -33,8 +33,8 @@ export default {
   min-height: 100vh;
 }
 
-#nav {
-  padding: 30px;
+/* #nav {
+  padding: 0px;
 }
 
 #nav a {
@@ -45,7 +45,7 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
+} */
 
 #main {
   flex-grow: 1;

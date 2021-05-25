@@ -90,4 +90,8 @@ h6 {
   padding: 12px;
   color: black;
 }
+
+span {
+  font-size: 14px;
+}
 </style>
