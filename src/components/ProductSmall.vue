@@ -6,7 +6,7 @@
     img-top
     tag="article"
     style="max-width: 20rem;"
-    class="mb-2"
+    class="mb-2 h-100"
   >
     <b-card-text class="title">
       <b-link :to="{ name: 'Product', params: { productId: book.isbn } }">{{
@@ -17,7 +17,7 @@
       {{ book.author }}
     </b-card-text>
 
-    <b-button @click="buyProduct" size="sm" variant="primary">
+    <b-button class="mt-auto" @click="buyProduct" size="sm" variant="primary">
       $ {{ book.price }}
       <b-icon icon="cart" aria-hidden="true"></b-icon>
     </b-button>
@@ -68,7 +68,7 @@ p.card-text.author {
 }
 button {
   margin: 24px 12px 12px;
-  font-size: 18px;
+  font-size: 14px;
 }
 img {
   padding: 12px 12px 0px;

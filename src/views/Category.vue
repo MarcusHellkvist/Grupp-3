@@ -2,20 +2,25 @@
   <div>
     <h3>{{ formatSlug }}</h3>
     <b-container class="main-container">
-      <b-row>
-        <b-col>
-          <b-card-group deck>
-            <product-small
-              v-for="book in books"
-              :key="book.isbn"
-              @book-to-cart-alert="onBookToCartToast"
-              :isbn="book.isbn"
-              :title="book.title"
-              :author="book.author"
-              :price="book.price"
-              :image="book.image"
-            ></product-small>
-          </b-card-group>
+      <b-row class="align-items-stretch">
+        <b-col
+          cols="12"
+          sm="6"
+          md="4"
+          lg="3"
+          xl="2"
+          class="card-column"
+          v-for="book in books"
+          :key="book.isbn"
+        >
+          <product-small
+            @book-to-cart-alert="onBookToCartToast"
+            :isbn="book.isbn"
+            :title="book.title"
+            :author="book.author"
+            :price="book.price"
+            :image="book.image"
+          ></product-small>
         </b-col>
       </b-row>
     </b-container>
@@ -120,8 +125,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.main-container {
-  border: 1px solid red;
-}
-</style>
+<style></style>
