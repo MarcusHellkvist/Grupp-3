@@ -1,6 +1,45 @@
 <template>
   <div>
-    <b-navbar toggleable="sm" type="light" variant="light">
+    <b-container fluid class="nav-container">
+      <b-row>
+        <b-col class="my-border" cols="2"
+          ><router-link to="/">LOGO</router-link></b-col
+        >
+        <b-col class="my-border" cols="8">
+          <b-row>
+            <b-col cols="12"
+              ><b-form>
+                <b-input-group size="sm" class="mt-2">
+                  <b-form-input
+                    type="search"
+                    placeholder="Find your next adventure"
+                  ></b-form-input>
+                  <b-input-group-append is-text>
+                    <b-icon icon="search"></b-icon>
+                  </b-input-group-append> </b-input-group></b-form
+            ></b-col>
+            <b-col cols="12"
+              ><ul class="nav-link">
+                <li v-for="genre in $store.state.genres" :key="genre.name">
+                  <router-link
+                    :to="{
+                      name: 'Category',
+                      params: { slug: genre.slug },
+                    }"
+                    >{{ genre.name }}</router-link
+                  >
+                </li>
+              </ul></b-col
+            >
+          </b-row>
+        </b-col>
+        <b-col class="mt-2" cols="2"
+          ><router-link to="/cart"
+            ><shopping-cart-button></shopping-cart-button></router-link
+        ></b-col>
+      </b-row>
+    </b-container>
+    <!-- <b-navbar toggleable="sm" type="light" variant="light">
       <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
       <b-navbar-brand><b-link to="/">LOGO</b-link></b-navbar-brand>
       <b-collapse id="nav-text-collapse" is-nav>
@@ -14,13 +53,11 @@
               >{{ genre.name }}</router-link
             >
           </b-nav-item>
-          <!-- ALONA -->
           <b-nav-item
             ><router-link to="/cart"
               ><shopping-cart-button></shopping-cart-button></router-link
           ></b-nav-item>
 
-          <!-- ALONA -->
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-form @submit="onSubmit">
@@ -37,7 +74,7 @@
           </b-nav-form>
         </b-navbar-nav>
       </b-collapse>
-    </b-navbar>
+    </b-navbar> -->
   </div>
 </template>
 
@@ -60,4 +97,40 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.nav-container {
+  background: #403042;
+  text-align: start;
+}
+
+.nav-link {
+  list-style: none;
+}
+
+.nav-link li {
+  display: inline-block;
+  padding: 0px 15px;
+}
+
+.nav-link li a {
+  transition: all 0.3s ease 0s;
+}
+
+.nav-link li a:hover {
+  color: #9cc4b2;
+  text-decoration: none;
+}
+
+ul {
+  padding: 8px 0px;
+  margin: 0;
+}
+
+li,
+a,
+button {
+  font-size: 12px;
+  color: #edf0f1;
+  text-decoration: none;
+}
+</style>

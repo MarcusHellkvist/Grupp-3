@@ -43,7 +43,7 @@
         style="color: #5E807F;"
         icon="cart4"
         class=" position-relative"
-        font-scale="3"
+        font-scale="2"
       ></b-icon>
       <span
         id="cart-check-number"
@@ -61,31 +61,31 @@
 </template>
 
 <script>
-  export default {
-    name: 'ShoppingCartButton',
+export default {
+  name: "ShoppingCartButton",
 
-    created() {
-      console.log('HI 14:41 HI', this.numberOfItems)
-      /*  this.numberOfItems =  */
-    },
-    data() {
-      return {}
-    },
-    /*  props: {
+  created() {
+    console.log("HI 14:41 HI", this.numberOfItems);
+    /*  this.numberOfItems =  */
+  },
+  data() {
+    return {};
+  },
+  /*  props: {
       numberOfItems: {
         type: Number
       }
     }, */
-    computed: {
-      numberOfItems() {
-        return this.$store.state.cart.length
-      }
-    }
-  }
+  computed: {
+    numberOfItems() {
+      return this.$store.state.cart.length;
+    },
+  },
+};
 </script>
 
 <style scoped>
-  /* #goToShoppingCartButton {
+/* #goToShoppingCartButton {
     background-color: green;
     height: 100px;
     width: 200px;
@@ -93,7 +93,7 @@
     font-family: Marker Felt;
     font-size: 30px;
   } */
-  /* #cart {
+/* #cart {
     background-color: grey;
     height: 200px;
     width: 200px;

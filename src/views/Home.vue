@@ -133,10 +133,12 @@
 <script>
 import ProductSmall from "../components/ProductSmall.vue";
 import Carousel from "../components/Carousel.vue";
+
 import TopTenBooks from "../components/TopTenBooks.vue";
 
 export default {
   components: { ProductSmall, Carousel, TopTenBooks },
+
   name: "Home",
   data() {
     return {
