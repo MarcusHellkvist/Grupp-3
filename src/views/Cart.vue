@@ -2,8 +2,8 @@
   <div>
     <h1>Shopping cart</h1>
     <b-container fluid>
-      <b-form-row>
-        <b-col lg="12" md="12" sm="4">
+      <b-row>
+        <b-col cols="12">
           <div v-if="this.$store.state.cart.length === 0">
             <b-card
               title="Your cart is empty"
@@ -36,12 +36,18 @@
                   class="mb-3"
                 >
                   <b-card-text>
-                    <p>{{ product.description }}</p>
-
-                    <div>
+                    <b-container>
                       <b-row>
-                        <b-col
-                          >Antal:
+                        <b-col cols="12">
+                          {{ product.description }}
+                        </b-col>
+                      </b-row>
+
+                      <br />
+
+                      <b-row>
+                        <b-col cols="12" md="6" lg="3"
+                          >Quantity:
                           <b-icon
                             v-if="product.quantity >= 2"
                             variant="Primary"
@@ -56,9 +62,13 @@
                           ></b-icon>
                         </b-col>
 
-                        <b-col>Pris: {{ product.price }}</b-col>
-                        <b-col>Total: {{ product.total }}</b-col>
-                        <b-col>
+                        <b-col cols="12" md="6" lg="3"
+                          >Price: {{ product.price }}</b-col
+                        >
+                        <b-col cols="12" md="6" lg="3"
+                          >Total: {{ product.total }}</b-col
+                        >
+                        <b-col cols="12" md="6" lg="3">
                           <b-icon
                             variant="danger"
                             icon="x-circle"
@@ -66,13 +76,13 @@
                           ></b-icon>
                         </b-col>
                       </b-row>
-                    </div>
+                    </b-container>
                   </b-card-text>
                 </b-card>
               </b-list-group-item>
 
               <b-row align-h="between">
-                <b-col lg="4" md="12" sm="4"
+                <b-col cols="12" md="4" lg="4"
                   ><b-button
                     class="btn btn-primary btn-lg btn-block"
                     variant="primary"
@@ -80,7 +90,7 @@
                     >Continue shopping</b-button
                   ></b-col
                 >
-                <b-col lg="4" md="12" sm="12"
+                <b-col cols="12" md="4" lg="4"
                   ><b-button
                     class="btn btn-primary btn-lg btn-block"
                     variant="primary"
@@ -93,10 +103,11 @@
             </b-list-group>
           </div>
         </b-col>
-      </b-form-row>
+      </b-row>
     </b-container>
   </div>
 </template>
+
 
 <script>
 export default {
