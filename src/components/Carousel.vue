@@ -17,6 +17,7 @@
         <template #img>
           <img class="w-100" width="1024" height="200" :src="product.photo" />
         </template>
+        <button class="btn btn-outline-light" @click="shopNow">SHOP NOW</button>
       </b-carousel-slide>
     </b-carousel>
   </div>
@@ -30,7 +31,11 @@ export default {
       sale: this.$store.state.products,
     };
   },
-  methods: {},
+  methods: {
+    shopNow() {
+      console.log("Shop Now!!");
+    },
+  },
 };
 </script>
 
