@@ -29,12 +29,11 @@ export default {
   data() {
     return {
       book: {
-        isbn: "this.isbn",
-        title: "this.title",
-        author: "this.author",
-        price: "this.price",
-        image:
-          "https://s2.adlibris.com/images/57965498/burn-after-writing-pink.jpg",
+        isbn: this.isbn,
+        title: this.title,
+        author: this.author,
+        price: this.price,
+        image: this.image,
       },
     };
   },
@@ -57,13 +56,13 @@ export default {
 
 <style scoped>
 p.card-text.title {
-  font-size: 18px;
+  font-size: 14px;
   font-weight: bold;
   text-align: start;
   margin: 6px 12px 0px;
 }
 p.card-text.author {
-  font-size: 16px;
+  font-size: 12px;
   text-align: start;
   margin: 0px 12px;
 }

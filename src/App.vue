@@ -1,62 +1,13 @@
 <template>
   <b-container fluid>
     <div id="app">
-      <b-row id="nav">
-        <b-col>
-          <b-navbar toggleable="sm" type="light" variant="light">
-            <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
-            <b-navbar-brand>e-handel</b-navbar-brand>
-            <b-collapse id="nav-text-collapse" is-nav>
-              <b-navbar-nav>
-                <b-nav-item
-                  ><router-link name="cat1" to="/category/1"
-                    >Category 1</router-link
-                  ></b-nav-item
-                >
-                <b-nav-item
-                  ><router-link to="/category/2"
-                    >Category 2</router-link
-                  ></b-nav-item
-                >
-                <b-nav-item
-                  ><router-link to="/category/3"
-                    >Category 3</router-link
-                  ></b-nav-item
-                >
-                <!-- ALONA -->
-                <b-nav-item
-                  ><router-link to="/cart"
-                    ><ShoppingCartButton></ShoppingCartButton></router-link
-                ></b-nav-item>
-
-                <!-- ALONA -->
-              </b-navbar-nav>
-              <b-navbar-nav class="ml-auto">
-                <b-nav-form @submit="onSubmit">
-                  <b-input-group size="sm" class="mb-2">
-                    <b-input-group-prepend is-text>
-                      <b-icon icon="search" variant="dark"></b-icon>
-                    </b-input-group-prepend>
-                    <vue-typeahead-bootstrap
-                      :data="productNames"
-                      v-model="searchQuery"
-                      placeholder="Search Product"
-                    />
-                  </b-input-group>
-                </b-nav-form>
-              </b-navbar-nav>
-            </b-collapse>
-          </b-navbar>
-          <router-link to="/">Homepage</router-link> |
-          <router-link to="/cart">Cart</router-link> |
-          <router-link to="/checkout">Checkout</router-link> |
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col>
-          <router-view />
-        </b-col>
-      </b-row>
+      <div id="nav">
+        <navigation-bar></navigation-bar>
+      </div>
+      <div id="main">
+        <router-view />
+      </div>
+      <div class="footer1"></div>
     </div>
     <!-- footer -->
     <b-row class="news-letter" align-h="center">
@@ -110,43 +61,10 @@
 </template>
 
 <script>
-import ShoppingCartButton from "./components/ShoppingCartButton.vue";
+import NavigationBar from "./components/NavigationBar.vue";
 export default {
   name: "App",
-  components: { ShoppingCartButton },
-
-  created() {
-    this.getLocalData();
-  },
-  data() {
-    return {
-      productNames: [],
-      searchQuery: null,
-    };
-  },
-  methods: {
-    getLocalData() {
-      fetch("products.json")
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data.products[0].name);
-          data.products.forEach((product) => {
-            this.productNames.push(product.id + ", " + product.name);
-          });
-          console.log(this.productNames);
-        });
-    },
-    onSubmit() {
-      console.log(this.searchQuery);
-      var n = this.searchQuery.indexOf(",");
-      var trimmedQuery = this.searchQuery.slice(0, n);
-      this.$router.push({
-        name: "Product",
-        params: { productId: trimmedQuery },
-      });
-      this.searchQuery = "";
-    },
-  },
+  components: { NavigationBar },
 };
 </script>
 

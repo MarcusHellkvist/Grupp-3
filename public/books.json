@@ -41,7 +41,7 @@
       "published": "2018-06-26",
       "stock": 4,
       "rating": 3,
-      "genre": "fantasy and science fiction",
+      "genre": "fantasy-and-science-fiction",
       "language": "english",
       "image": "https://s2.adlibris.com/images/36792113/shadow-and-bone-now-a-netflix-original-series.jpg"
     },
@@ -56,7 +56,7 @@
       "published": "2018-06-26",
       "stock": 8,
       "rating": 3,
-      "genre": "fantasy and science fiction",
+      "genre": "fantasy-and-science-fiction",
       "language": "english",
       "image": "https://s2.adlibris.com/images/36789096/shadow-and-bone-siege-and-storm.jpg"
     },
@@ -71,7 +71,7 @@
       "published": "2018-06-26",
       "stock": 10,
       "rating": 4,
-      "genre": "fantasy and science fiction",
+      "genre": "fantasy-and-science-fiction",
       "language": "english",
       "image": "https://s2.adlibris.com/images/36773547/shadow-and-bone-ruin-and-rising.jpg"
     },
@@ -86,7 +86,7 @@
       "published": "2020-10-01",
       "stock": 46,
       "rating": 2,
-      "genre": "crime and thriller",
+      "genre": "crime-and-thriller",
       "language": "english",
       "image": "https://s2.adlibris.com/images/57965498/burn-after-writing-pink.jpg"
     },
@@ -101,7 +101,7 @@
       "published": "2020-09-03",
       "stock": 17,
       "rating": 4,
-      "genre": "crime and thriller",
+      "genre": "crime-and-thriller",
       "language": "english",
       "image": "https://s1.adlibris.com/images/57447905/thursday-murder-club.jpg"
     },
@@ -161,7 +161,7 @@
       "published": "2020-10-01",
       "stock": 10,
       "rating": 0,
-      "genre": "biographies & memoirs",
+      "genre": "biographies-and-memoirs",
       "language": "english",
       "image": "https://s2.adlibris.com/images/58724496/greenlights.jpg"
     },
@@ -176,7 +176,7 @@
       "published": "2020-02-01",
       "stock": 10,
       "rating": 0,
-      "genre": "biographies & memoirs",
+      "genre": "biographies-and-memoirs",
       "language": "english",
       "image": "https://s1.adlibris.com/images/44323740/the-mamba-mentality.jpg"
     },
@@ -191,7 +191,7 @@
       "published": "2020-11-01",
       "stock": 15,
       "rating": 0,
-      "genre": "biographies & memoirs",
+      "genre": "biographies-and-memoirs",
       "language": "english",
       "image": "https://s1.adlibris.com/images/58890476/a-promised-land.jpg"
     },
@@ -206,7 +206,7 @@
       "published": "2017-11-02",
       "stock": 25,
       "rating": 0,
-      "genre": "biographies & memoirs",
+      "genre": "biographies-and-memoirs",
       "language": "english",
       "image": "https://s1.adlibris.com/images/31988435/mindhunter.jpg"
     },
@@ -221,17 +221,20 @@
       "published": "2017-07-13",
       "stock": 30,
       "rating": 0,
-      "genre": "biographies & memoirs",
+      "genre": "biographies-and-memoirs",
       "language": "english",
       "image": "https://s1.adlibris.com/images/29645029/pablo-escobar-my-father.jpg"
     }
   ],
-  "genre": [
-    "mystery",
-    "fiction",
-    "crime and thriller",
-    "fantasy and science fiction",
-    "romance",
-    "biographies & memoirs"
+  "genres": [
+    { "name": "Mystery", "slug": "mystery" },
+    { "name": "Fiction", "slug": "fiction" },
+    { "name": "Crime and Thriller", "slug": "crime-and-thriller" },
+    {
+      "name": "Fantasy and Science Fiction",
+      "slug": "fantasy-and-science-fiction"
+    },
+    { "name": "Romance", "slug": "romance" },
+    { "name": "Biographies and Memoirs", "slug": "biographies-and-memoirs" }
   ]
 }

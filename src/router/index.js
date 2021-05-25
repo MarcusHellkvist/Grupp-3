@@ -4,7 +4,7 @@ import Home from "../views/Home.vue";
 import Cart from "../views/Cart.vue";
 import Checkout from "../views/Checkout.vue";
 import Product from "../views/Product.vue";
-import Category from "../views/Category.vue"
+import Category from "../views/Category.vue";
 
 Vue.use(VueRouter);
 
@@ -15,7 +15,7 @@ const routes = [
     component: Home,
   },
   {
-    path: "/category/:categoryId",
+    path: "/category/:slug",
     name: "Category",
     component: Category,
   },

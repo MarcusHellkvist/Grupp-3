@@ -1,7 +1,26 @@
 <template>
   <div>
-    <div class="container" v-if="this.$route.params.categoryId">
-      <h2>--- KATEGORI {{ $route.params.categoryId }} ---</h2>
+    <h3>{{ formatSlug }}</h3>
+    <b-container class="main-container">
+      <b-row>
+        <b-col>
+          <b-card-group deck>
+            <product-small
+              v-for="book in books"
+              :key="book.isbn"
+              @book-to-cart-alert="onBookToCartToast"
+              :isbn="book.isbn"
+              :title="book.title"
+              :author="book.author"
+              :price="book.price"
+              :image="book.image"
+            ></product-small>
+          </b-card-group>
+        </b-col>
+      </b-row>
+    </b-container>
+
+    <div class="container" v-if="this.$route.params.slug">
       <div class="row">
         <b-row>
           <div class="col" v-for="filtered in filteredArray" :key="filtered.id">
@@ -30,66 +49,79 @@
 </template>
 
 <script>
-  import ProductSmall from '../components/ProductSmall.vue'
-  export default {
-    components: { ProductSmall },
+import ProductSmall from "../components/ProductSmall.vue";
+export default {
+  components: { ProductSmall },
 
-    created() {
-      this.filterArray()
+  created() {},
+  data() {
+    return {
+      filteredArray: [],
+      perPage: 4,
+      currentPageFiltered: 1,
+      defaultImage: this.$store.state.defaultImage,
+    };
+  },
+  computed: {
+    // products() {
+    //   return this.$store.state.products;
+    // },
+    books() {
+      console.log(this.$route.params.slug);
+      const books = [];
+      this.$store.state.books.forEach((element) => {
+        if (this.$route.params.slug === element.genre) {
+          books.push(element);
+        }
+      });
+      return books;
     },
-    data() {
-      return {
-        filteredArray: [],
-        perPage: 4,
-        currentPageFiltered: 1,
-        defaultImage: this.$store.state.defaultImage
-      }
+    formatSlug() {
+      const header = this.$route.params.slug;
+      const temp = header.charAt(0).toUpperCase() + header.slice(1);
+      return temp.replaceAll("-", " ");
     },
-    computed: {
-      products() {
-        return this.$store.state.products
-      },
-      /* Slice the filtered array to work with the pagination */
-      sliceFilteredArray() {
-        return this.filteredArray.slice(
-          (this.currentPageFiltered - 1) * this.perPage,
-          this.currentPageFiltered * this.perPage
-        )
-      },
-      filterRows() {
-        return this.filteredArray.length
-      }
-    },
+    //this.$route.params.slug
 
-    methods: {
-      /* Filter all products by their CategoryId */
+    /* Slice the filtered array to work with the pagination */
+    // sliceFilteredArray() {
+    //   return this.filteredArray.slice(
+    //     (this.currentPageFiltered - 1) * this.perPage,
+    //     this.currentPageFiltered * this.perPage
+    //   );
+    // },
+    // filterRows() {
+    //   return this.filteredArray.length;
+    // },
+  },
 
-      filterArray() {
-        for (
-          let index = 0;
-          index < this.$store.state.products.length;
-          index++
+  methods: {
+    filterArray() {
+      for (let index = 0; index < this.$store.state.products.length; index++) {
+        if (
+          JSON.stringify(this.$store.state.products[index].category) ===
+          this.$route.params.categoryId
         ) {
-          if (
-            JSON.stringify(this.$store.state.products[index].category) ===
-            this.$route.params.categoryId
-          ) {
-            this.filteredArray.push(this.$store.state.products[index])
-          }
+          this.filteredArray.push(this.$store.state.products[index]);
         }
       }
     },
-    watch: {
-      /* Empty the filtered array and once again filter by CategoryId and set the currentPage to 1 in the pagination when route is changed. */
-      $route(to, from) {
-        if (to !== from) {
-          this.filteredArray = []
-          this.filterArray()
-          this.currentPageFiltered = 1
-        }
-      }
-    }
-  }
+    onBookToCartToast(book) {
+      this.$bvToast.toast(`${book.title} was added to your cart`, {
+        title: "Success",
+        autoHideDelay: 2000,
+        appendToast: true,
+        variant: "success",
+        solid: true,
+        toaster: "b-toaster-top-center",
+      });
+    },
+  },
+};
 </script>
 
-<style></style>
+<style scoped>
+.main-container {
+  border: 1px solid red;
+}
+</style>
