@@ -28,8 +28,13 @@ export default {
   data() {
     return {
       slide: 0,
-      sale: this.$store.state.books,
+      //sale: this.$store.state.books,
     };
+  },
+  computed: {
+    sale() {
+      return this.$store.state.books;
+    },
   },
   methods: {
     shopNow() {

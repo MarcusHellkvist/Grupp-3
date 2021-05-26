@@ -5,7 +5,7 @@
         <h4 class="text-left">Top 10</h4>
 
         <b-list-group-item
-          v-for="(product, index) in topTen"
+          v-for="(product, index) in topTen.slice(0, 10)"
           :key="index"
           class="d-flex justify-content-between"
           :to="{ name: 'Product', params: { isbn: product.isbn } }"
@@ -45,20 +45,18 @@ export default {
       books: this.$store.state.books,
     };
   },
-  created() {
-    this.topTenRating();
-  },
+
   computed: {
     topTen() {
-      return this.$store.state.books.slice(0, 10);
+      this.topTenRating();
+      return this.$store.state.books;
     },
   },
   methods: {
     topTenRating() {
-      this.books.sort(function(a, b) {
+      this.$store.state.books.sort(function(a, b) {
         return b.rating - a.rating;
       });
-      console.log(this.books);
     },
   },
 };
