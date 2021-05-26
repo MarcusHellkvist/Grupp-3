@@ -266,11 +266,16 @@ max-height:150px
               </b-button>
             </b-col>
             <b-col
-              class=""
+              class="mt-2"
               style=" font-weight: bold; font-size: 80%; letter-spacing: -1px;  text-align:right; "
               cols="5"
               md="5"
-            >
+              ><b-icon
+                style="color: black; text-align: left;  "
+                icon="truck "
+                class=" position-relative"
+                font-scale="2"
+              ></b-icon>
               Delivery within 1-2 days with PREMIUM delivery
             </b-col>
           </b-row>
