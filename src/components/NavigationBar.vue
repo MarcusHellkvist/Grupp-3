@@ -9,15 +9,17 @@
           <b-row>
             <b-col cols="12"
               ><b-form @submit="onSubmit">
-                <b-input-group size="sm" class="mt-2">
-                  <vue-typeahead-bootstrap
-                    :data="bookNames"
-                    v-model="searchQuery"
-                    placeholder="Find your next adventure"
-                  />
-                  <b-input-group-append is-text>
-                    <b-icon icon="search"></b-icon>
-                  </b-input-group-append> </b-input-group></b-form
+                <vue-typeahead-bootstrap
+                  class="mt-2"
+                  :data="bookNames"
+                  v-model="searchQuery"
+                  placeholder="Find your next adventure"
+                >
+                  <template slot="append">
+                    <button class="btn btn-secondary">
+                      <b-icon icon="search" />
+                    </button>
+                  </template> </vue-typeahead-bootstrap></b-form
             ></b-col>
             <b-col cols="12"
               ><ul class="nav-link">
@@ -34,7 +36,7 @@
             >
           </b-row>
         </b-col>
-        <b-col class="mt-2" cols="2"
+        <b-col class="mt-2 text-right" cols="2"
           ><router-link to="/cart"
             ><shopping-cart-button></shopping-cart-button></router-link
         ></b-col>
