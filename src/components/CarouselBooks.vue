@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-carousel ref="carouselbook" v-model="slide">
+    <b-carousel ref="carouselbook" controls indicators v-model="slide">
       <b-carousel-slide
         img-blank
         v-for="product in sale.slice(0, 4)"
