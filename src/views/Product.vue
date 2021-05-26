@@ -202,13 +202,14 @@ max-height:150px
     </b-container> -->
 
     <b-container class="mt-4">
-      <b-row no-gutters style="background-color: white;" class="">
-        <b-col cols="12" md="6" class="" style=" background-color: yellow;">
-          <img style="width: 100%;" :src="image" alt="" />
+      <b-row no-gutters style="background-color: white;  " class="">
+        <b-col cols="12" md="3" class="" style=" ">
+          <img style="width: 95%;   " :src="image" alt="BOOK PHOTO" />
         </b-col>
         <b-col>
           <b-row>
             <b-col
+              class="ml-4"
               cols="12"
               md="12"
               style="text-align: left; font-size: 180%; letter-spacing: -1px;  font-weight: bold;
@@ -216,12 +217,14 @@ max-height:150px
               >{{ title }}
             </b-col>
 
-            <b-col style=" text-align: left;" cols="12" md="12">
+            <b-col id="authorStyle" class="ml-4" cols="12" md="12">
               Author: {{ author }}
-              <hr
-            /></b-col>
+              <!-- <hr
+            /> --></b-col
+            >
 
             <b-col
+              class="ml-4"
               style="font-weight: bold; font-size: 180%; letter-spacing: -1px;  font-weight: bold; text-align: left; "
               cols="6"
               md="6"
@@ -246,11 +249,38 @@ max-height:150px
             </b-col>
           </b-row>
           <hr />
-          <b-col cols="12" md="12" style="font-weight: bold;"
+
+          <b-row>
+            <b-col style=" text-align: left;" class="ml-4" cols="6" md="6">
+              <b-button
+                style=" background-color:white;  font-weight: bold;  word-spacing: -2px;"
+                @click="onClick"
+              >
+                <b-icon
+                  style="color: black; text-align: left;  "
+                  icon="suit-heart"
+                  class=" position-relative"
+                  font-scale="2"
+                ></b-icon>
+                Add to wishlist
+              </b-button>
+            </b-col>
+            <b-col
+              class=""
+              style=" font-weight: bold; font-size: 80%; letter-spacing: -1px;  text-align:right; "
+              cols="5"
+              md="5"
+            >
+              Delivery within 1-2 days with PREMIUM delivery
+            </b-col>
+          </b-row>
+          <b-col id="descriptionStyle" class="mt-2 " cols="12" md="12"
             >Description
           </b-col>
-          <hr />
-          <b-col cols="12" md="12"> {{ plot }}</b-col>
+
+          <b-col id="plotStyle" class="mb-4" cols="12" md="12">
+            {{ plot }}</b-col
+          >
         </b-col>
       </b-row>
     </b-container>
@@ -276,31 +306,43 @@ max-height:150px
         language: '',
         title: '',
         published: '',
-        productsArr: this.$store.state.books,
-        isbn: this.$route.params.isbn,
-        /* isbn: '9781785035142', */
 
+        isbn: this.$route.params.isbn,
+        /* productsArr: this.$store.state.books, */
+        productsArr: [],
         oneObject: {}
-        /* numberOfItemsInCart: 0 */
       }
     },
+    /* computed: {
+      id() {
+        return this.$route.params.isbn
+      }
+    }, */
     created() {
       this.fetchLocalData()
+
+      console.log('CREATED LOOK FOR ARRAY', this.productsArr)
+      /* this.fetchLocalData() */
       /*  this.numberOfItemsInCart = this.$store.state.cart.length */
     },
     methods: {
       fetchLocalData() {
-        /*  fetch('books.json')
+        fetch('books.json')
           .then((response) => response.json())
           .then((data) => {
-            this.productsArr = data.products
-            
-            console.log('hi ffffffff', this.productsArr) */
-        this.pickRightObject()
-        this.giveVAlueToObject()
-        /* }) */
+            this.productsArr = data.books
+
+            console.log('hi ffffffff', this.productsArr)
+
+            console.log('METHOD', this.isbn)
+            this.pickRightObject()
+            this.giveVAlueToObject()
+          })
       },
       pickRightObject() {
+        /* this.productsArr = this.rows */
+        /* this.productsArr = this.$store.state.books */
+
         for (let i = 0; i < this.productsArr.length; i++) {
           if (this.productsArr[i].isbn === this.isbn) {
             /* this.oneObject = this.productsArr[i] */
@@ -317,16 +359,19 @@ max-height:150px
             console.log('MY OBJECT', this.oneObject)
           }
         }
+        return this.oneObject
       },
       giveVAlueToObject() {
         this.title = this.oneObject.title
         this.image = this.oneObject.image
+        /* this.isbn = this.oneObject.isbn */
         this.price = this.oneObject.price
         this.author = this.oneObject.author
         this.plot = this.oneObject.plot
       },
       onClick() {
         this.$store.commit('addToCart', this.oneObject)
+
         /* this.$store.state.cart.length++ */
         /* console.log(this.numberOfItemsInCart) */
       }
@@ -334,8 +379,11 @@ max-height:150px
     watch: {
       '$route.params.isbn'(to, from) {
         console.log(`params changed - to: ${to} from:${from}`)
+
         this.isbn = to
         this.fetchLocalData()
+
+        console.log('IN WATCH ', this.isbn)
 
         // Fixa så det fungerar i realtid, just nu måste man uppdatera hemsidan manuellt för att ändringar ska ske.
       }
@@ -344,6 +392,25 @@ max-height:150px
 </script>
 
 <style scoped>
+  #plotStyle {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #dbd9d8;
+  }
+  #authorStyle {
+    text-align: left;
+    border-width: 1px;
+    border-color: #dbd9d8;
+    border-bottom-style: solid;
+  }
+  #descriptionStyle {
+    font-weight: bold;
+    border-width: 1px;
+    border-color: #dbd9d8;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+  }
   #nameForSite {
     color: white;
     font-size: 250%;

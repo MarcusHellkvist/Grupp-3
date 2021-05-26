@@ -6,8 +6,8 @@ $body-color: seashell;
 
 //  theme colors
 $theme-colors: (
-  "primary": #403042,
-  "secondary": #9cc4b2,
+  'primary': #403042,
+  'secondary': #9cc4b2
 );
 
 /* #goToShoppingCartButton {
@@ -22,16 +22,17 @@ $theme-colors: (
 #price {
   color: black;
   font-size: 30px;
-  font-family: "Marker Felt";
+  font-family: 'Marker Felt';
 }
 
 #addToShopingCart {
-  background-color: blueviolet;
+  color: white;
+  background-color: #403042;
 }
 
 // Sass imports (The variables need to be set prior to importing)
-@import "~bootstrap";
-@import "~bootstrap-vue";
+@import '~bootstrap';
+@import '~bootstrap-vue';
 
 // Unset default Vue CLI foreground color set in App.vue, to prevent override of
 // the color set in $body-color
