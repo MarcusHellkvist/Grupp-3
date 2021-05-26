@@ -101,6 +101,7 @@ export default {
     onSubmit() {
       var isbn = this.getIsbnFromTitle(this.searchQuery);
       this.$router.push({ name: "Product", params: { isbn: isbn } });
+      this.searchQuery = "";
     },
     getIsbnFromTitle(title) {
       var isbn = "";
