@@ -1,53 +1,44 @@
 <template>
   <div>
-    <div>
-      <b-carousel
-        ref="carousel"
-        v-model="slide"
-        img-width="1024"
-        img-height="400"
+    <b-carousel ref="carouselbook" v-model="slide">
+      <b-carousel-slide
+        img-blank
+        v-for="product in sale.slice(0, 4)"
+        :key="product.isbn"
       >
-        <b-carousel-slide img-blank v-for="product in 4" :key="product.isbn">
-          <div>
-            <b-row>
-              <b-col lg="3" v-for="book in sale" :key="book.isbn">
-                <product-small
-                  :key="book.isbn"
-                  :isbn="book.isbn"
-                  :title="book.title"
-                  :author="book.author"
-                  :price="book.price"
-                  :image="book.image"
-                ></product-small>
-              </b-col>
-            </b-row>
-          </div>
-        </b-carousel-slide>
+        <b-row>
+          <b-col lg="3" v-for="book in sale.slice(0, 4)" :key="book.isbn">
+            <product-small
+              :key="book.isbn"
+              :isbn="book.isbn"
+              :title="book.title"
+              :author="book.author"
+              :price="book.price"
+              :image="book.image"
+            ></product-small>
+          </b-col>
+        </b-row>
+      </b-carousel-slide>
 
-        <a
-          class="carousel-control-prev"
-          href="#carousel"
-          role="button"
-          @click="prev"
-          data-slide="prev"
-        >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a
-          class="carousel-control-next"
-          href="#carousel"
-          role="button"
-          @click="next"
-          data-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </b-carousel>
-    </div>
-
-    <!-- test -->
+      <a
+        class="carousel-control-prev"
+        href="#carouselbook"
+        role="button"
+        @click="prev"
+        data-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      </a>
+      <a
+        class="carousel-control-next"
+        href="#carouselbook"
+        role="button"
+        @click="next"
+        data-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      </a>
+    </b-carousel>
   </div>
 </template>
 
@@ -66,19 +57,19 @@ export default {
   },
   computed: {
     sale() {
-      return this.books.slice(0, 4);
+      return this.books;
     },
   },
   methods: {
     prev() {
-      this.$refs.carousel.prev();
+      this.$refs.carouselbook.prev();
 
       for (var x = 0; x < 4; x++) {
         this.array_move(this.books, this.books.length - 1, 0);
       }
     },
     next() {
-      this.$refs.carousel.next();
+      this.$refs.carouselbook.next();
       for (var x = 0; x < 4; x++) {
         this.array_move(this.books, 0, this.books.length - 1);
       }
@@ -92,11 +83,7 @@ export default {
       }
       arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
 
-      return arr; // for testing
-    },
-
-    shopNow() {
-      console.log("Shop Now!!");
+      return arr;
     },
 
     localBooks() {
