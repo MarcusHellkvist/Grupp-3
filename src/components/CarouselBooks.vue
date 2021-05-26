@@ -57,6 +57,7 @@ export default {
   },
   computed: {
     sale() {
+      this.localBooks();
       return this.books;
     },
   },
