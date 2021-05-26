@@ -8,12 +8,13 @@
         <b-col class="my-border" cols="8">
           <b-row>
             <b-col cols="12"
-              ><b-form>
+              ><b-form @submit="onSubmit">
                 <b-input-group size="sm" class="mt-2">
-                  <b-form-input
-                    type="search"
+                  <vue-typeahead-bootstrap
+                    :data="bookNames"
+                    v-model="searchQuery"
                     placeholder="Find your next adventure"
-                  ></b-form-input>
+                  />
                   <b-input-group-append is-text>
                     <b-icon icon="search"></b-icon>
                   </b-input-group-append> </b-input-group></b-form
@@ -82,16 +83,33 @@
 import ShoppingCartButton from "./ShoppingCartButton.vue";
 export default {
   components: { ShoppingCartButton },
+  computed: {
+    bookNames() {
+      const bookNames = [];
+      this.$store.state.books.forEach((element) => {
+        bookNames.push(element.title);
+      });
+      return bookNames;
+    },
+  },
   data() {
     return {
-      arrayOfGenres: [],
-      productNames: [],
       searchQuery: null,
     };
   },
   methods: {
     onSubmit() {
-      console.log("hej hej");
+      var isbn = this.getIsbnFromTitle(this.searchQuery);
+      this.$router.push({ name: "Product", params: { isbn: isbn } });
+    },
+    getIsbnFromTitle(title) {
+      var isbn = "";
+      this.$store.state.books.forEach((element) => {
+        if (title === element.title) {
+          isbn = element.isbn;
+        }
+      });
+      return isbn;
     },
   },
 };
