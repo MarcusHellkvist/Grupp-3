@@ -201,7 +201,7 @@ max-height:150px
       <b-row class="d-flex flex-row-reverse bd-highlight"> </b-row>
     </b-container> -->
 
-    <b-container>
+    <b-container class="mt-4">
       <b-row no-gutters style="background-color: white;" class="">
         <b-col cols="12" md="6" class="" style=" background-color: yellow;">
           <img style="width: 100%;" :src="image" alt="" />
@@ -225,15 +225,18 @@ max-height:150px
               style="font-weight: bold; font-size: 180%; letter-spacing: -1px;  font-weight: bold; text-align: left; "
               cols="6"
               md="6"
-              >Price: {{ price }}
+              >Price: {{ price }}$
             </b-col>
-            <b-col style=" " cols="6" md="6"
+            <b-col class="" cols="5" md="5"
               ><div class=" text-right">
-                <b-button id="addToShopingCart" @click="onClick"
+                <b-button
+                  style="font-weight: bold; text-align: left; word-spacing: -2px;"
+                  id="addToShopingCart"
+                  @click="onClick"
                   >ADD TO CART
                   <b-icon
                     id="icon-cart-check"
-                    style="color: white; "
+                    style="color: white;  "
                     icon="cart4"
                     class=" position-relative"
                     font-scale="2"
@@ -274,8 +277,8 @@ max-height:150px
         title: '',
         published: '',
         productsArr: this.$store.state.books,
-        /*  isbn: this.$route.params.isbn, */
-        isbn: '9781785035142',
+        isbn: this.$route.params.isbn,
+        /* isbn: '9781785035142', */
 
         oneObject: {}
         /* numberOfItemsInCart: 0 */
@@ -329,7 +332,7 @@ max-height:150px
       }
     },
     watch: {
-      '$route.params.productId'(to, from) {
+      '$route.params.isbn'(to, from) {
         console.log(`params changed - to: ${to} from:${from}`)
         this.isbn = to
         this.fetchLocalData()

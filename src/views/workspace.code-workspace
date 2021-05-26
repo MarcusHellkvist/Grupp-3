@@ -1,0 +1,16 @@
+{
+  "folders": [
+	{
+		"path": "../.."
+	},
+	{
+		"path": "../../../project-to-try"
+	},
+	{
+		"path": "../../../new-labb-4"
+	}
+],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "Grupp-3"
+  }
+}
