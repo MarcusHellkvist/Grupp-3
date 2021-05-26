@@ -23,12 +23,12 @@
             <b-list-group>
               <b-list-group-item
                 v-for="product in this.$store.state.cart"
-                :key="product.photo"
+                :key="product.isbn"
               >
                 <b-card
-                  :productId="product.productId"
-                  :title="product.name"
-                  :img-src="product.productImage"
+                  :productId="product.isbn"
+                  :title="product.title"
+                  :img-src="product.image"
                   img-alt="Card image"
                   img-left
                   img-height="150"
@@ -37,13 +37,13 @@
                 >
                   <b-card-text>
                     <b-container>
-                      <b-row>
+                      <!-- <b-row>
                         <b-col cols="12">
-                          {{ product.description }}
+                          {{ product.plot }}
                         </b-col>
                       </b-row>
 
-                      <br />
+                      <br /> -->
 
                       <b-row>
                         <b-col cols="12" md="6" lg="3"
@@ -52,13 +52,13 @@
                             v-if="product.quantity >= 2"
                             variant="Primary"
                             icon="file-minus"
-                            @click="quantityMinus(product.productId)"
+                            @click="quantityMinus(product.isbn)"
                           ></b-icon>
                           {{ product.quantity }}
                           <b-icon
                             variant="Primary"
                             icon="file-plus"
-                            @click="quantityPlus(product.productId)"
+                            @click="quantityPlus(product.isbn)"
                           ></b-icon>
                         </b-col>
 
@@ -72,7 +72,7 @@
                           <b-icon
                             variant="danger"
                             icon="x-circle"
-                            @click="deleteProduct(product.productId)"
+                            @click="deleteProduct(product.isbn)"
                           ></b-icon>
                         </b-col>
                       </b-row>

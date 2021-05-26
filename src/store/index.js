@@ -32,7 +32,7 @@ export default new Vuex.Store({
 
     deleteProduct(state, id) {
       for (let i = 0; i < state.cart.length; i++) {
-        if (state.cart[i].productId === id) {
+        if (state.cart[i].isbn === id) {
           state.cart.splice(i, 1);
           console.log("item deleted!" + id);
 
@@ -43,7 +43,7 @@ export default new Vuex.Store({
 
     addToCart(state, product) {
       for (let i = 0; i < state.cart.length; i++) {
-        if (state.cart[i].productId === product.productId) {
+        if (state.cart[i].isbn === product.isbn) {
           state.cart[i].quantity += 1;
           state.cart[i].total = state.cart[i].price * state.cart[i].quantity;
           console.log("denna produkt ligger redan i varukorgen");
@@ -58,7 +58,7 @@ export default new Vuex.Store({
 
     quantityPlus(state, id) {
       for (let i = 0; i < state.cart.length; i++) {
-        if (state.cart[i].productId === id) {
+        if (state.cart[i].isbn === id) {
           Vue.set(state.cart, i, {
             ...state.cart[i],
             quantity: (state.cart[i].quantity += 1),
@@ -70,7 +70,7 @@ export default new Vuex.Store({
 
     quantityMinus(state, id) {
       for (let i = 0; i < state.cart.length; i++) {
-        if (state.cart[i].productId === id) {
+        if (state.cart[i].isbn === id) {
           state.cart[i].quantity -= 1;
           state.cart[i].total = state.cart[i].price * state.cart[i].quantity;
         }
