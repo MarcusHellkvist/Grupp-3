@@ -59,64 +59,7 @@
             <b-row>
               <b-col style="border: 2px solid">
                 2 carousel col-9
-                <div class="container">
-                  <b-carousel
-                    id="carousel-1"
-                    v-model="slide"
-                    :interval="400000"
-                    controls
-                    indicators
-                    background="#ababab"
-                    style="text-shadow: 1px 1px 2px #333;"
-                    @sliding-start="onSlideStart"
-                    @sliding-end="onSlideEnd"
-                  >
-                    <!-- Text slides with image -->
-                    <b-carousel-slide img-blank>
-                      <div class="container">
-                        <div class="row">
-                          <div
-                            class="col"
-                            v-for="book in showProducts"
-                            :key="book.isbn"
-                          >
-                            <product-small
-                              :key="book.isbn"
-                              @book-to-cart-alert="onBookToCartToast"
-                              :isbn="book.isbn"
-                              :title="book.title"
-                              :author="book.author"
-                              :price="book.price"
-                              :image="book.image"
-                            ></product-small>
-                          </div>
-                        </div>
-                      </div>
-                    </b-carousel-slide>
-                    <b-carousel-slide img-blank>
-                      <div class="container">
-                        <div class="row">
-                          <div
-                            class="col"
-                            v-for="product in showProducts"
-                            :key="product.id"
-                          >
-                            <product-small
-                              v-for="book in books"
-                              :key="book.isbn"
-                              @book-to-cart-alert="onBookToCartToast"
-                              :isbn="book.isbn"
-                              :title="book.title"
-                              :author="book.author"
-                              :price="book.price"
-                              :image="book.image"
-                            ></product-small>
-                          </div>
-                        </div>
-                      </div>
-                    </b-carousel-slide>
-                  </b-carousel>
-                </div>
+                <carousel-books></carousel-books>
               </b-col>
             </b-row>
           </b-col>
@@ -135,9 +78,10 @@ import ProductSmall from "../components/ProductSmall.vue";
 import Carousel from "../components/Carousel.vue";
 
 import TopTenBooks from "../components/TopTenBooks.vue";
+import CarouselBooks from "../components/CarouselBooks";
 
 export default {
-  components: { ProductSmall, Carousel, TopTenBooks },
+  components: { ProductSmall, Carousel, TopTenBooks, CarouselBooks },
 
   name: "Home",
   data() {

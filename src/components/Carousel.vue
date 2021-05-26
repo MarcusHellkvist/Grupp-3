@@ -17,6 +17,7 @@
         <template #img>
           <img class="w-100" width="1024" height="200" :src="product.image" />
         </template>
+
         <button class="btn btn-outline-light" @click="shopNow">SHOP NOW</button>
       </b-carousel-slide>
     </b-carousel>
@@ -28,9 +29,10 @@ export default {
   data() {
     return {
       slide: 0,
-      //sale: this.$store.state.books,
+      books: [],
     };
   },
+  created() {},
   computed: {
     sale() {
       return this.$store.state.books;

@@ -29,7 +29,7 @@
 
           <div>
             <div>
-              <img :src="product.image" width="50" height="80" />
+              <img :src="product.image" width="70" height="100" />
             </div>
           </div>
         </b-list-group-item>
