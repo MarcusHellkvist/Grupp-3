@@ -20,7 +20,7 @@
                 <div class="container">
                   <div class="row">
                     <div
-                      class="col-lg col-md-4 col-sm-6"
+                      class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
                       v-for="book in allProducts"
                       :key="book.isbn"
                     >
@@ -48,6 +48,7 @@
                 </div>
               </b-col>
             </b-row>
+            <carousel-trending></carousel-trending>
             <b-row>
               <b-col style="border: 2px solid">
                 2 carousel col-9
@@ -66,73 +67,106 @@
 </template>
 
 <script>
-import ProductSmall from "../components/ProductSmall.vue";
-import Carousel from "../components/Carousel.vue";
-
-import TopTenBooks from "../components/TopTenBooks.vue";
-import CarouselBooks from "../components/CarouselBooks";
-
-export default {
-  components: { ProductSmall, Carousel, TopTenBooks, CarouselBooks },
-
-  name: "Home",
-  data() {
-    return {
-      data: this.$store.state.books,
-      slide: 0,
-      sliding: null,
-      books: this.$store.state.books, // all product "use to sort Price"
-      perPage: 7,
-      currentPage: 1,
-      defaultImage: this.$store.state.defaultImage,
-      value: 4,
-      startValue: 0,
-      topTenBooks: [],
-    };
-  },
-  computed: {
-    rows() {
-      return this.$store.state.books.length;
+  import ProductSmall from '../components/ProductSmall.vue'
+  import Carousel from '../components/Carousel.vue'
+  import TopTenBooks from '../components/TopTenBooks.vue'
+  import CarouselBooks from '../components/CarouselBooks'
+  import CarouselTrending from '../components/CarouselTrending'
+  export default {
+    components: {
+      ProductSmall,
+      Carousel,
+      TopTenBooks,
+      CarouselBooks,
+      CarouselTrending
     },
-    allProducts() {
-      return this.$store.state.books.slice(
-        (this.currentPage - 1) * this.perPage,
-        this.currentPage * this.perPage
-      );
-    },
-    showProducts() {
-      return this.$store.state.books.slice(this.startValue, this.value);
-    },
-  },
-  methods: {
-    onSlideStart() {
-      this.sliding = true;
-      this.startValue += 4;
-      this.value += 4;
-      if (this.value > this.$store.state.books.length) {
-        this.startValue = 0;
-        this.value = 4;
+
+    name: 'Home',
+    data() {
+      return {
+        slide: 0,
+        sliding: null,
+        books: this.$store.state.books, // all product "use to sort Price"
+        perPage: 7,
+        currentPage: 1,
+        defaultImage: this.$store.state.defaultImage,
+        topTenBooks: []
       }
     },
-    onSlideEnd() {
-      this.sliding = false;
-    },
+    created() {},
+    computed: {
+      rows() {
+        return this.$store.state.books.length
+      },
+      /* For pagination */
+      allProducts() {
+        return this.$store.state.books.slice(
+          (this.currentPage - 1) * this.perPage,
+          this.currentPage * this.perPage
+        )
+      },
+      methods: {
+        onSlideStart() {
+          this.sliceStartValue += 4
+          this.sliceEndValue += 4
+          this.sliding = true
+          if (this.sliceStartValue > 4) {
+            this.sliceStartValue = 0
+            this.sliceEndValue = 4
+          }
+        },
+        onSlideEnd() {
+          this.sliding = false
+        },
+        maxPrice() {
+          this.books.sort(function(a, b) {
+            return b.price - a.price
+          })
+          console.log(this.books)
+        },
+        minPrice() {
+          this.books.sort(function(a, b) {
+            return a.price - b.price
+          })
+          console.log(this.books)
+        },
 
-    onBookToCartToast(book) {
-      this.$bvToast.toast(`${book.title} was added to your cart`, {
-        title: "Success",
-        autoHideDelay: 2000,
-        appendToast: true,
-        variant: "success",
-        solid: true,
-        toaster: "b-toaster-top-center",
-      });
-    },
-  },
-};
+        onBookToCartToast(book) {
+          this.$bvToast.toast(`${book.title} was added to your cart`, {
+            title: 'Success',
+            autoHideDelay: 2000,
+            appendToast: true,
+            variant: 'success',
+            solid: true,
+            toaster: 'b-toaster-top-center'
+          })
+        }
+      }
+    }
+  }
 </script>
+
 <style scoped>
-.carousel >>> .carousel-item {
-  height: 450px;
-}
+  .carousel >>> .carousel-item {
+    height: 375px;
+  }
+  .carousel >>> .carousel-indicators li {
+    background-color: #403042;
+  }
+  .carousel >>> .carousel-control-prev-icon {
+    height: 40px;
+    width: 40px;
+    outline: black;
+    background-size: 35%, 35%;
+    border-radius: 50%;
+    background-color: #403042;
+  }
+  .carousel >>> .carousel-control-next-icon {
+    height: 40px;
+    width: 40px;
+    outline: black;
+    background-size: 35%, 35%;
+    border-radius: 50%;
+    background-color: #403042;
+  }
 </style>
