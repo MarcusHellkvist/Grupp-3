@@ -1,13 +1,13 @@
 <template>
   <div>
-    <b-carousel ref="carouselbook" controls indicators v-model="slide">
+    <b-carousel ref="carouselbook" :interval="0" v-model="slide">
       <b-carousel-slide
         img-blank
         v-for="product in sale.slice(0, 4)"
         :key="product.isbn"
       >
         <b-row>
-          <b-col lg="3" v-for="book in sale.slice(0, 4)" :key="book.isbn">
+          <b-col lg="3" v-for="book in books.slice(0, 4)" :key="book.isbn">
             <product-small
               :key="book.isbn"
               :isbn="book.isbn"
@@ -24,21 +24,25 @@
         class="carousel-control-prev"
         href="#carouselbook"
         role="button"
-        @click="prev"
         data-slide="prev"
+        @click="prev"
       >
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
       </a>
       <a
         class="carousel-control-next"
         href="#carouselbook"
         role="button"
-        @click="next"
         data-slide="next"
+        @click="next"
       >
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
       </a>
     </b-carousel>
+    <button class="btn btn-outline-light" @click="next">Next</button>
+    <button class="btn btn-outline-light" @click="prev">Previous</button>
   </div>
 </template>
 
@@ -64,13 +68,14 @@ export default {
   methods: {
     prev() {
       this.$refs.carouselbook.prev();
-
+      console.log("p");
       for (var x = 0; x < 4; x++) {
         this.array_move(this.books, this.books.length - 1, 0);
       }
     },
     next() {
       this.$refs.carouselbook.next();
+      console.log("n");
       for (var x = 0; x < 4; x++) {
         this.array_move(this.books, 0, this.books.length - 1);
       }
