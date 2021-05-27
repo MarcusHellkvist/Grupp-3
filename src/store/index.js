@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    trending: [],
     books: [],
     genres: [],
     products: [],
@@ -28,6 +29,7 @@ export default new Vuex.Store({
       console.log("BOOKS FROM JSON TO STORE");
       state.books = data.books;
       state.genres = data.genres;
+      state.trending = data.books.slice(0,8)
     },
 
     deleteProduct(state, id) {
