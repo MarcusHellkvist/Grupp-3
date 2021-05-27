@@ -71,8 +71,13 @@ export default new Vuex.Store({
     quantityMinus(state, id) {
       for (let i = 0; i < state.cart.length; i++) {
         if (state.cart[i].isbn === id) {
-          state.cart[i].quantity -= 1;
-          state.cart[i].total = state.cart[i].price * state.cart[i].quantity;
+          // state.cart[i].quantity -= 1;
+          // state.cart[i].total = state.cart[i].price * state.cart[i].quantity;
+          Vue.set(state.cart, i, {
+            ...state.cart[i],
+            quantity: (state.cart[i].quantity -= 1),
+            total: state.cart[i].price * state.cart[i].quantity,
+          });
         }
       }
     },
