@@ -5,18 +5,6 @@
     <!-- Carousel -->
     <carousel></carousel>
 
-    <!-- dropdown List -->
-    <div>
-      <b-dropdown text="Sort by">
-        <b-dropdown-item-button @click="maxPrice()"
-          >Max Price</b-dropdown-item-button
-        >
-        <b-dropdown-item-button @click="minPrice()"
-          >Min Price</b-dropdown-item-button
-        >
-      </b-dropdown>
-    </div>
-
     <!-- grid layout  -->
     <div>
       <b-container>
@@ -65,7 +53,7 @@
           </b-col>
           <b-col lg="3" style="border: 2px solid">
             top 10 col-3
-            <top-ten-books></top-ten-books>
+            <top-ten-books :topTenBooks="$store.state.books"></top-ten-books>
           </b-col>
         </b-row>
       </b-container>
@@ -95,6 +83,7 @@ export default {
       defaultImage: this.$store.state.defaultImage,
       value: 4,
       startValue: 0,
+      topTenBooks: [],
     };
   },
   computed: {
@@ -123,18 +112,6 @@ export default {
     },
     onSlideEnd() {
       this.sliding = false;
-    },
-    maxPrice() {
-      this.books.sort(function(a, b) {
-        return b.price - a.price;
-      });
-      console.log(this.books);
-    },
-    minPrice() {
-      this.books.sort(function(a, b) {
-        return a.price - b.price;
-      });
-      console.log(this.books);
     },
 
     onBookToCartToast(book) {

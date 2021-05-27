@@ -9,6 +9,7 @@ export default new Vuex.Store({
     genres: [],
     products: [],
     cart: [],
+    topTenBooks: [],
     defaultImage:
       "http://jbdiamonds.com/media/catalog/new-pp/placeholder/default/no-img-1000.jpg",
   },
@@ -28,6 +29,7 @@ export default new Vuex.Store({
       console.log("BOOKS FROM JSON TO STORE");
       state.books = data.books;
       state.genres = data.genres;
+      state.topTenBooks = data.books.slice(0, 10);
     },
 
     deleteProduct(state, id) {
