@@ -217,7 +217,7 @@ max-height:150px
               >{{ title }}
             </b-col>
 
-            <b-col id="authorStyle" class="ml-4" cols="12" md="12">
+            <b-col id="authorStyle" class="ml-4 mb-4" cols="12" md="12">
               Author: {{ author }}
               <!-- <hr
             /> --></b-col
@@ -248,6 +248,7 @@ max-height:150px
               </div>
             </b-col>
           </b-row>
+
           <hr />
 
           <b-row>
@@ -404,11 +405,18 @@ max-height:150px
     border-width: 1px;
     border-color: #dbd9d8;
   }
-  #authorStyle {
-    text-align: left;
+
+  #priceAndShoppingButtonStyle {
     border-width: 1px;
     border-color: #dbd9d8;
-    border-bottom-style: solid;
+    border-top-style: solid;
+  }
+
+  #authorStyle {
+    text-align: left;
+    /*  border-width: 1px;
+    border-color: #dbd9d8;
+    border-bottom-style: solid; */
   }
   #descriptionStyle {
     font-weight: bold;
@@ -476,11 +484,6 @@ max-height:150px
 
   #shopping-cart {
     padding: 0%;
-    /* box-shadow: rgba(103, 245, 74, 0.425) 10px 5px 10px 10px; */
-  }
-
-  #search {
-    /* margin: 0px, 100px 100px; */
     /* box-shadow: rgba(103, 245, 74, 0.425) 10px 5px 10px 10px; */
   }
 
