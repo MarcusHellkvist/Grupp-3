@@ -202,7 +202,7 @@ max-height:150px
     </b-container> -->
 
     <b-container class="mt-4">
-      <b-row no-gutters style="background-color: white;  " class="">
+      <b-row no-gutters style="background-color: white;  " class=" pr-2">
         <b-col cols="12" md="3" class="" style=" ">
           <img style="width: 95%;   " :src="image" alt="BOOK PHOTO" />
         </b-col>
@@ -315,7 +315,8 @@ max-height:150px
         isbn: this.$route.params.isbn,
         /* productsArr: this.$store.state.books, */
         productsArr: [],
-        oneObject: {}
+        oneObject: {},
+        quantityinCart: 0
       }
     },
     /* computed: {
@@ -376,6 +377,7 @@ max-height:150px
       },
       onClick() {
         this.$store.commit('addToCart', this.oneObject)
+        /* this.$store.commit('quantityInCart') */
 
         /* this.$store.state.cart.length++ */
         /* console.log(this.numberOfItemsInCart) */

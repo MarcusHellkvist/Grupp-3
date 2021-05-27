@@ -1,38 +1,5 @@
 <template>
   <div>
-    <!-- <p>{{ cartLenght }}</p> -->
-
-    <!--  <b-row cols="2" cols-sm="4" class="text-center" style="font-size: 4rem;">
-      <b-col class="py-4 mb-2">
-        <b-icon icon="exclamation-circle" class="bg-info"></b-icon>
-      </b-col>
-    </b-row> -->
-
-    <!--  <b-button
-      id="goToShoppingCartButton"
-      href="#"
-      variant="primary"
-      class="position-relativ"
-      >Shopping cart</b-button
-    > -->
-
-    <!-- div id="goToShoppingCartButton">
-      <b-button><span class="bi bi-cart4"></span></b-button>
-    </div> -->
-
-    <!--  <button type="button" variant="success" class="btn position-relative">
-      <b-icon
-        variant="success"
-        icon="cart-check"
-        class="position-relative"
-        font-scale="6"
-      ></b-icon>
-      <span
-        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"
-        >{{ numberOfItems }}
-      </span>
-    </button> -->
-
     <b-button
       type="button"
       variant="outline-success"
@@ -52,11 +19,6 @@
         >{{ numberOfItems }}
       </span>
     </b-button>
-
-    <!-- <div id="cart">
-      <span class="bi bi-cart4"></span>
-      <span id="number">{{ numberOfItems }}</span>
-    </div> -->
   </div>
 </template>
 
@@ -64,23 +26,37 @@
   export default {
     name: 'ShoppingCartButton',
 
-    created() {
+    /* created() {
       console.log('HI 14:41 HI', this.numberOfItems)
-      /*  this.numberOfItems =  */
-    },
+      
+    }, */
     data() {
-      return {}
+      return {
+        /*  productsArr: this.$store.state.cart,
+        quantityinCart: 0 */
+      }
     },
     /*  props: {
       numberOfItems: {
         type: Number
       }
     }, */
-    computed: {
+
+    /* computed: {
       numberOfItems() {
+        console.log('SHOPPING CART LENGTH', this.$store.state.cart.length)
+        console.log('PRODUCT QUVONTITY', this.$store.state.cart.quantity)
         return this.$store.state.cart.length
       }
-    }
+    } */
+
+    computed: {
+      numberOfItems() {
+        console.log('CAAAAARRTTT', this.$store.state.cart)
+        return this.$store.state.quantityItemsInCart
+      }
+    },
+    methods: {}
   }
 </script>
 
