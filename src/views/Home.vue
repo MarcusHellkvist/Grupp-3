@@ -103,7 +103,8 @@ export default {
         (this.currentPage - 1) * this.perPage,
         this.currentPage * this.perPage
       );
-    },
+    }
+  },
     methods: {
       onSlideStart() {
         this.sliceStartValue += 4;
@@ -141,7 +142,7 @@ export default {
         });
       },
     },
-  },
+  
 };
 </script>
 
