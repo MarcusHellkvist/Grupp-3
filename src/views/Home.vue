@@ -3,7 +3,11 @@
     <h1>Start page - Home</h1>
 
     <!-- Carousel -->
-    <carousel></carousel>
+    <b-container>
+      <b-row>
+        <b-col cols="12"><carousel></carousel></b-col>
+      </b-row>
+    </b-container>
 
     <!-- grid layout  -->
     <div>
