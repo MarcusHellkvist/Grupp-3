@@ -41,20 +41,22 @@
 <script>
 export default {
   data() {
-    return {
-      books: this.$store.state.books,
-    };
+    return {};
+  },
+
+  created() {
+    console.log(this.books);
   },
 
   computed: {
     topTen() {
       this.topTenRating();
-      return this.$store.state.books;
+      return this.$store.state.topTenBooks;
     },
   },
   methods: {
     topTenRating() {
-      this.$store.state.books.sort(function(a, b) {
+      this.$store.state.topTenBooks.sort(function(a, b) {
         return b.rating - a.rating;
       });
     },

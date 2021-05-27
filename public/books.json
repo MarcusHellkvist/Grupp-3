@@ -32,7 +32,7 @@
     },
     {
       "isbn": "9781510105249",
-      "title": "Shadow and Bone: Now a Netflix Original Series",
+      "title": "Shadow and Bone: Netflix Original Series",
       "author": "Leigh Bardugo",
       "price": 87,
       "plot": "Enter the Grishaverse with book one of the Shadow and Bone Trilogy by number one New York Times-bestselling author, Leigh Bardugo. Perfect for fans of Laini Taylor and Sarah J. Maas. Now with a stunning new cover and exclusive bonus material: The Demon in the Wood (a Darkling prequel story) and a Q&A with Leigh Bardugo.",
@@ -224,17 +224,107 @@
       "genre": "biographies-and-memoirs",
       "language": "english",
       "image": "https://s1.adlibris.com/images/29645029/pablo-escobar-my-father.jpg"
+    },
+    {
+      "isbn": "9781471407277",
+      "title": "The Cruel Prince",
+      "author": "Holly Black",
+      "price": 12,
+      "plot": "One terrible morning, Jude and her sisters see their parents murdered in front of them. The terrifying assassin abducts all three girls to the world of Faerie, where Jude is installed in the royal court but mocked and tormented by the Faerie royalty for being mortal. As Jude grows older, she realises that she will need to take part in the dangerous deceptions of the fey to ever truly belong.",
+      "pages": 370,
+      "publisher": "Tiptree Book Service",
+      "published": "2018-07-26",
+      "stock": 22,
+      "rating": 0,
+      "genre": "fantasy-and-science-fiction",
+      "language": "english",
+      "image": "https://s1.adlibris.com/images/41316736/the-cruel-prince.jpg"
+    },
+    {
+      "isbn": "9781840226249",
+      "title": "The Mysterious Island ",
+      "author": "Jules Verne",
+      "price": 5,
+      "plot": "In The Mysterious Island a group of men escape imprisonment during the American Civil War by stealing a balloon. Blown across the world, they are air-wrecked on a remote desert island. In a manner reminiscent of Robinson Crusoe, the men apply their scientific knowledge and technical skill to exploit the island's bountiful resources, eventually constructing a sophisticated society in miniature",
+      "pages": 528,
+      "publisher": "Wordsworth Editions Ltd",
+      "published": "2010-03-01",
+      "stock": 39,
+      "rating": 4,
+      "genre": "fantasy-and-science-fiction",
+      "language": "english",
+      "image": "https://s2.adlibris.com/images/3033327/the-mysterious-island.jpg"
+    },
+    {
+      "isbn": "9780008196608",
+      "title": "Caribbean Mystery",
+      "author": "Agatha Christie",
+      "price": 10,
+      "plot": "An exotic holiday for Miss Marple is ruined when a retired major is killed...",
+      "pages": 240,
+      "publisher": "Harpercollins Publishers",
+      "published": "2016-12-29",
+      "stock": 19,
+      "rating": 4,
+      "genre": "mystery",
+      "language": "english",
+      "image": "https://s2.adlibris.com/images/26409886/caribbean-mystery.jpg"
+    },
+    {
+      "isbn": "9780141036144",
+      "title": "1984",
+      "author": "George Orwell",
+      "price": 9,
+      "plot": "Winston Smith works for the Ministry of Truth in London, chief city of Airstrip One. Big Brother stares out from every poster, the Thought Police uncover every act of betrayal. When Winston finds love with Julia, he discovers that life does not have to be dull and deadening, and awakens to new possibilities",
+      "pages": 336,
+      "publisher": "Penguin Books Ltd.",
+      "published": "2008-07-03",
+      "stock": 18,
+      "rating": 4,
+      "genre": "fantasy-and-science-fiction",
+      "language": "english",
+      "image": "https://s2.adlibris.com/images/1416501/1984.jpg"
+    },
+    {
+      "isbn": "9781529100617",
+      "title": "Project Hail Mary",
+      "author": "Andy Weir",
+      "price": 20,
+      "plot": "Ryland Grace is the sole survivor on a desperate, last-chance mission - and if he fails, humanity and the earth itself will perish.Except that right now, he doesn't know that. He can't even remember his own name, let alone the nature of his assignment or how to complete it.All he knows is that he's been asleep for a very, very long time. And he's just been awakened to find himself millions of miles from home, with nothing but two corpses for company.",
+      "pages": 496,
+      "publisher": "Del Rey",
+      "published": "2021-05-03",
+      "stock": 30,
+      "rating": 4,
+      "genre": "fantasy-and-science-fiction",
+      "language": "english",
+      "image": "https://s1.adlibris.com/images/59748916/project-hail-mary.jpg"
     }
   ],
   "genres": [
-    { "name": "Mystery", "slug": "mystery" },
-    { "name": "Fiction", "slug": "fiction" },
-    { "name": "Crime and Thriller", "slug": "crime-and-thriller" },
+    {
+      "name": "Mystery",
+      "slug": "mystery"
+    },
+    {
+      "name": "Fiction",
+      "slug": "fiction"
+    },
+    {
+      "name": "Crime and Thriller",
+      "slug": "crime-and-thriller"
+    },
     {
       "name": "Fantasy and Science Fiction",
       "slug": "fantasy-and-science-fiction"
     },
-    { "name": "Romance", "slug": "romance" },
-    { "name": "Biographies and Memoirs", "slug": "biographies-and-memoirs" }
+    {
+      "name": "Romance",
+      "slug": "romance"
+    },
+    {
+      "name": "Biographies and Memoirs",
+      "slug": "biographies-and-memoirs"
+    }
   ]
 }

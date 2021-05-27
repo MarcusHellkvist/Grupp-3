@@ -7,7 +7,6 @@
           <div v-if="this.$store.state.cart.length === 0">
             <b-card
               title="Your cart is empty"
-              img-src="https://freepikpsd.com/wp-content/uploads/2019/10/empty-cart-png-Transparent-Images.png"
               img-alt="Card image"
               img-left
               class="mb-3"
@@ -32,7 +31,7 @@
                   img-alt="Card image"
                   img-left
                   img-height="150"
-                  img-width="250"
+                  img-width="100"
                   class="mb-3"
                 >
                   <b-card-text>

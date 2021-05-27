@@ -6,10 +6,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     quantityItemsInCart: 0,
+    trending: [],
+
     books: [],
     genres: [],
     products: [],
     cart: [],
+    topTenBooks: [],
     defaultImage:
       'http://jbdiamonds.com/media/catalog/new-pp/placeholder/default/no-img-1000.jpg'
   },
@@ -29,6 +32,8 @@ export default new Vuex.Store({
       console.log('BOOKS FROM JSON TO STORE')
       state.books = data.books
       state.genres = data.genres
+      state.trending = data.books.slice(0, 8)
+      state.topTenBooks = data.books.slice(0, 10)
     },
 
     deleteProduct(state, id) {
@@ -93,6 +98,14 @@ export default new Vuex.Store({
 
           /* Alona */
           state.cart[i].total = state.cart[i].price * state.cart[i].quantity
+
+          // state.cart[i].quantity -= 1;
+          // state.cart[i].total = state.cart[i].price * state.cart[i].quantity;
+          Vue.set(state.cart, i, {
+            ...state.cart[i],
+            quantity: (state.cart[i].quantity -= 1),
+            total: state.cart[i].price * state.cart[i].quantity
+          })
         }
       }
     },
