@@ -8,17 +8,15 @@
       :interval="10000"
       controls
     >
-      <b-carousel-slide
-        v-for="product in sale"
-        :key="product.id"
-        caption="SALE"
-        text="40% of all books"
-      >
+      <b-carousel-slide>
         <template #img>
-          <img class="w-100" width="1024" height="200" :src="product.image" />
+          <img
+            class="d-block img-fluid w-100"
+            width="1280"
+            height="320"
+            src="../assets/slide-1.png"
+          />
         </template>
-
-        <button class="btn btn-outline-light" @click="shopNow">SHOP NOW</button>
       </b-carousel-slide>
     </b-carousel>
   </div>
@@ -29,20 +27,11 @@ export default {
   data() {
     return {
       slide: 0,
-      books: [],
     };
   },
   created() {},
-  computed: {
-    sale() {
-      return this.$store.state.books;
-    },
-  },
-  methods: {
-    shopNow() {
-      console.log("Shop Now!!");
-    },
-  },
+  computed: {},
+  methods: {},
 };
 </script>
 

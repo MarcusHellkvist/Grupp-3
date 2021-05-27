@@ -3,19 +3,11 @@
     <h1>Start page - Home</h1>
 
     <!-- Carousel -->
-    <carousel></carousel>
-
-    <!-- dropdown List -->
-    <div>
-      <b-dropdown text="Sort by">
-        <b-dropdown-item-button @click="maxPrice()"
-          >Max Price</b-dropdown-item-button
-        >
-        <b-dropdown-item-button @click="minPrice()"
-          >Min Price</b-dropdown-item-button
-        >
-      </b-dropdown>
-    </div>
+    <b-container>
+      <b-row>
+        <b-col cols="12"><carousel></carousel></b-col>
+      </b-row>
+    </b-container>
 
     <!-- grid layout  -->
     <div>
@@ -66,7 +58,7 @@
           </b-col>
           <b-col lg="3" style="border: 2px solid">
             top 10 col-3
-            <top-ten-books></top-ten-books>
+            <top-ten-books :topTenBooks="$store.state.books"></top-ten-books>
           </b-col>
         </b-row>
       </b-container>
@@ -98,8 +90,7 @@
         perPage: 7,
         currentPage: 1,
         defaultImage: this.$store.state.defaultImage,
-        sliceStartValue: 0,
-        sliceEndValue: 4
+        topTenBooks: []
       }
     },
     created() {},
@@ -114,62 +105,47 @@
           this.currentPage * this.perPage
         )
       },
-      /* For carousel */
-      showProducts() {
-        return this.$store.state.books.slice(
-          this.sliceStartValue,
-          this.sliceEndValue
-        )
-      }
-    },
-    methods: {
-      // fillBookArray() {
-      //   for (let i = 0; i < 8; i++) {
-      //     this.arrayHolder.push(this.$store.state.books[i])
-      //   }
-      //   this.bookSlideOne.push(this.arrayHolder.slice(0, 4))
-      //   this.bookSlideTwo.push(this.arrayHolder.slice(4, 8))
-      //   console.log(this.bookSlideOne)
-      //   console.log(this.bookSlideTwo)
-      // },
-      onSlideStart() {
-        this.sliceStartValue += 4
-        this.sliceEndValue += 4
-        this.sliding = true
-        if (this.sliceStartValue > 4) {
-          this.sliceStartValue = 0
-          this.sliceEndValue = 4
-        }
-      },
-      onSlideEnd() {
-        this.sliding = false
-      },
-      maxPrice() {
-        this.books.sort(function(a, b) {
-          return b.price - a.price
-        })
-        console.log(this.books)
-      },
-      minPrice() {
-        this.books.sort(function(a, b) {
-          return a.price - b.price
-        })
-        console.log(this.books)
-      },
+      methods: {
+        onSlideStart() {
+          this.sliceStartValue += 4
+          this.sliceEndValue += 4
+          this.sliding = true
+          if (this.sliceStartValue > 4) {
+            this.sliceStartValue = 0
+            this.sliceEndValue = 4
+          }
+        },
+        onSlideEnd() {
+          this.sliding = false
+        },
+        maxPrice() {
+          this.books.sort(function(a, b) {
+            return b.price - a.price
+          })
+          console.log(this.books)
+        },
+        minPrice() {
+          this.books.sort(function(a, b) {
+            return a.price - b.price
+          })
+          console.log(this.books)
+        },
 
-      onBookToCartToast(book) {
-        this.$bvToast.toast(`${book.title} was added to your cart`, {
-          title: 'Success',
-          autoHideDelay: 2000,
-          appendToast: true,
-          variant: 'success',
-          solid: true,
-          toaster: 'b-toaster-top-center'
-        })
+        onBookToCartToast(book) {
+          this.$bvToast.toast(`${book.title} was added to your cart`, {
+            title: 'Success',
+            autoHideDelay: 2000,
+            appendToast: true,
+            variant: 'success',
+            solid: true,
+            toaster: 'b-toaster-top-center'
+          })
+        }
       }
     }
   }
 </script>
+
 <style scoped>
   .carousel >>> .carousel-item {
     height: 375px;

@@ -1,7 +1,21 @@
 <template>
   <div>
     <h3>{{ formatSlug }}</h3>
+
     <b-container class="main-container">
+      <b-row>
+        <b-col cols="auto">
+          <!-- dropdown List -->
+          <div>
+            <b-form-select
+              v-model="selected"
+              :options="options"
+            ></b-form-select>
+            <div class="mt-3"></div>
+          </div>
+        </b-col>
+      </b-row>
+
       <b-row class="align-items-stretch">
         <b-col
           cols="12"
@@ -14,7 +28,6 @@
           :key="book.isbn"
         >
           <product-small
-            @book-to-cart-alert="onBookToCartToast"
             :isbn="book.isbn"
             :title="book.title"
             :author="book.author"
@@ -25,21 +38,6 @@
       </b-row>
     </b-container>
 
-    <div class="container" v-if="this.$route.params.slug">
-      <div class="row">
-        <b-row>
-          <div class="col" v-for="filtered in filteredArray" :key="filtered.id">
-            <product-small
-              :productId="filtered.id"
-              :name="filtered.name"
-              :description="filtered.description"
-              :price="filtered.price"
-              :productImage="filtered.photo || defaultImage"
-            ></product-small>
-          </div>
-        </b-row>
-      </div>
-    </div>
     <div class="overflow-auto">
       <b-pagination
         v-if="this.$route.params.categoryId !== undefined"
@@ -61,10 +59,12 @@ export default {
   created() {},
   data() {
     return {
-      filteredArray: [],
-      perPage: 4,
-      currentPageFiltered: 1,
-      defaultImage: this.$store.state.defaultImage,
+      selected: null,
+      options: [
+        { value: null, text: "Sort BY" },
+        { value: "maxPrice", text: "Max Price" },
+        { value: "minPrice", text: "Min Price" },
+      ],
     };
   },
   computed: {
@@ -74,11 +74,29 @@ export default {
     books() {
       console.log(this.$route.params.slug);
       const books = [];
+
       this.$store.state.books.forEach((element) => {
         if (this.$route.params.slug === element.genre) {
           books.push(element);
         }
       });
+      switch (this.selected) {
+        case "minPrice":
+          books.sort(function(a, b) {
+            return a.price - b.price;
+          });
+
+          break;
+
+        case "maxPrice":
+          books.sort(function(a, b) {
+            return b.price - a.price;
+          });
+          break;
+
+        default:
+          break;
+      }
       return books;
     },
     formatSlug() {
@@ -101,16 +119,6 @@ export default {
   },
 
   methods: {
-    filterArray() {
-      for (let index = 0; index < this.$store.state.products.length; index++) {
-        if (
-          JSON.stringify(this.$store.state.products[index].category) ===
-          this.$route.params.categoryId
-        ) {
-          this.filteredArray.push(this.$store.state.products[index]);
-        }
-      }
-    },
     onBookToCartToast(book) {
       this.$bvToast.toast(`${book.title} was added to your cart`, {
         title: "Success",
