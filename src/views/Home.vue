@@ -26,7 +26,6 @@
                     >
                       <product-small
                         :key="book.isbn"
-                        @book-to-cart-alert="onBookToCartToast"
                         :isbn="book.isbn"
                         :title="book.title"
                         :author="book.author"
@@ -67,106 +66,106 @@
 </template>
 
 <script>
-  import ProductSmall from '../components/ProductSmall.vue'
-  import Carousel from '../components/Carousel.vue'
-  import TopTenBooks from '../components/TopTenBooks.vue'
-  import CarouselBooks from '../components/CarouselBooks'
-  import CarouselTrending from '../components/CarouselTrending'
-  export default {
-    components: {
-      ProductSmall,
-      Carousel,
-      TopTenBooks,
-      CarouselBooks,
-      CarouselTrending
-    },
+import ProductSmall from "../components/ProductSmall.vue";
+import Carousel from "../components/Carousel.vue";
+import TopTenBooks from "../components/TopTenBooks.vue";
+import CarouselBooks from "../components/CarouselBooks";
+import CarouselTrending from "../components/CarouselTrending";
+export default {
+  components: {
+    ProductSmall,
+    Carousel,
+    TopTenBooks,
+    CarouselBooks,
+    CarouselTrending,
+  },
 
-    name: 'Home',
-    data() {
-      return {
-        slide: 0,
-        sliding: null,
-        books: this.$store.state.books, // all product "use to sort Price"
-        perPage: 7,
-        currentPage: 1,
-        defaultImage: this.$store.state.defaultImage,
-        topTenBooks: []
-      }
+  name: "Home",
+  data() {
+    return {
+      slide: 0,
+      sliding: null,
+      books: this.$store.state.books, // all product "use to sort Price"
+      perPage: 7,
+      currentPage: 1,
+      defaultImage: this.$store.state.defaultImage,
+      topTenBooks: [],
+    };
+  },
+  created() {},
+  computed: {
+    rows() {
+      return this.$store.state.books.length;
     },
-    created() {},
-    computed: {
-      rows() {
-        return this.$store.state.books.length
-      },
-      /* For pagination */
-      allProducts() {
-        return this.$store.state.books.slice(
-          (this.currentPage - 1) * this.perPage,
-          this.currentPage * this.perPage
-        )
-      },
-      methods: {
-        onSlideStart() {
-          this.sliceStartValue += 4
-          this.sliceEndValue += 4
-          this.sliding = true
-          if (this.sliceStartValue > 4) {
-            this.sliceStartValue = 0
-            this.sliceEndValue = 4
-          }
-        },
-        onSlideEnd() {
-          this.sliding = false
-        },
-        maxPrice() {
-          this.books.sort(function(a, b) {
-            return b.price - a.price
-          })
-          console.log(this.books)
-        },
-        minPrice() {
-          this.books.sort(function(a, b) {
-            return a.price - b.price
-          })
-          console.log(this.books)
-        },
-
-        onBookToCartToast(book) {
-          this.$bvToast.toast(`${book.title} was added to your cart`, {
-            title: 'Success',
-            autoHideDelay: 2000,
-            appendToast: true,
-            variant: 'success',
-            solid: true,
-            toaster: 'b-toaster-top-center'
-          })
+    /* For pagination */
+    allProducts() {
+      return this.$store.state.books.slice(
+        (this.currentPage - 1) * this.perPage,
+        this.currentPage * this.perPage
+      );
+    },
+    methods: {
+      onSlideStart() {
+        this.sliceStartValue += 4;
+        this.sliceEndValue += 4;
+        this.sliding = true;
+        if (this.sliceStartValue > 4) {
+          this.sliceStartValue = 0;
+          this.sliceEndValue = 4;
         }
-      }
-    }
-  }
+      },
+      onSlideEnd() {
+        this.sliding = false;
+      },
+      maxPrice() {
+        this.books.sort(function(a, b) {
+          return b.price - a.price;
+        });
+        console.log(this.books);
+      },
+      minPrice() {
+        this.books.sort(function(a, b) {
+          return a.price - b.price;
+        });
+        console.log(this.books);
+      },
+
+      onBookToCartToast(book) {
+        this.$bvToast.toast(`${book.title} was added to your cart`, {
+          title: "Success",
+          autoHideDelay: 2000,
+          appendToast: true,
+          variant: "success",
+          solid: true,
+          toaster: "b-toaster-top-center",
+        });
+      },
+    },
+  },
+};
 </script>
 
 <style scoped>
-  .carousel >>> .carousel-item {
-    height: 375px;
-  }
-  .carousel >>> .carousel-indicators li {
-    background-color: #403042;
-  }
-  .carousel >>> .carousel-control-prev-icon {
-    height: 40px;
-    width: 40px;
-    outline: black;
-    background-size: 35%, 35%;
-    border-radius: 50%;
-    background-color: #403042;
-  }
-  .carousel >>> .carousel-control-next-icon {
-    height: 40px;
-    width: 40px;
-    outline: black;
-    background-size: 35%, 35%;
-    border-radius: 50%;
-    background-color: #403042;
-  }
+.carousel >>> .carousel-item {
+  height: 375px;
+}
+.carousel >>> .carousel-indicators li {
+  background-color: #403042;
+}
+.carousel >>> .carousel-control-prev-icon {
+  height: 40px;
+  width: 40px;
+  outline: black;
+  background-size: 35%, 35%;
+  border-radius: 50%;
+  background-color: #403042;
+}
+.carousel >>> .carousel-control-next-icon {
+  height: 40px;
+  width: 40px;
+  outline: black;
+  background-size: 35%, 35%;
+  border-radius: 50%;
+  background-color: #403042;
+}
 </style>
