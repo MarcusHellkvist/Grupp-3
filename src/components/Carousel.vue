@@ -18,6 +18,17 @@
           />
         </template>
       </b-carousel-slide>
+
+      <b-carousel-slide>
+        <template #img>
+          <img
+            class="d-block img-fluid w-100"
+            width="1280"
+            height="320"
+            src="../assets/slide-2.png"
+          />
+        </template>
+      </b-carousel-slide>
     </b-carousel>
   </div>
 </template>
