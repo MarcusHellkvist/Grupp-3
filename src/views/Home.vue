@@ -62,7 +62,9 @@ export default {
       topTenBooks: [],
     };
   },
-  created() {},
+  created() {
+    console.log(this.$store.state.user.data.email);
+  },
   computed: {
     rows() {
       return this.$store.state.books.length;

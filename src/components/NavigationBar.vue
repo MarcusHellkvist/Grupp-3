@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div v-if="user.loggedIn">
+      {{ user.data.uid }}
+      <b-button @click="signOut">Sign Out</b-button>
+    </div>
     <b-container fluid class="nav-container">
       <b-row>
         <b-col class="my-border" cols="2"
@@ -83,9 +87,15 @@
 
 <script>
 import ShoppingCartButton from "./ShoppingCartButton.vue";
+import firebase from "firebase";
+import { mapGetters } from "vuex";
+
 export default {
   components: { ShoppingCartButton },
   computed: {
+    ...mapGetters({
+      user: "user",
+    }),
     bookNames() {
       const bookNames = [];
       this.$store.state.books.forEach((element) => {
@@ -100,6 +110,14 @@ export default {
     };
   },
   methods: {
+    signOut() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.replace({ name: "Home" });
+        });
+    },
     onSubmit() {
       var isbn = this.getIsbnFromTitle(this.searchQuery);
       this.$router.push({ name: "Product", params: { isbn: isbn } });
