@@ -89,7 +89,7 @@ export default {
     },
   },
   props: {
-    booksInCarousel: [],
+    booksInCarousel: Array,
     title: String,
   },
 };

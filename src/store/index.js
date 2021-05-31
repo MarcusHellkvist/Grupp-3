@@ -5,9 +5,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    user: {
+      loggedIn: false,
+      data: null,
+    },
     quantityItemsInCart: 0,
     trending: [],
-
     books: [],
     genres: [],
     products: [],
@@ -16,7 +19,18 @@ export default new Vuex.Store({
     defaultImage:
       "http://jbdiamonds.com/media/catalog/new-pp/placeholder/default/no-img-1000.jpg",
   },
+  getters: {
+    user(state) {
+      return state.user;
+    },
+  },
   mutations: {
+    SET_LOGGED_IN(state, value) {
+      state.user.loggedIn = value;
+    },
+    SET_USER(state, data) {
+      state.user.data = data;
+    },
     fillWithProducts(state, products) {
       state.products = products;
     },
@@ -127,6 +141,18 @@ export default new Vuex.Store({
     /* Alona */
   },
   actions: {
+    fetchUser({ commit }, user) {
+      commit("SET_LOGGED_IN", user !== null);
+      if (user) {
+        commit("SET_USER", {
+          displayName: user.displayName,
+          email: user.email,
+          uid: user.uid,
+        });
+      } else {
+        commit("SET_USER", null);
+      }
+    },
     fetchLocalData({ commit }) {
       fetch("books.json")
         .then((response) => response.json())
