@@ -111,6 +111,7 @@ export default new Vuex.Store({
       while (state.cart.length > 0) {
         state.cart.pop();
         console.log("clear cart !");
+        state.quantityItemsInCart = 0;
       }
     },
     /* Alona */
