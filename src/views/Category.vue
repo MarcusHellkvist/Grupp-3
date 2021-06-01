@@ -52,85 +52,103 @@
 </template>
 
 <script>
-import ProductSmall from "../components/ProductSmall.vue";
-export default {
-  components: { ProductSmall },
+  import ProductSmall from '../components/ProductSmall.vue'
+  import * as firebase from '../firebase.js'
+  export default {
+    components: { ProductSmall },
 
-  created() {},
-  data() {
-    return {
-      selected: null,
-      options: [
-        { value: null, text: "Sort BY" },
-        { value: "maxPrice", text: "Max Price" },
-        { value: "minPrice", text: "Min Price" },
-      ],
-    };
-  },
-  computed: {
-    // products() {
-    //   return this.$store.state.products;
-    // },
-    books() {
-      console.log(this.$route.params.slug);
-      const books = [];
-
-      this.$store.state.books.forEach((element) => {
-        if (this.$route.params.slug === element.genre) {
-          books.push(element);
-        }
-      });
-      switch (this.selected) {
-        case "minPrice":
-          books.sort(function(a, b) {
-            return a.price - b.price;
-          });
-
-          break;
-
-        case "maxPrice":
-          books.sort(function(a, b) {
-            return b.price - a.price;
-          });
-          break;
-
-        default:
-          break;
+    boforeMount() {
+      this.getBooks()
+    },
+    updated() {
+      this.getBooks()
+    },
+    data() {
+      return {
+        books2: [],
+        selected: null,
+        options: [
+          { value: null, text: 'Sort BY' },
+          { value: 'maxPrice', text: 'Max Price' },
+          { value: 'minPrice', text: 'Min Price' }
+        ]
       }
-      return books;
     },
-    formatSlug() {
-      const header = this.$route.params.slug;
-      const temp = header.charAt(0).toUpperCase() + header.slice(1);
-      return temp.replaceAll("-", " ");
-    },
-    //this.$route.params.slug
+    computed: {
+      books() {
+        console.log(this.$route.params.slug)
+        const books = []
 
-    /* Slice the filtered array to work with the pagination */
-    // sliceFilteredArray() {
-    //   return this.filteredArray.slice(
-    //     (this.currentPageFiltered - 1) * this.perPage,
-    //     this.currentPageFiltered * this.perPage
-    //   );
-    // },
-    // filterRows() {
-    //   return this.filteredArray.length;
-    // },
-  },
+        this.$store.state.books.forEach((element) => {
+          if (this.$route.params.slug === element.genre) {
+            books.push(element)
+          }
+        })
+        switch (this.selected) {
+          case 'minPrice':
+            books.sort(function(a, b) {
+              return a.price - b.price
+            })
 
-  methods: {
-    onBookToCartToast(book) {
-      this.$bvToast.toast(`${book.title} was added to your cart`, {
-        title: "Success",
-        autoHideDelay: 2000,
-        appendToast: true,
-        variant: "success",
-        solid: true,
-        toaster: "b-toaster-top-center",
-      });
+            break
+
+          case 'maxPrice':
+            books.sort(function(a, b) {
+              return b.price - a.price
+            })
+            break
+
+          default:
+            break
+        }
+        return books
+      },
+      formatSlug() {
+        const header = this.$route.params.slug
+        const temp = header.charAt(0).toUpperCase() + header.slice(1)
+        return temp.replaceAll('-', ' ')
+      }
+      //this.$route.params.slug
+
+      /* Slice the filtered array to work with the pagination */
+      // sliceFilteredArray() {
+      //   return this.filteredArray.slice(
+      //     (this.currentPageFiltered - 1) * this.perPage,
+      //     this.currentPageFiltered * this.perPage
+      //   );
+      // },
+      // filterRows() {
+      //   return this.filteredArray.length;
+      // },
     },
-  },
-};
+
+    methods: {
+      getBooks() {
+        this.books2 = []
+        firebase.booksCollection
+          .where('genre', '==', this.$route.params.slug)
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              console.log(doc.data().isbn)
+              this.books2.push(doc.data())
+            })
+            console.log(this.books2)
+          })
+      },
+
+      onBookToCartToast(book) {
+        this.$bvToast.toast(`${book.title} was added to your cart`, {
+          title: 'Success',
+          autoHideDelay: 2000,
+          appendToast: true,
+          variant: 'success',
+          solid: true,
+          toaster: 'b-toaster-top-center'
+        })
+      }
+    }
+  }
 </script>
 
 <style></style>

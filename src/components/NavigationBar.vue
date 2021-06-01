@@ -27,7 +27,7 @@
             ></b-col>
             <b-col cols="12"
               ><ul class="nav-link">
-                <li v-for="genre in $store.state.genres" :key="genre.name">
+                <li v-for="genre in genres" :key="genre.name">
                   <router-link
                     :to="{
                       name: 'Category',
@@ -92,6 +92,9 @@
 
   export default {
     components: { ShoppingCartButton },
+    created() {
+      this.getGenre()
+    },
     computed: {
       ...mapGetters({
         user: 'user'
@@ -106,10 +109,20 @@
     },
     data() {
       return {
-        searchQuery: null
+        searchQuery: null,
+        genres: []
       }
     },
     methods: {
+      getGenre() {
+        firebase.genresCollection.get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            //   console.log(doc.id, doc.data(), doc.data().name)
+            this.genres.push(doc.data())
+            //   console.log(this.genres)
+          })
+        })
+      },
       signOut() {
         firebase.auth.signOut().then(() => {
           //this.$router.replace({ name: 'Home' })
