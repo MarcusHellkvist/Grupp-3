@@ -12,7 +12,7 @@ const configOptions = {
 }
 
 firebase.initializeApp(configOptions)
-firebase.analytics()
+//firebase.analytics()
 
 // utils
 const auth = firebase.auth()

@@ -63,7 +63,7 @@
       }
     },
     created() {
-      console.log(this.$store.state.user.data.email)
+      //    console.log(this.$store.state.user.data.email)
     },
     computed: {
       rows() {

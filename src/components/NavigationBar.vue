@@ -31,7 +31,7 @@
                   <router-link
                     :to="{
                       name: 'Category',
-                      params: { slug: genre.slug },
+                      params: { slug: genre.slug }
                     }"
                     >{{ genre.name }}</router-link
                   >
@@ -86,90 +86,87 @@
 </template>
 
 <script>
-import ShoppingCartButton from "./ShoppingCartButton.vue";
-import firebase from "firebase";
-import { mapGetters } from "vuex";
+  import ShoppingCartButton from './ShoppingCartButton.vue'
+  import * as firebase from '../firebase.js'
+  import { mapGetters } from 'vuex'
 
-export default {
-  components: { ShoppingCartButton },
-  computed: {
-    ...mapGetters({
-      user: "user",
-    }),
-    bookNames() {
-      const bookNames = [];
-      this.$store.state.books.forEach((element) => {
-        bookNames.push(element.title);
-      });
-      return bookNames;
+  export default {
+    components: { ShoppingCartButton },
+    computed: {
+      ...mapGetters({
+        user: 'user'
+      }),
+      bookNames() {
+        const bookNames = []
+        this.$store.state.books.forEach((element) => {
+          bookNames.push(element.title)
+        })
+        return bookNames
+      }
     },
-  },
-  data() {
-    return {
-      searchQuery: null,
-    };
-  },
-  methods: {
-    signOut() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.$router.replace({ name: "Home" });
-        });
+    data() {
+      return {
+        searchQuery: null
+      }
     },
-    onSubmit() {
-      var isbn = this.getIsbnFromTitle(this.searchQuery);
-      this.$router.push({ name: "Product", params: { isbn: isbn } });
-      this.searchQuery = "";
-    },
-    getIsbnFromTitle(title) {
-      var isbn = "";
-      this.$store.state.books.forEach((element) => {
-        if (title === element.title) {
-          isbn = element.isbn;
-        }
-      });
-      return isbn;
-    },
-  },
-};
+    methods: {
+      signOut() {
+        firebase.auth.signOut().then(() => {
+          //this.$router.replace({ name: 'Home' })
+        })
+      },
+      onSubmit() {
+        var isbn = this.getIsbnFromTitle(this.searchQuery)
+        this.$router.push({ name: 'Product', params: { isbn: isbn } })
+        this.searchQuery = ''
+      },
+      getIsbnFromTitle(title) {
+        var isbn = ''
+        this.$store.state.books.forEach((element) => {
+          if (title === element.title) {
+            isbn = element.isbn
+          }
+        })
+        return isbn
+      }
+    }
+  }
 </script>
 
 <style scoped>
-.nav-container {
-  background: #403042;
-  text-align: start;
-}
+  .nav-container {
+    background: #403042;
+    text-align: start;
+  }
 
-.nav-link {
-  list-style: none;
-}
+  .nav-link {
+    list-style: none;
+  }
 
-.nav-link li {
-  display: inline-block;
-  padding: 0px 15px;
-}
+  .nav-link li {
+    display: inline-block;
+    padding: 0px 15px;
+  }
 
-.nav-link li a {
-  transition: all 0.3s ease 0s;
-}
+  .nav-link li a {
+    transition: all 0.3s ease 0s;
+  }
 
-.nav-link li a:hover {
-  color: #9cc4b2;
-  text-decoration: none;
-}
+  .nav-link li a:hover {
+    color: #9cc4b2;
+    text-decoration: none;
+  }
 
-ul {
-  padding: 8px 0px;
-  margin: 0;
-}
+  ul {
+    padding: 8px 0px;
+    margin: 0;
+  }
 
-li,
-a,
-button {
-  font-size: 12px;
-  color: #edf0f1;
-  text-decoration: none;
-}
+  li,
+  a,
+  button {
+    font-size: 12px;
+    color: #edf0f1;
+    text-decoration: none;
+  }
 </style>
