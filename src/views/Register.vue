@@ -57,29 +57,6 @@
           .catch((err) => {
             console.log(err)
           })
-
-        // firebase
-        //   .auth()
-        //   .createUserWithEmailAndPassword(this.form.email, this.form.password)
-        //   .then((data) => {
-        //     console.log(data.user.uid)
-        //     firebase
-        //       .firestore()
-        //       .collection('users')
-        //       .doc(data.user.uid)
-        //       .set({
-        //         email: this.form.email
-        //       })
-        //       .then(() => {
-        //         console.log('Document successfully written!')
-        //       })
-        //       .catch((error) => {
-        //         console.error('Error writing document: ', error)
-        //       })
-        //   })
-        //   .catch((err) => {
-        //     console.log(err)
-        //   })
       }
     }
   }
