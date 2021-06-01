@@ -24,31 +24,40 @@
 </template>
 
 <script>
-import firebase from "firebase";
-export default {
-  data() {
-    return {
-      error: "",
-      form: {
-        email: "",
-        password: "",
-      },
-    };
-  },
-  methods: {
-    submit() {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.form.email, this.form.password)
-        .then(() => {
-          this.$router.replace({ name: "Home" });
-        })
-        .catch((err) => {
-          this.error = err.message;
-        });
+  import * as firebase from '../firebase.js'
+  export default {
+    data() {
+      return {
+        error: '',
+        form: {
+          email: '',
+          password: ''
+        }
+      }
     },
-  },
-};
+    methods: {
+      submit() {
+        firebase.auth
+          .signInWithEmailAndPassword(this.form.email, this.form.password)
+          .then(() => {
+            this.$router.replace({ name: 'Home' })
+          })
+          .catch((err) => {
+            console.log(err.message)
+          })
+
+        // firebase
+        //   .auth()
+        //   .signInWithEmailAndPassword(this.form.email, this.form.password)
+        //   .then(() => {
+        //     this.$router.replace({ name: 'Home' })
+        //   })
+        //   .catch((err) => {
+        //     this.error = err.message
+        //   })
+      }
+    }
+  }
 </script>
 
 <style></style>

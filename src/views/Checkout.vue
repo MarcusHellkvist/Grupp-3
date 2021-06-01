@@ -330,189 +330,189 @@
 </template>
 
 <script>
-import { validationMixin } from "vuelidate";
-import {
-  required,
-  minLength,
-  maxLength,
-  email,
-  decimal,
-} from "vuelidate/lib/validators";
+  import { validationMixin } from 'vuelidate'
+  import {
+    required,
+    minLength,
+    maxLength,
+    email,
+    decimal
+  } from 'vuelidate/lib/validators'
 
-export default {
-  components: {},
-  mixins: [validationMixin],
-  data() {
-    return {
-      cart: this.$store.state.cart,
-      products: this.$store.state.books,
-      localCart: [],
-      sum: 0,
-      showAndHide: null,
-      showAlert: "d-none",
+  export default {
+    components: {},
+    mixins: [validationMixin],
+    data() {
+      return {
+        cart: this.$store.state.cart,
+        products: this.$store.state.books,
+        localCart: [],
+        sum: 0,
+        showAndHide: null,
+        showAlert: 'd-none',
 
-      cardDateMonth: [
-        { value: null, text: "Month.." },
-        { value: "01", text: "01" },
-        { value: "02", text: "02" },
-        { value: "03", text: "03" },
-        { value: "04", text: "04" },
-        { value: "05", text: "05" },
-        { value: "06", text: "06" },
-        { value: "07", text: "07" },
-        { value: "08", text: "08" },
-        { value: "08", text: "09" },
-        { value: "10", text: "10" },
-        { value: "11", text: "11" },
-        { value: "12", text: "12" },
-      ],
-      cardDateYear: [
-        { value: null, text: "Year.." },
-        { value: "2021", text: "2021" },
-        { value: "2022", text: "2022" },
-        { value: "2023", text: "2023" },
-        { value: "2024", text: "2024" },
-        { value: "2025", text: "2025" },
-        { value: "2026", text: "2026" },
-        { value: "2027", text: "2027" },
-      ],
-      form: {
-        name: null,
-        lastName: null,
-        email: null,
-        address: null,
-        country: null,
-        state: null,
-        zip: null,
-        cardName: null,
-        cardNumber: null,
-        cardDateMonth: null,
-        cardDateYear: null,
-        cardCVV: null,
-      },
-    };
-  },
-  validations: {
-    form: {
-      name: {
-        required,
-        minLength: minLength(3),
-      },
-      lastName: {
-        required,
-        minLength: minLength(3),
-      },
-      email: { required, email },
-      address: { required },
-      country: { required },
-      state: { required },
-      zip: { required },
-      cardName: { required, minLength: minLength(3) },
-      cardNumber: {
-        required,
-        minLength: minLength(16),
-        maxLength: maxLength(16),
-        decimal,
-      },
-      cardDateMonth: { required },
-      cardDateYear: { required },
-      cardCVV: { required, decimal, minlength: minLength(3) },
+        cardDateMonth: [
+          { value: null, text: 'Month..' },
+          { value: '01', text: '01' },
+          { value: '02', text: '02' },
+          { value: '03', text: '03' },
+          { value: '04', text: '04' },
+          { value: '05', text: '05' },
+          { value: '06', text: '06' },
+          { value: '07', text: '07' },
+          { value: '08', text: '08' },
+          { value: '08', text: '09' },
+          { value: '10', text: '10' },
+          { value: '11', text: '11' },
+          { value: '12', text: '12' }
+        ],
+        cardDateYear: [
+          { value: null, text: 'Year..' },
+          { value: '2021', text: '2021' },
+          { value: '2022', text: '2022' },
+          { value: '2023', text: '2023' },
+          { value: '2024', text: '2024' },
+          { value: '2025', text: '2025' },
+          { value: '2026', text: '2026' },
+          { value: '2027', text: '2027' }
+        ],
+        form: {
+          name: null,
+          lastName: null,
+          email: null,
+          address: null,
+          country: null,
+          state: null,
+          zip: null,
+          cardName: null,
+          cardNumber: null,
+          cardDateMonth: null,
+          cardDateYear: null,
+          cardCVV: null
+        }
+      }
     },
-  },
-  computed: {
-    /* somchange() {
+    validations: {
+      form: {
+        name: {
+          required,
+          minLength: minLength(3)
+        },
+        lastName: {
+          required,
+          minLength: minLength(3)
+        },
+        email: { required, email },
+        address: { required },
+        country: { required },
+        state: { required },
+        zip: { required },
+        cardName: { required, minLength: minLength(3) },
+        cardNumber: {
+          required,
+          minLength: minLength(16),
+          maxLength: maxLength(16),
+          decimal
+        },
+        cardDateMonth: { required },
+        cardDateYear: { required },
+        cardCVV: { required, decimal, minlength: minLength(3) }
+      }
+    },
+    computed: {
+      /* somchange() {
       return this.total();
     }, */
-  },
-  created() {
-    this.total();
-    this.addTolocalCart();
-    this.maxPrice();
-  },
-  watch: {
-    sum() {
-      // return this.total();
     },
-  },
-  methods: {
-    print() {
-      window.print();
+    created() {
+      this.total()
+      this.addTolocalCart()
+      this.maxPrice()
     },
+    watch: {
+      sum() {
+        // return this.total();
+      }
+    },
+    methods: {
+      print() {
+        window.print()
+      },
 
-    validateState(input) {
-      const { $dirty, $error } = this.$v.form[input];
-      return $dirty ? !$error : null;
-    },
+      validateState(input) {
+        const { $dirty, $error } = this.$v.form[input]
+        return $dirty ? !$error : null
+      },
 
-    onSubmit() {
-      /* this.$v.form.$touch();
+      onSubmit() {
+        /* this.$v.form.$touch();
        if (this.$v.form.$anyError) {
         return;
       } */
-      if (this.cart.length > 0) {
-        console.log(this.form.name);
-        this.showAndHide = "d-none";
-        this.showAlert = "";
-        this.clearCart();
+        if (this.cart.length > 0) {
+          console.log(this.form.name)
+          this.showAndHide = 'd-none'
+          this.showAlert = ''
+          this.clearCart()
+        }
+      },
+
+      deleteProduct(id) {
+        console.log(id)
+        this.$store.commit('deleteProduct', id)
+        this.sum = 0
+        this.total()
+      },
+
+      clearCart() {
+        this.$store.commit('clearCart')
+      },
+
+      total() {
+        for (let i = 0; i < this.cart.length; i++) {
+          this.sum += this.cart[i].total
+          console.log(this.sum)
+        }
+        return this.sum
+      },
+
+      addTolocalCart() {
+        this.localCart = [] //to clear localCart
+        for (let i = 0; i < this.cart.length; i++) {
+          this.localCart.push(this.cart[i])
+        }
+        return this.localCart
+      },
+      maxPrice() {
+        // sort by max price
+        this.products.sort(function(a, b) {
+          return a.price - b.price
+        })
+        console.log(this.products)
       }
-    },
-
-    deleteProduct(id) {
-      console.log(id);
-      this.$store.commit("deleteProduct", id);
-      this.sum = 0;
-      this.total();
-    },
-
-    clearCart() {
-      this.$store.commit("clearCart");
-    },
-
-    total() {
-      for (let i = 0; i < this.cart.length; i++) {
-        this.sum += this.cart[i].total;
-        console.log(this.sum);
-      }
-      return this.sum;
-    },
-
-    addTolocalCart() {
-      this.localCart = []; //to clear localCart
-      for (let i = 0; i < this.cart.length; i++) {
-        this.localCart.push(this.cart[i]);
-      }
-      return this.localCart;
-    },
-    maxPrice() {
-      // sort by max price
-      this.products.sort(function(a, b) {
-        return a.price - b.price;
-      });
-      console.log(this.products);
-    },
-  },
-};
+    }
+  }
 </script>
 
 <style scoped>
-.container {
-  max-width: 960px;
-  text-align: left;
-  padding: 1rem;
-}
+  .container {
+    max-width: 960px;
+    text-align: left;
+    padding: 1rem;
+  }
 
-#name__BV_label_.d_block {
-  padding: 0px;
-  margin-bottom: 0 !important;
-}
-h6 {
-  margin-bottom: 0rem;
-}
-small {
-  margin-top: 0rem;
-}
-span {
-  margin-left: 0rem;
-  margin-top: 0rem;
-}
+  #name__BV_label_.d_block {
+    padding: 0px;
+    margin-bottom: 0 !important;
+  }
+  h6 {
+    margin-bottom: 0rem;
+  }
+  small {
+    margin-top: 0rem;
+  }
+  span {
+    margin-left: 0rem;
+    margin-top: 0rem;
+  }
 </style>
