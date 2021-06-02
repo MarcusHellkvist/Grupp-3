@@ -16,7 +16,7 @@
         </b-col>
       </b-row>
 
-      <b-row class="align-items-stretch">
+      <b-row class="align-items-stretch" v-if="books2">
         <b-col
           cols="12"
           sm="6"
@@ -24,7 +24,7 @@
           lg="3"
           xl="2"
           class="card-column"
-          v-for="book in books"
+          v-for="book in books2"
           :key="book.isbn"
         >
           <product-small
@@ -57,10 +57,7 @@
   export default {
     components: { ProductSmall },
 
-    boforeMount() {
-      this.getBooks()
-    },
-    updated() {
+    created() {
       this.getBooks()
     },
     data() {
@@ -130,10 +127,8 @@
           .get()
           .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-              console.log(doc.data().isbn)
               this.books2.push(doc.data())
             })
-            console.log(this.books2)
           })
       },
 
@@ -146,6 +141,12 @@
           solid: true,
           toaster: 'b-toaster-top-center'
         })
+      }
+    },
+    watch: {
+      '$route.params.slug'(to, from) {
+        console.log(`params changed - to: ${to} from:${from}`)
+        this.getBooks()
       }
     }
   }
