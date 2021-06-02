@@ -1,55 +1,61 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import Cart from "../views/Cart.vue";
-import Checkout from "../views/Checkout.vue";
-import Product from "../views/Product.vue";
-import Category from "../views/Category.vue";
-import Register from "../views/Register.vue";
-import Login from "../views/Login.vue";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from '../views/Home.vue'
+import Cart from '../views/Cart.vue'
+import Checkout from '../views/Checkout.vue'
+import Product from '../views/Product.vue'
+import Category from '../views/Category.vue'
+import Register from '../views/Register.vue'
+import Login from '../views/Login.vue'
+import Admin from '../views/Admin.vue'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: Home,
+    path: '/',
+    name: 'Home',
+    component: Home
   },
   {
-    path: "/category/:slug",
-    name: "Category",
-    component: Category,
+    path: '/category/:slug',
+    name: 'Category',
+    component: Category
   },
   {
-    path: "/product/:isbn",
-    name: "Product",
-    component: Product,
+    path: '/product/:isbn',
+    name: 'Product',
+    component: Product
   },
   {
-    path: "/cart",
-    name: "Cart",
-    component: Cart,
+    path: '/cart',
+    name: 'Cart',
+    component: Cart
   },
   {
-    path: "/checkout",
-    name: "Checkout",
-    component: Checkout,
+    path: '/checkout',
+    name: 'Checkout',
+    component: Checkout
   },
   {
-    path: "/register",
-    name: "Register",
-    component: Register,
+    path: '/register',
+    name: 'Register',
+    component: Register
   },
   {
-    path: "/login",
-    name: "Login",
-    component: Login,
+    path: '/login',
+    name: 'Login',
+    component: Login
   },
-];
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin
+  }
+]
 
 const router = new VueRouter({
-  routes,
-});
+  routes
+})
 
-export default router;
+export default router
