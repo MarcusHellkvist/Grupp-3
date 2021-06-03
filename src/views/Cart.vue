@@ -62,7 +62,7 @@
                           >Price: {{ product.price }}</b-col
                         >
                         <b-col cols="12" md="6" lg="3"
-                          >Total: {{ product.total }}</b-col
+                          >Total: {{ product.price * product.quantity }}</b-col
                         >
                         <b-col cols="12" md="6" lg="3">
                           <b-icon

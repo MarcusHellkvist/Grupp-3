@@ -171,42 +171,49 @@ export default {
       // counter = counter + 1;
       // this.book.quantity = Number(counter);
       if (this.$store.state.user.loggedIn === true) {
-        firebase.usersCollection
+        var sfDocRef = firebase.usersCollection
           .doc(this.$store.state.user.data.uid)
           .collection("cart")
-          .doc(this.book.isbn)
-          .set(this.book)
+          .doc(this.book.isbn);
+
+        // Uncomment to initialize the doc.
+        // sfDocRef.set({ quantity: 0 });
+
+        return firebase.db
+          .runTransaction((transaction) => {
+            // This code may get re-run multiple times if there are conflicts.
+            return transaction.get(sfDocRef).then((sfDoc) => {
+              if (!sfDoc.exists) {
+                firebase.usersCollection
+                  .doc(this.$store.state.user.data.uid)
+                  .collection("cart")
+                  .doc(this.book.isbn)
+                  .set({
+                    title: this.book.title,
+                    quantity: 1,
+                    price: this.book.price,
+                    image: this.book.image,
+                    isbn: this.book.isbn,
+                  })
+                  .then(() => {
+                    console.log("The book is created");
+                  });
+                return;
+              }
+
+              // Add one person to the city population.
+              // Note: this could be done without a transaction
+              //       by updating the population using FieldValue.increment()
+              console.log(sfDoc.data().quantity);
+              var newQuantity = sfDoc.data().quantity + 1;
+              transaction.update(sfDocRef, { quantity: newQuantity });
+            });
+          })
           .then(() => {
-            var sfDocRef = firebase.usersCollection
-              .doc(this.$store.state.user.data.uid)
-              .collection("cart")
-              .doc(this.book.isbn);
-
-            // Uncomment to initialize the doc.
-            // sfDocRef.set({ quantity: 0 });
-
-            return firebase.db
-              .runTransaction((transaction) => {
-                // This code may get re-run multiple times if there are conflicts.
-                return transaction.get(sfDocRef).then((sfDoc) => {
-                  if (!sfDoc.exists) {
-                    throw "Document does not exist!";
-                  }
-
-                  // Add one person to the city population.
-                  // Note: this could be done without a transaction
-                  //       by updating the population using FieldValue.increment()
-                  console.log(sfDoc.data().quantity);
-                  var newQuantity = sfDoc.data().quantity + 1;
-                  transaction.update(sfDocRef, { quantity: newQuantity });
-                });
-              })
-              .then(() => {
-                console.log("Transaction successfully committed!");
-              })
-              .catch((error) => {
-                console.log("Transaction failed: ", error);
-              });
+            console.log("Transaction successfully committed!");
+          })
+          .catch((error) => {
+            console.log("Transaction failed: ", error);
           });
 
         // firebase.usersCollection.doc(this.$store.state.user.data.uid).collection("cart").doc(this.book.isbn).set(this.book.quantity)
