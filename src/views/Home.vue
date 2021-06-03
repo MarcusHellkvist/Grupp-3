@@ -15,7 +15,7 @@
             <b-row>
               <b-col>
                 <carousel-trending
-                  :booksInCarousel="this.$store.state.books.slice(0, 8)"
+                  :booksInCarousel="this.fireBooks.slice(0, 8)"
                   title="New books"
                 ></carousel-trending>
               </b-col>
@@ -24,14 +24,14 @@
             <b-row>
               <b-col>
                 <carousel-trending
-                  :booksInCarousel="this.$store.state.books.slice(8, 16)"
+                  :booksInCarousel="this.fireBooks.slice(8, 16)"
                   title="Trending"
                 ></carousel-trending>
               </b-col>
             </b-row>
           </b-col>
           <b-col lg="3">
-            <top-ten-books :topTenBooks="$store.state.books"></top-ten-books>
+            <top-ten-books :topTenBooks="this.fireBooks"></top-ten-books>
           </b-col>
         </b-row>
       </b-container>
@@ -43,6 +43,7 @@
   import Carousel from '../components/Carousel.vue'
   import TopTenBooks from '../components/TopTenBooks.vue'
   import CarouselTrending from '../components/CarouselTrending'
+  import * as firebase from '../firebase.js'
   export default {
     components: {
       Carousel,
@@ -55,29 +56,22 @@
       return {
         slide: 0,
         sliding: null,
-        books: this.$store.state.books, // all product "use to sort Price"
-        perPage: 7,
-        currentPage: 1,
-        defaultImage: this.$store.state.defaultImage,
-        topTenBooks: []
+        topTenBooks: [],
+        fireBooks: []
       }
     },
     created() {
-      //    console.log(this.$store.state.user.data.email)
+      this.fetchBooks()
     },
-    computed: {
-      rows() {
-        return this.$store.state.books.length
-      },
-      /* For pagination */
-      allProducts() {
-        return this.$store.state.books.slice(
-          (this.currentPage - 1) * this.perPage,
-          this.currentPage * this.perPage
-        )
-      }
-    },
+    computed: {},
     methods: {
+      fetchBooks() {
+        firebase.booksCollection.get().then((books) => {
+          books.forEach((books) => {
+            this.fireBooks.push(books.data())
+          })
+        })
+      },
       onSlideStart() {
         this.sliceStartValue += 4
         this.sliceEndValue += 4
@@ -91,16 +85,14 @@
         this.sliding = false
       },
       maxPrice() {
-        this.books.sort(function(a, b) {
+        this.fireBooks.sort(function(a, b) {
           return b.price - a.price
         })
-        console.log(this.books)
       },
       minPrice() {
-        this.books.sort(function(a, b) {
+        this.fireBooks.sort(function(a, b) {
           return a.price - b.price
         })
-        console.log(this.books)
       },
 
       onBookToCartToast(book) {
