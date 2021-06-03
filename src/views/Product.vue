@@ -126,231 +126,232 @@
 </template>
 
 <script>
-import * as firebase from "../firebase.js";
+  import * as firebase from '../firebase.js'
 
-//import CarouselOfInterest from '../components/CarouselOfInterest.vue'
-export default {
-  components: {},
-  name: "Product",
-  data() {
-    return {
-      book: null,
-      quantityinCart: 0,
-    };
-  },
-  /* computed: {
+  //import CarouselOfInterest from '../components/CarouselOfInterest.vue'
+  export default {
+    components: {},
+    name: 'Product',
+    data() {
+      return {
+        book: null,
+        quantityinCart: 0
+      }
+    },
+    /* computed: {
       id() {
         return this.$route.params.isbn
       }
     }, */
-  created() {
-    this.getBook();
-  },
-  methods: {
-    getBook() {
-      var docRef = firebase.booksCollection.doc(this.$route.params.isbn);
-
-      docRef
-        .get()
-        .then((doc) => {
-          if (doc.exists) {
-            console.log("Document data:", doc.data());
-            this.book = doc.data();
-          } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-          }
-        })
-        .catch((error) => {
-          console.log("Error getting document:", error);
-        });
+    created() {
+      this.getBook()
     },
+    methods: {
+      getBook() {
+        var docRef = firebase.booksCollection.doc(this.$route.params.isbn)
 
-    onClick() {
-      // var counter = 0;
-      // counter = counter + 1;
-      // this.book.quantity = Number(counter);
-      if (this.$store.state.user.loggedIn === true) {
-        var sfDocRef = firebase.usersCollection
-          .doc(this.$store.state.user.data.uid)
-          .collection("cart")
-          .doc(this.book.isbn);
-
-        // Uncomment to initialize the doc.
-        // sfDocRef.set({ quantity: 0 });
-
-        return firebase.db
-          .runTransaction((transaction) => {
-            // This code may get re-run multiple times if there are conflicts.
-            return transaction.get(sfDocRef).then((sfDoc) => {
-              if (!sfDoc.exists) {
-                firebase.usersCollection
-                  .doc(this.$store.state.user.data.uid)
-                  .collection("cart")
-                  .doc(this.book.isbn)
-                  .set({
-                    title: this.book.title,
-                    quantity: 1,
-                    price: this.book.price,
-                    image: this.book.image,
-                    isbn: this.book.isbn,
-                  })
-                  .then(() => {
-                    console.log("The book is created");
-                  });
-              } else {
-                var newQuantity = sfDoc.data().quantity + 1;
-                transaction.update(sfDocRef, { quantity: newQuantity });
-              }
-
-              // Add one person to the city population.
-              // Note: this could be done without a transaction
-              //       by updating the population using FieldValue.increment()
-            });
-          })
-          .then(() => {
-            console.log("Transaction successfully committed!");
+        docRef
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              console.log('Document data:', doc.data())
+              this.book = doc.data()
+            } else {
+              // doc.data() will be undefined in this case
+              console.log('No such document!')
+            }
           })
           .catch((error) => {
-            console.log("Transaction failed: ", error);
-          });
+            console.log('Error getting document:', error)
+          })
+      },
 
-        // firebase.usersCollection.doc(this.$store.state.user.data.uid).collection("cart").doc(this.book.isbn).set(this.book.quantity)
-        // return firebase.
-        //   firebase.usersCollection
-        //     .doc(this.$store.state.user.data.uid)
-        //     .collection("cart")
-        //     .doc(this.book.isbn)
-        //     .set(this.book)
-        //     .then(() => {
-        //       console.log("Document successfully written!");
-        //     })
-        //     .catch((error) => {
-        //       console.error("Error writing document: ", error);
-        //     });
-        //   console.log("User is true");
+      onClick() {
+        // var counter = 0;
+        // counter = counter + 1;
+        // this.book.quantity = Number(counter);
+        if (this.$store.state.user.loggedIn === true) {
+          var sfDocRef = firebase.usersCollection
+            .doc(this.$store.state.user.data.uid)
+            .collection('cart')
+            .doc(this.book.isbn)
 
-        // } else {
-        //   console.log("User is false");
+          // Uncomment to initialize the doc.
+          // sfDocRef.set({ quantity: 0 });
+
+          return firebase.db
+            .runTransaction((transaction) => {
+              // This code may get re-run multiple times if there are conflicts.
+              return transaction.get(sfDocRef).then((sfDoc) => {
+                if (!sfDoc.exists) {
+                  firebase.usersCollection
+                    .doc(this.$store.state.user.data.uid)
+                    .collection('cart')
+                    .doc(this.book.isbn)
+                    .set({
+                      title: this.book.title,
+                      quantity: 1,
+                      price: this.book.price,
+                      image: this.book.image,
+                      isbn: this.book.isbn
+                    })
+                    .then(() => {
+                      console.log('The book is created')
+                    })
+                } else {
+                  console.log(sfDoc.data().quantity)
+                  var newQuantity = sfDoc.data().quantity + 1
+                  transaction.update(sfDocRef, { quantity: newQuantity })
+                }
+
+                // Add one person to the city population.
+                // Note: this could be done without a transaction
+                //       by updating the population using FieldValue.increment()
+              })
+            })
+            .then(() => {
+              console.log('Transaction successfully committed!')
+            })
+            .catch((error) => {
+              console.log('Transaction failed: ', error)
+            })
+
+          // firebase.usersCollection.doc(this.$store.state.user.data.uid).collection("cart").doc(this.book.isbn).set(this.book.quantity)
+          // return firebase.
+          //   firebase.usersCollection
+          //     .doc(this.$store.state.user.data.uid)
+          //     .collection("cart")
+          //     .doc(this.book.isbn)
+          //     .set(this.book)
+          //     .then(() => {
+          //       console.log("Document successfully written!");
+          //     })
+          //     .catch((error) => {
+          //       console.error("Error writing document: ", error);
+          //     });
+          //   console.log("User is true");
+
+          // } else {
+          //   console.log("User is false");
+        }
+        /* this.$store.commit('addToCart', this.book) */
+        /* this.$store.commit('quantityInCart') */
+
+        /* this.$store.state.cart.length++ */
+        /* console.log(this.numberOfItemsInCart) */
       }
-      /* this.$store.commit('addToCart', this.book) */
-      /* this.$store.commit('quantityInCart') */
-
-      /* this.$store.state.cart.length++ */
-      /* console.log(this.numberOfItemsInCart) */
     },
-  },
-  watch: {
-    "$route.params.isbn"(to, from) {
-      console.log(`params changed - to: ${to} from:${from}`);
-      this.getBook();
-    },
-  },
-};
+    watch: {
+      '$route.params.isbn'(to, from) {
+        console.log(`params changed - to: ${to} from:${from}`)
+        this.getBook()
+      }
+    }
+  }
 </script>
 
 <style scoped>
-#plotStyle {
-  border-style: solid;
-  border-width: 1px;
-  border-color: #dbd9d8;
-}
+  #plotStyle {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #dbd9d8;
+  }
 
-#priceAndShoppingButtonStyle {
-  border-width: 1px;
-  border-color: #dbd9d8;
-  border-top-style: solid;
-}
+  #priceAndShoppingButtonStyle {
+    border-width: 1px;
+    border-color: #dbd9d8;
+    border-top-style: solid;
+  }
 
-#authorStyle {
-  text-align: left;
-  /*  border-width: 1px;
+  #authorStyle {
+    text-align: left;
+    /*  border-width: 1px;
     border-color: #dbd9d8;
     border-bottom-style: solid; */
-}
-#descriptionStyle {
-  font-weight: bold;
-  border-width: 1px;
-  border-color: #dbd9d8;
-  border-top-style: solid;
-  border-right-style: solid;
-  border-left-style: solid;
-}
-#nameForSite {
-  color: white;
-  font-size: 250%;
-  /* background-image: linear-gradient(to bottom, #4b3b40, #31563a); */
-  background-image: linear-gradient(
-    to top,
-    rgba(255, 0, 0, 0),
-    rgb(75, 177, 55)
-  );
-  /*  margin: 0px 0px 20px; */
-  /* border: 0px solid #8eb8a0; */
-}
+  }
+  #descriptionStyle {
+    font-weight: bold;
+    border-width: 1px;
+    border-color: #dbd9d8;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+  }
+  #nameForSite {
+    color: white;
+    font-size: 250%;
+    /* background-image: linear-gradient(to bottom, #4b3b40, #31563a); */
+    background-image: linear-gradient(
+      to top,
+      rgba(255, 0, 0, 0),
+      rgb(75, 177, 55)
+    );
+    /*  margin: 0px 0px 20px; */
+    /* border: 0px solid #8eb8a0; */
+  }
 
-.first {
-  font-size: 150%;
-  margin: 35px 0px;
-  /* background-color: pink; */
-  /* background-image: url('../assets/books.jpg'); */
-  background-size: 100% 100%;
-  font-family: "Courier New", Courier, monospace;
-  color: white;
-  font-weight: bold;
-  box-shadow: rgba(17, 17, 26, 0.452) 0px 8px 24px,
-    rgba(17, 17, 26, 0.5) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
-  /* border-radius: 25px; */
-  /*  border: 15px solid #8eb8a0; */
-}
+  .first {
+    font-size: 150%;
+    margin: 35px 0px;
+    /* background-color: pink; */
+    /* background-image: url('../assets/books.jpg'); */
+    background-size: 100% 100%;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    font-weight: bold;
+    box-shadow: rgba(17, 17, 26, 0.452) 0px 8px 24px,
+      rgba(17, 17, 26, 0.5) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+    /* border-radius: 25px; */
+    /*  border: 15px solid #8eb8a0; */
+  }
 
-#category1 {
-  color: ivory;
-  border-radius: 25px;
-  background-color: white;
-  border: 5px solid #8eb8a0;
-  /* box-shadow: rgba(0.8, 0.8, 0.8, 0.8) 10px 5px 10px 10px; */
-  box-shadow: rgba(103, 245, 74, 0.425) 10px 5px 10px 10px;
+  #category1 {
+    color: ivory;
+    border-radius: 25px;
+    background-color: white;
+    border: 5px solid #8eb8a0;
+    /* box-shadow: rgba(0.8, 0.8, 0.8, 0.8) 10px 5px 10px 10px; */
+    box-shadow: rgba(103, 245, 74, 0.425) 10px 5px 10px 10px;
 
-  /* margin: 5px 5px 20px; */
-}
-#category2 {
-  color: ivory;
-  border-radius: 25px;
-  background-color: white;
-  border: 5px solid #8eb8a0;
-  box-shadow: rgba(103, 245, 74, 0.425) 10px 5px 10px 10px;
-  /* margin: 5px 5px 20px; */
-}
+    /* margin: 5px 5px 20px; */
+  }
+  #category2 {
+    color: ivory;
+    border-radius: 25px;
+    background-color: white;
+    border: 5px solid #8eb8a0;
+    box-shadow: rgba(103, 245, 74, 0.425) 10px 5px 10px 10px;
+    /* margin: 5px 5px 20px; */
+  }
 
-#category3 {
-  color: ivory;
-  border-radius: 25px;
-  background-color: white;
-  border: 5px solid #8eb8a0;
-  box-shadow: rgba(103, 245, 74, 0.425) 10px 5px 10px 10px;
-  /* margin: 5px 5px 0px; */
-}
+  #category3 {
+    color: ivory;
+    border-radius: 25px;
+    background-color: white;
+    border: 5px solid #8eb8a0;
+    box-shadow: rgba(103, 245, 74, 0.425) 10px 5px 10px 10px;
+    /* margin: 5px 5px 0px; */
+  }
 
-#shopping-cart {
-  padding: 0%;
-  /* box-shadow: rgba(103, 245, 74, 0.425) 10px 5px 10px 10px; */
-}
+  #shopping-cart {
+    padding: 0%;
+    /* box-shadow: rgba(103, 245, 74, 0.425) 10px 5px 10px 10px; */
+  }
 
-.mr-2 {
-  margin-left: (2 * 0.25) !important;
-  width: 700px;
-}
-hr {
-  margin: 5px 5px;
-  color: black;
-}
+  .mr-2 {
+    margin-left: (2 * 0.25) !important;
+    width: 700px;
+  }
+  hr {
+    margin: 5px 5px;
+    color: black;
+  }
 
-#picture {
-  background-color: darksalmon;
-  /*  max-width: 300px; */
-}
-#main {
-  background-color: azure;
-}
+  #picture {
+    background-color: darksalmon;
+    /*  max-width: 300px; */
+  }
+  #main {
+    background-color: azure;
+  }
 </style>
