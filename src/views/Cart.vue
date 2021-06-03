@@ -4,7 +4,7 @@
     <b-container fluid>
       <b-row>
         <b-col cols="12">
-          <div v-if="this.$store.state.cart.length === 0">
+          <div v-if="myBooks.length === 0">
             <b-card
               title="Your cart is empty"
               img-alt="Card image"
@@ -20,10 +20,7 @@
           </div>
           <div v-else>
             <b-list-group>
-              <b-list-group-item
-                v-for="product in this.$store.state.cart"
-                :key="product.isbn"
-              >
+              <b-list-group-item v-for="product in myBooks" :key="product.isbn">
                 <b-card
                   :productId="product.isbn"
                   :title="product.title"
@@ -109,16 +106,37 @@
 
 
 <script>
+import * as firebase from "../firebase.js";
 export default {
-  created() {},
+  created() {
+    this.allBooks();
+    // while (this.$store.state.user.data.uid === null) {
+    //   this.allBooks();
+    // }
+  },
   computed: {},
   data() {
     return {
+      myBooks: [],
       bild:
         "https://listimg.pinclipart.com/picdir/s/201-2018325_img-empty-shopping-cart-gif-clipart.png",
     };
   },
   methods: {
+    allBooks() {
+      console.log(this.$store.state.user.data.uid);
+      firebase.usersCollection
+        .doc(this.$store.state.user.data.uid)
+        .collection("cart")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
+            this.myBooks.push(doc.data());
+          });
+        });
+    },
     quantityPlus(id) {
       this.$store.commit("quantityPlus", id);
     },
