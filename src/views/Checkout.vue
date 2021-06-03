@@ -274,7 +274,9 @@
                     icon="x-circle-fill"
                     @click="deleteProduct(product.isbn)"
                   ></b-icon>
-                  <h6 class="text-muted text-right">${{ product.total }}</h6>
+                  <h6 class="text-muted text-right">
+                    ${{ product.price * product.quantity }}
+                  </h6>
                 </div>
               </b-list-group-item>
             </b-list-group>
@@ -339,12 +341,16 @@
     decimal
   } from 'vuelidate/lib/validators'
 
+  import * as firebace from '../firebase'
+
   export default {
     components: {},
     mixins: [validationMixin],
     data() {
       return {
-        cart: this.$store.state.cart,
+        cart: [],
+        userUid: this.$store.state.user.data.uid,
+        loggedIn: this.$store.state.user.loggedIn,
         products: this.$store.state.books,
         localCart: [],
         sum: 0,
@@ -424,16 +430,13 @@
       return this.total();
     }, */
     },
+
     created() {
-      this.total()
+      this.getCart()
+
       this.addTolocalCart()
-      this.maxPrice()
     },
-    watch: {
-      sum() {
-        // return this.total();
-      }
-    },
+
     methods: {
       print() {
         window.print()
@@ -445,6 +448,12 @@
       },
 
       onSubmit() {
+        this.addTolocalCart()
+        this.addOrder()
+
+        this.clearFirebaseCart()
+
+        // this.clearFirebaseCart()
         /* this.$v.form.$touch();
        if (this.$v.form.$anyError) {
         return;
@@ -453,15 +462,32 @@
           console.log(this.form.name)
           this.showAndHide = 'd-none'
           this.showAlert = ''
-          this.clearCart()
+          // this.clearCart()
         }
       },
 
+      /* Firebase */
       deleteProduct(id) {
-        console.log(id)
-        this.$store.commit('deleteProduct', id)
-        this.sum = 0
-        this.total()
+        if (this.loggedIn && this.userUid !== null) {
+          firebace.usersCollection
+            .doc(this.userUid)
+            .collection('cart')
+            .doc(id)
+            .delete()
+            .then(() => {
+              console.log('Document successfully deleted!')
+
+              this.total()
+            })
+            .catch((error) => {
+              console.error('Error removing document: ', error)
+            })
+        } else {
+          console.log(id)
+          this.$store.commit('deleteProduct', id)
+
+          this.total()
+        }
       },
 
       clearCart() {
@@ -469,26 +495,80 @@
       },
 
       total() {
+        this.sum = 0
         for (let i = 0; i < this.cart.length; i++) {
-          this.sum += this.cart[i].total
-          console.log(this.sum)
+          this.sum += this.cart[i].price * this.cart[i].quantity
         }
+
         return this.sum
       },
 
       addTolocalCart() {
-        this.localCart = [] //to clear localCart
-        for (let i = 0; i < this.cart.length; i++) {
+        this.localCart = []
+        this.localCart = [...this.cart]
+        /* for (let i = 0; i < this.cart.length; i++) {
           this.localCart.push(this.cart[i])
-        }
+        } */
         return this.localCart
       },
-      maxPrice() {
-        // sort by max price
-        this.products.sort(function(a, b) {
-          return a.price - b.price
-        })
-        console.log(this.products)
+
+      getCart() {
+        if (this.loggedIn) {
+          firebace.usersCollection
+            .doc(this.userUid)
+            .collection('cart')
+            .onSnapshot((querySnapshot) => {
+              this.cart = []
+
+              querySnapshot.forEach((doc) => {
+                this.cart.push(doc.data())
+
+                this.total()
+              })
+            }),
+            (error) => {
+              console.log(error)
+            }
+        } else {
+          this.cart = []
+          this.cart = this.$store.state.cart
+        }
+      },
+
+      clearFirebaseCart() {
+        for (let i = 0; i < this.cart.length; i++) {
+          const isbn = this.cart[i].isbn
+
+          firebace.usersCollection
+            .doc(this.userUid)
+            .collection('cart')
+            .doc(isbn)
+            .delete()
+            .then(() => {
+              console.log('Document successfully deleted!')
+            })
+            .catch((error) => {
+              console.error('Error removing document: ', error)
+            })
+        }
+      },
+      addOrder() {
+        const day = new Date().toISOString()
+
+        for (let i = 0; i < this.cart.length; i++) {
+          const isbn = this.cart[i].isbn
+          firebace.usersCollection
+            .doc(this.userUid)
+            .collection('orders')
+            .doc(isbn + ', ' + day)
+            .set(this.cart[i])
+            .then(() => {
+              console.log('Document successfully written!')
+            })
+            .catch((error) => {
+              console.error('Error writing document: ', error)
+            })
+        }
       }
     }
   }
