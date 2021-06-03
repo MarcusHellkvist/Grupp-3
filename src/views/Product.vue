@@ -197,16 +197,15 @@ export default {
                   })
                   .then(() => {
                     console.log("The book is created");
-                    return;
                   });
+              } else {
+                var newQuantity = sfDoc.data().quantity + 1;
+                transaction.update(sfDocRef, { quantity: newQuantity });
               }
 
               // Add one person to the city population.
               // Note: this could be done without a transaction
               //       by updating the population using FieldValue.increment()
-              console.log(sfDoc.data().quantity);
-              var newQuantity = sfDoc.data().quantity + 1;
-              transaction.update(sfDocRef, { quantity: newQuantity });
             });
           })
           .then(() => {
