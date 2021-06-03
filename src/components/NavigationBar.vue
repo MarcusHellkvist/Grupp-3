@@ -40,10 +40,17 @@
             >
           </b-row>
         </b-col>
-        <b-col class="mt-2 text-right" cols="2"
-          ><router-link to="/cart"
-            ><shopping-cart-button></shopping-cart-button></router-link
-        ></b-col>
+        <b-col class="mt-2 text-right" cols="2">
+          <div class="d-flex justify-content-around">
+            <router-link to="/Login" v-if="!user.loggedIn">Login</router-link>
+            <router-link to="" v-if="user.loggedIn">
+              <span @click="signOut">Sign Out</span>
+            </router-link>
+            <router-link to="/cart">
+              <shopping-cart-button></shopping-cart-button>
+            </router-link>
+          </div>
+        </b-col>
       </b-row>
     </b-container>
     <!-- <b-navbar toggleable="sm" type="light" variant="light">
@@ -124,6 +131,7 @@
         })
       },
       signOut() {
+        console.log('sign out')
         firebase.auth.signOut().then(() => {
           //this.$router.replace({ name: 'Home' })
         })
