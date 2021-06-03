@@ -197,8 +197,8 @@ export default {
                   })
                   .then(() => {
                     console.log("The book is created");
+                    return;
                   });
-                return;
               }
 
               // Add one person to the city population.

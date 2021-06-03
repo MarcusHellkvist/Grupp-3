@@ -107,6 +107,7 @@
 
 <script>
 import * as firebase from "../firebase.js";
+import firebase2 from "firebase";
 export default {
   created() {
     this.allBooks();
@@ -124,26 +125,63 @@ export default {
   },
   methods: {
     allBooks() {
-      console.log(this.$store.state.user.data.uid);
       firebase.usersCollection
         .doc(this.$store.state.user.data.uid)
         .collection("cart")
-        .get()
-        .then((querySnapshot) => {
+        .onSnapshot((querySnapshot) => {
+          this.myBooks = [];
           querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            // console.log(doc.id, " => ", doc.data());
             this.myBooks.push(doc.data());
           });
         });
     },
     quantityPlus(id) {
-      this.$store.commit("quantityPlus", id);
+      if (this.$store.state.user.loggedIn === true) {
+        firebase.usersCollection
+          .doc(this.$store.state.user.data.uid)
+          .collection("cart")
+          .doc(id)
+          .update({
+            quantity: firebase2.firestore.FieldValue.increment(1),
+          });
+        // this.myBooks.quantity = this.myBooks.quantity + 1;
+        console.log(this.myBooks.quantity);
+      } else {
+        console.log("fail!!!");
+      }
+
+      // this.$store.commit("quantityPlus", id);
     },
     quantityMinus(id) {
-      this.$store.commit("quantityMinus", id);
+      if (this.$store.state.user.loggedIn === true) {
+        firebase.usersCollection
+          .doc(this.$store.state.user.data.uid)
+          .collection("cart")
+          .doc(id)
+          .update({
+            quantity: firebase2.firestore.FieldValue.increment(-1),
+          });
+        // this.myBooks.quantity = this.myBooks.quantity + 1;
+        console.log(this.myBooks.quantity);
+      } else {
+        console.log("fail!!!");
+      }
+      // this.$store.commit("quantityMinus", id);
     },
     deleteProduct(id) {
+      if (this.$store.state.user.loggedIn === true) {
+        firebase.usersCollection
+          .doc(this.$store.state.user.data.uid)
+          .collection("cart")
+          .doc(id)
+          .delete()
+          .then(() => {
+            console.log("Document successfully deleted!");
+          })
+          .catch((error) => {
+            console.error("Error removing document: ", error);
+          });
+      }
       this.$store.commit("deleteProduct", id);
     },
   },
