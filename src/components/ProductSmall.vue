@@ -25,51 +25,53 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      book: {
-        isbn: this.isbn,
-        title: this.title,
-        author: this.author,
-        price: this.price,
-        image: this.image,
-      },
-    };
-  },
-  props: {
-    isbn: String,
-    title: String,
-    author: String,
-    price: Number,
-    image: String,
-  },
-  methods: {
-    buyProduct() {
-      console.log("you bought it!");
-      this.$store.commit("addToCart", this.book);
+  import store from '../store'
+  export default {
+    data() {
+      return {
+        book: {
+          isbn: this.isbn,
+          title: this.title,
+          author: this.author,
+          price: this.price,
+          image: this.image
+        }
+      }
     },
-  },
-};
+    props: {
+      isbn: String,
+      title: String,
+      author: String,
+      price: Number,
+      image: String
+    },
+    methods: {
+      buyProduct() {
+        console.log('you bought it!')
+        store.dispatch('addToCartFirestore')
+        //this.$store.commit("addToCart", this.book);
+      }
+    }
+  }
 </script>
 
 <style scoped>
-p.card-text.title {
-  font-size: 14px;
-  font-weight: bold;
-  text-align: start;
-  margin: 6px 12px 0px;
-}
-p.card-text.author {
-  font-size: 12px;
-  text-align: start;
-  margin: 0px 12px;
-}
-button {
-  margin: 24px 12px 12px;
-  font-size: 14px;
-}
-img {
-  padding: 12px 12px 0px;
-}
+  p.card-text.title {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: start;
+    margin: 6px 12px 0px;
+  }
+  p.card-text.author {
+    font-size: 12px;
+    text-align: start;
+    margin: 0px 12px;
+  }
+  button {
+    margin: 24px 12px 12px;
+    font-size: 14px;
+  }
+  img {
+    padding: 12px 12px 0px;
+  }
 </style>
