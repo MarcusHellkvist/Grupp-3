@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import * as firebase from '../firebase.js'
 
 Vue.use(Vuex)
 
@@ -168,6 +169,23 @@ export default new Vuex.Store({
         .then((response) => response.json())
         .then((data) => {
           commit('setBooks', data)
+        })
+    },
+    addToCartFirestore() {
+      // THIS WORKS! TODO - MOVE "onClick()" from Product.vue HERE
+      firebase.db
+        .collection('test')
+        .doc('test')
+        .set({
+          name: 'Los Angeles',
+          state: 'CA',
+          country: 'USA'
+        })
+        .then(() => {
+          console.log('Document successfully written!')
+        })
+        .catch((error) => {
+          console.error('Error writing document: ', error)
         })
     }
   },
