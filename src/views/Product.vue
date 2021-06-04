@@ -165,77 +165,31 @@
             console.log('Error getting document:', error)
           })
       },
-
       onClick() {
-        // var counter = 0;
-        // counter = counter + 1;
-        // this.book.quantity = Number(counter);
         if (this.$store.state.user.loggedIn === true) {
-          var sfDocRef = firebase.usersCollection
+          var docRef = firebase.usersCollection
             .doc(this.$store.state.user.data.uid)
             .collection('cart')
             .doc(this.book.isbn)
 
-          // Uncomment to initialize the doc.
-          // sfDocRef.set({ quantity: 0 });
-
-          firebase.db
-            .runTransaction((transaction) => {
-              // This code may get re-run multiple times if there are conflicts.
-              transaction.get(sfDocRef).then((sfDoc) => {
-                console.log('get document')
-                console.log('sfDocref:', sfDocRef)
-                if (!sfDoc.exists) {
-                  console.log('we are creating the document')
-                  firebase.usersCollection
-                    .doc(this.$store.state.user.data.uid)
-                    .collection('cart')
-                    .doc(this.book.isbn)
-                    .set({
-                      title: this.book.title,
-                      quantity: 1,
-                      price: this.book.price,
-                      image: this.book.image,
-                      isbn: this.book.isbn
-                    })
-                    .then(() => {
-                      console.log('The book is created')
-                    })
-                } else {
-                  console.log(sfDoc.data().quantity)
-                  var newQuantity = sfDoc.data().quantity + 1
-                  transaction.update(sfDocRef, { quantity: newQuantity })
-                }
-
-                // Add one person to the city population.
-                // Note: this could be done without a transaction
-                //       by updating the population using FieldValue.increment()
-              })
-            })
-            .then(() => {
-              console.log('Transaction successfully committed!')
-            })
-            .catch((error) => {
-              console.log('Transaction failed: ', error)
-            })
-
-          // firebase.usersCollection.doc(this.$store.state.user.data.uid).collection("cart").doc(this.book.isbn).set(this.book.quantity)
-          // return firebase.
-          //   firebase.usersCollection
-          //     .doc(this.$store.state.user.data.uid)
-          //     .collection("cart")
-          //     .doc(this.book.isbn)
-          //     .set(this.book)
-          //     .then(() => {
-          //       console.log("Document successfully written!");
-          //     })
-          //     .catch((error) => {
-          //       console.error("Error writing document: ", error);
-          //     });
-          //   console.log("User is true");
-
-          // } else {
-          //   console.log("User is false");
+          docRef.get().then((doc) => {
+            if (!doc.exists) {
+              docRef
+                .set({
+                  title: this.book.title,
+                  quantity: 1,
+                  price: this.book.price,
+                  image: this.book.image,
+                  isbn: this.book.isbn
+                })
+                .then(() => {
+                  console.log('New book added!')
+                })
+            } else {
+              console.log('Quantity updated!')
+              docRef.update({ quantity: doc.data().quantity + 1 })
+            }
+          })
         }
         /* this.$store.commit('addToCart', this.book) */
         /* this.$store.commit('quantityInCart') */
