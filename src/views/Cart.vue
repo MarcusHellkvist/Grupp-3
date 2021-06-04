@@ -109,12 +109,18 @@
   import firebase2 from 'firebase'
   export default {
     created() {
-      this.allBooks()
+      if (this.userData !== null) {
+        this.allBooks()
+      }
       // while (this.$store.state.user.data.uid === null) {
       //   this.allBooks();
       // }
     },
-    computed: {},
+    computed: {
+      userData() {
+        return this.$store.state.user.data
+      }
+    },
     data() {
       return {
         myBooks: [],
@@ -182,6 +188,13 @@
             })
         }
         this.$store.commit('deleteProduct', id)
+      }
+    },
+    watch: {
+      userData() {
+        if (this.userData !== null) {
+          this.allBooks()
+        }
       }
     }
   }

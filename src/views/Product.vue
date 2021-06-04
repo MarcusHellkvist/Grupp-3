@@ -179,11 +179,14 @@
           // Uncomment to initialize the doc.
           // sfDocRef.set({ quantity: 0 });
 
-          return firebase.db
+          firebase.db
             .runTransaction((transaction) => {
               // This code may get re-run multiple times if there are conflicts.
-              return transaction.get(sfDocRef).then((sfDoc) => {
+              transaction.get(sfDocRef).then((sfDoc) => {
+                console.log('get document')
+                console.log('sfDocref:', sfDocRef)
                 if (!sfDoc.exists) {
+                  console.log('we are creating the document')
                   firebase.usersCollection
                     .doc(this.$store.state.user.data.uid)
                     .collection('cart')
