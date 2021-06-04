@@ -41,7 +41,7 @@
       if (this.userData !== null) {
         this.quantityInCart()
         console.log('this.userData', this.userData)
-      } else {
+      } else if (this.userData === null) {
         this.numberOnCart = this.$store.state.quantityItemsInCart
         console.log('IF NOT INLOG', this.$store.state.quantityItemsInCart)
       }
@@ -50,10 +50,14 @@
     computed: {
       userData() {
         return this.$store.state.user.data
+      },
+      userDataNull() {
+        return this.$store.state.quantityItemsInCart
       }
     },
     methods: {
       quantityInCart() {
+        this.numberOnCart = 0
         if (this.$store.state.user.loggedIn === true) {
           firebase.usersCollection
             .doc(this.$store.state.user.data.uid)
@@ -67,6 +71,8 @@
               console.log('ALO TRY CART FIREBASE', this.cartQuantity)
             })
         } else {
+          this.numberOnCart = this.$store.state.quantityItemsInCart
+
           console.log('SHOPING CART AS A GUEST!!!')
         }
       },
@@ -86,10 +92,17 @@
       userData() {
         if (this.userData !== null) {
           this.quantityInCart()
-          console.log(
-            'LOOKING WATCH IN SHOPPING CART',
-            (this.numberOnCart = this.$store.state.quantityItemsInCartFirebase)
-          )
+        } else {
+          this.numberOnCart = this.$store.state.quantityItemsInCart
+          console.log('IF NOT INLOG', this.$store.state.quantityItemsInCart)
+        }
+      },
+      userDataNull() {
+        if (this.userData === null) {
+          this.numberOnCart = this.$store.state.quantityItemsInCart
+          console.log('IF NOT INLOG', this.$store.state.quantityItemsInCart)
+        } else {
+          this.quantityInCart()
         }
       }
     }
