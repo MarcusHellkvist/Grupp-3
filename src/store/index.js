@@ -86,6 +86,7 @@ export default new Vuex.Store({
       state.quantityItemsInCart += 1
       product.total = product.price
       state.cart.push(product)
+
     },
 
     quantityPlus(state, id) {

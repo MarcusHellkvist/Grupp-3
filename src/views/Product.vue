@@ -149,7 +149,6 @@
     methods: {
       getBook() {
         var docRef = firebase.booksCollection.doc(this.$route.params.isbn)
-
         docRef
           .get()
           .then((doc) => {
@@ -157,7 +156,6 @@
               console.log('Document data:', doc.data())
               this.book = doc.data()
             } else {
-              // doc.data() will be undefined in this case
               console.log('No such document!')
             }
           })
@@ -165,6 +163,7 @@
             console.log('Error getting document:', error)
           })
       },
+
       onClick() {
         if (this.$store.state.user.loggedIn === true) {
           var docRef = firebase.usersCollection
@@ -190,12 +189,12 @@
               docRef.update({ quantity: doc.data().quantity + 1 })
             }
           })
+        } else {
+          this.$store.commit('addToCart', this.book)
+          // this.$store.commit("quantityInCart");
+          // this.$store.state.cart.length++;
+          // console.log(this.numberOfItemsInCart);
         }
-        /* this.$store.commit('addToCart', this.book) */
-        /* this.$store.commit('quantityInCart') */
-
-        /* this.$store.state.cart.length++ */
-        /* console.log(this.numberOfItemsInCart) */
       }
     },
     watch: {
