@@ -342,6 +342,9 @@
   } from 'vuelidate/lib/validators'
 
   import * as firebace from '../firebase'
+  import emailjs from 'emailjs-com'
+  import { init } from 'emailjs-com'
+  init('user_GROqJdzcqEARwCHGVqGmU')
 
   export default {
     components: {},
@@ -438,6 +441,22 @@
     },
 
     methods: {
+      sendEmail() {
+        try {
+          emailjs.send(
+            'service_books',
+            'template_books',
+
+            {
+              message: 'your order will arrive soon!! ',
+              sendToEmail: this.form.email,
+              userName: this.form.name
+            }
+          )
+        } catch (error) {
+          console.log(error)
+        }
+      },
       print() {
         window.print()
       },
@@ -448,6 +467,7 @@
       },
 
       onSubmit() {
+        this.sendEmail()
         this.addTolocalCart()
         this.addOrder()
 
