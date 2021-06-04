@@ -130,15 +130,6 @@ export default new Vuex.Store({
         state.quantityItemsInCart = 0
       }
     },
-    /* Alona */
-    /*   quantityInCart(state) {
-      var counter = 0
-      for (let i = 0; i < state.cart.length; i++) {
-        counter = counter + state.cart[i].quantity
-        console.log('MY PRODUCT VUE', state.cart.length)
-      }
-      state.quantityItemsInCart = counter
-    } */
 
     changeQuantityInCart(state, counter) {
       state.quantityItemsInCartFirebase = counter
@@ -148,8 +139,6 @@ export default new Vuex.Store({
       )
       return state.quantityItemsInCartFirebase
     }
-
-    /* Alona */
   },
   actions: {
     fetchUser({ commit }, user) {
