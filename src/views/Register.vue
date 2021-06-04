@@ -5,7 +5,24 @@
       <b-col>
         <h6>Create an account</h6>
         <b-form @submit.prevent="submit" class="text-left">
-          <b-form-group label="Email address:">
+          <b-form-group label="First name:">
+            <b-form-input
+              v-model="form.firstName"
+              placeholder="Enter first name"
+              type="text"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group label="Last name:">
+            <b-form-input
+              v-model="form.lastName"
+              placeholder="Enter last name"
+              type="text"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group id="emailWarning" label="Email address:">
             <b-form-input
               v-model="form.email"
               type="email"
@@ -19,6 +36,15 @@
               v-model="form.password"
               placeholder="********"
               type="password"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group label="Address:">
+            <b-form-input
+              v-model="form.address"
+              placeholder="Enter address"
+              type="text"
               required
             ></b-form-input>
           </b-form-group>
@@ -71,11 +97,25 @@
       return {
         form: {
           email: '',
-          password: ''
-        }
+          password: '',
+          firstName: '',
+          lastName: '',
+          address: ''
+        },
+        users: []
       }
     },
     methods: {
+      emailExists() {
+        this.$bvToast.toast(`Email already exists`, {
+          title: 'Something went wrong',
+          autoHideDelay: 3000,
+          appendToast: true,
+          variant: 'danger',
+          solid: true,
+          toaster: 'b-toaster-top-center'
+        })
+      },
       submit() {
         firebase.auth
           .createUserWithEmailAndPassword(this.form.email, this.form.password)
@@ -83,7 +123,10 @@
             firebase.usersCollection
               .doc(data.user.uid)
               .set({
-                email: this.form.email
+                email: this.form.email,
+                firstName: this.form.firstName,
+                lastName: this.form.lastName,
+                address: this.form.address
               })
               .then(() => {
                 console.log('Document successfully written!')
@@ -95,9 +138,14 @@
           })
           .catch((err) => {
             console.log(err)
+            if (err.code === 'auth/email-already-in-use') {
+              this.emailExists()
+              document.getElementById('emailWarning').style.color = 'red'
+            }
           })
       }
-    }
+    },
+    watch: {}
   }
 </script>
 
