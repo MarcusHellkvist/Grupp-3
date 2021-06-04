@@ -8,6 +8,7 @@ import Category from '../views/Category.vue'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import Admin from '../views/Admin.vue'
+import Profile from '../views/Profile.vue'
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,11 @@ const routes = [
     path: '/admin',
     name: 'Admin',
     component: Admin
+  },
+  {
+    path: '/profile/:uid',
+    name: 'Profile',
+    component: Profile
   }
 ]
 

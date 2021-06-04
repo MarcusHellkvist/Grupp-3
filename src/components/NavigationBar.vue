@@ -46,6 +46,16 @@
             <router-link to="" v-if="user.loggedIn">
               <span @click="signOut">Sign Out</span>
             </router-link>
+            <router-link
+              v-if="user.loggedIn"
+              :to="{
+                name: 'Profile',
+                params: { uid: $store.state.user.data.uid }
+              }"
+            >
+              Profile
+            </router-link>
+
             <router-link to="/cart">
               <shopping-cart-button></shopping-cart-button>
             </router-link>

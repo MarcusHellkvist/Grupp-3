@@ -28,11 +28,8 @@
     name: 'ShoppingCartButton',
     data() {
       return {
-        /* quantityinCart: 0, */
         numberOnCart: 0,
         cartQuantity: []
-        /*  productsArr: this.$store.state.cart,
-        quantityinCart: 0 */
       }
     },
     /* props: {
@@ -41,21 +38,19 @@
       }
     }, */
     created() {
-      this.quantityInCart()
-    },
-    /* computed: {
-      numberOfItems() {
-        console.log('SHOPPING CART LENGTH', this.$store.state.cart.length)
-        console.log('PRODUCT QUVONTITY', this.$store.state.cart.quantity)
-        return this.$store.state.cart.length
+      if (this.userData !== null) {
+        this.quantityInCart()
+        console.log('this.userData', this.userData)
+      } else {
+        this.numberOnCart = this.$store.state.quantityItemsInCart
+        console.log('IF NOT INLOG', this.$store.state.quantityItemsInCart)
       }
-    } */
+    },
 
     computed: {
-      /* numberOfItemsFirebase() {
-        this.quantityInCart()
-        return this.$store.state.quantityItemsInCartFirebase
-      } */
+      userData() {
+        return this.$store.state.user.data
+      }
     },
     methods: {
       quantityInCart() {
@@ -72,8 +67,7 @@
               console.log('ALO TRY CART FIREBASE', this.cartQuantity)
             })
         } else {
-          this.numberOnCart = this.$store.state.quantityItemsInCart
-          console.log('SHOPING CART fail!!!', this.numberOnCart)
+          console.log('SHOPING CART AS A GUEST!!!')
         }
       },
 
@@ -89,13 +83,14 @@
       }
     },
     watch: {
-      'this.quantityinCart'(to, from) {
-        console.log(`params changed - to: ${to} from:${from}`)
-        this.quantityInCart()
-        console.log(
-          'LOOKING WATCH IN SHOPPING CART',
-          (this.numberOnCart = this.$store.state.quantityItemsInCartFirebase)
-        )
+      userData() {
+        if (this.userData !== null) {
+          this.quantityInCart()
+          console.log(
+            'LOOKING WATCH IN SHOPPING CART',
+            (this.numberOnCart = this.$store.state.quantityItemsInCartFirebase)
+          )
+        }
       }
     }
   }

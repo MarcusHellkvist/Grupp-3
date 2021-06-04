@@ -434,7 +434,7 @@
     created() {
       this.getCart()
 
-      this.addTolocalCart()
+      // this.addTolocalCart()
     },
 
     methods: {
@@ -552,15 +552,15 @@
             })
         }
       },
-      addOrder() {
-        const day = new Date().toISOString()
-
+      addBooksToOrder() {
         for (let i = 0; i < this.cart.length; i++) {
           const isbn = this.cart[i].isbn
           firebace.usersCollection
             .doc(this.userUid)
             .collection('orders')
-            .doc(isbn + ', ' + day)
+            .doc()
+            .collection('books')
+            .doc(isbn)
             .set(this.cart[i])
             .then(() => {
               console.log('Document successfully written!')
@@ -569,6 +569,43 @@
               console.error('Error writing document: ', error)
             })
         }
+      },
+      addOrder() {
+        const day = new Date().toISOString()
+
+        /*  firebace.usersCollection
+          .doc(this.userUid)
+          .collection('orders')
+          .doc()
+          .set({
+            date: day
+          })
+          .then(() => {
+
+          })
+          .catch((error) => {
+            console.error('Error writing document: ', error)
+          })
+ */
+
+        //const isbn = this.cart[i].isbn
+        firebace.usersCollection
+          .doc(this.userUid)
+          .collection('orders')
+          .doc()
+
+          .set({
+            books: this.cart,
+            date: day,
+            userUid: this.userUid,
+            address: 'Send to Me, Gatan 10 41345 Göteborg, Sweden'
+          })
+          .then(() => {
+            console.log('Document successfully written!')
+          })
+          .catch((error) => {
+            console.error('Error writing document: ', error)
+          })
       }
     }
   }
