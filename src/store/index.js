@@ -10,6 +10,7 @@ export default new Vuex.Store({
       data: null
     },
     quantityItemsInCart: 0,
+    quantityItemsInCartFirebase: 0,
     trending: [],
     books: [],
     genres: [],
@@ -127,7 +128,7 @@ export default new Vuex.Store({
         console.log('clear cart !')
         state.quantityItemsInCart = 0
       }
-    }
+    },
     /* Alona */
     /*   quantityInCart(state) {
       var counter = 0
@@ -137,6 +138,15 @@ export default new Vuex.Store({
       }
       state.quantityItemsInCart = counter
     } */
+
+    changeQuantityInCart(state, counter) {
+      state.quantityItemsInCartFirebase = counter
+      console.log(
+        'state.quantityItemsInCartFirebase',
+        state.quantityItemsInCartFirebase
+      )
+      return state.quantityItemsInCartFirebase
+    }
 
     /* Alona */
   },
