@@ -1,68 +1,75 @@
 <template>
   <b-container>
-    <b-row>
-      <b-col></b-col>
-      <b-col>
-        <h6>Create an account</h6>
-        <b-form @submit.prevent="submit" class="text-left">
-          <b-form-group label="First name:">
-            <b-form-input
-              v-model="form.firstName"
-              placeholder="Enter first name"
-              type="text"
-              required
-            ></b-form-input>
-          </b-form-group>
-          <b-form-group label="Last name:">
-            <b-form-input
-              v-model="form.lastName"
-              placeholder="Enter last name"
-              type="text"
-              required
-            ></b-form-input>
-          </b-form-group>
+    <b-row class="register" align-h="center">
+      <b-col col lg="5" md="7" sm="10" cols="10">
+        <b-card
+          header="Create an account"
+          border-variant="primary"
+          header-bg-variant="primary"
+          header-text-variant="white"
+        >
+          <b-card-text>
+            <b-form @submit.prevent="submit" class="text-left">
+              <b-form-group label="First name:">
+                <b-form-input
+                  v-model="form.firstName"
+                  placeholder="Enter first name"
+                  type="text"
+                  required
+                ></b-form-input>
+              </b-form-group>
+              <b-form-group label="Last name:">
+                <b-form-input
+                  v-model="form.lastName"
+                  placeholder="Enter last name"
+                  type="text"
+                  required
+                ></b-form-input>
+              </b-form-group>
 
-          <b-form-group id="emailWarning" label="Email address:">
-            <b-form-input
-              v-model="form.email"
-              type="email"
-              placeholder="Enter email"
-              required
-            ></b-form-input>
-          </b-form-group>
+              <b-form-group id="emailWarning" label="Email address:">
+                <b-form-input
+                  v-model="form.email"
+                  type="email"
+                  placeholder="Enter email"
+                  required
+                ></b-form-input>
+              </b-form-group>
 
-          <b-form-group label="Password:">
-            <b-form-input
-              v-model="form.password"
-              placeholder="********"
-              type="password"
-              required
-            ></b-form-input>
-          </b-form-group>
+              <b-form-group label="Password:">
+                <b-form-input
+                  v-model="form.password"
+                  placeholder="********"
+                  type="password"
+                  required
+                ></b-form-input>
+              </b-form-group>
 
-          <b-form-group label="Address:">
-            <b-form-input
-              v-model="form.address"
-              placeholder="Enter address"
-              type="text"
-              required
-            ></b-form-input>
-          </b-form-group>
+              <b-form-group label="Address:">
+                <b-form-input
+                  v-model="form.address"
+                  placeholder="Enter address"
+                  type="text"
+                  required
+                ></b-form-input>
+              </b-form-group>
 
-          <b-button
-            type="submit"
-            variant="primary"
-            class="w-100 btn btn-primary btn-md"
-            >Login</b-button
-          >
-        </b-form>
-        <hr />
-        <h6>
-          Already have an account?
-          <router-link to="/login">Login here..</router-link>
-        </h6>
+              <b-button
+                type="submit"
+                variant="primary"
+                class="w-100 btn btn-primary btn-md"
+                >Login</b-button
+              >
+            </b-form>
+          </b-card-text>
+          <template #footer>
+            <small class="text-muted">
+              Already have an account?
+              <router-link to="/login">Login here..</router-link></small
+            >
+          </template>
+        </b-card>
       </b-col>
-      <b-col></b-col>
     </b-row>
 
     <!--  <b-row>
@@ -149,4 +156,8 @@
   }
 </script>
 
-<style></style>
+<style scoped>
+  .register {
+    padding-top: 2rem;
+  }
+</style>
