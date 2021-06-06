@@ -1,6 +1,5 @@
 <template>
   <div v-if="book">
-    {{ reviews }}
     <b-container class="mt-4">
       <b-row no-gutters style="background-color: white" class="pr-2">
         <b-col cols="12" md="3" class="" style="">
