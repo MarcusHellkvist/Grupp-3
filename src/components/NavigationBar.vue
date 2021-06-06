@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="user.loggedIn">
-      {{ user.data.uid }}
+      {{ user.data.uid }} {{ user.data.displayName }}
       <b-button @click="signOut">Sign Out</b-button>
     </div>
     <b-container fluid class="nav-container">

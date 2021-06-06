@@ -127,6 +127,13 @@
         firebase.auth
           .createUserWithEmailAndPassword(this.form.email, this.form.password)
           .then((data) => {
+            data.user
+              .updateProfile({
+                displayName: `${this.form.firstName} ${this.form.lastName}`
+              })
+              .then(() => {
+                console.log('displayName updated')
+              })
             firebase.usersCollection
               .doc(data.user.uid)
               .set({
