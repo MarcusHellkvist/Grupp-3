@@ -718,8 +718,6 @@ export default {
         .collection("orders")
         .doc()
         .set({
-          date: day,
-
           books: this.cart,
           date: day,
           userUid: this.$store.state.user.data.uid,
