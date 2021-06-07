@@ -264,10 +264,13 @@
     <b-container>
       <b-row cols="12" md="3">
         <b-col class="mt-4">
-          <!-- <carousel-of-interest
+          <carousel-of-interest
             :booksInCarousel="this.$store.state.books.slice(0, 8)"
             title="New books"
-          ></carousel-of-interest> -->
+            :author="book.author"
+            :genre="book.genre"
+            :isbn="book.isbn"
+          ></carousel-of-interest>
         </b-col>
       </b-row>
     </b-container>
@@ -278,9 +281,9 @@
   import * as firebase from '../firebase.js'
   import { mapGetters } from 'vuex'
 
-  //import CarouselOfInterest from '../components/CarouselOfInterest.vue'
+  import CarouselOfInterest from '../components/CarouselOfInterest.vue'
   export default {
-    components: {},
+    components: { CarouselOfInterest },
     name: 'Product',
     data() {
       return {
