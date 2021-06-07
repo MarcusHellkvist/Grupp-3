@@ -1,7 +1,12 @@
 <template>
   <div v-if="book">
     <b-container class="mt-4">
-      <b-row no-gutters style="background-color: white" class="pr-2">
+      <b-row
+        id="id_for_main_container"
+        no-gutters
+        style="background-color: white"
+        class="pr-2"
+      >
         <b-col cols="12" md="3" class="" style="">
           <img style="width: 95%" :src="book.image" alt="BOOK PHOTO" />
         </b-col>
@@ -22,9 +27,7 @@
 
             <b-col id="authorStyle" class="ml-4 mb-4" cols="12" md="12">
               Author: {{ book.author }}
-              <!-- <hr
-            /> --></b-col
-            >
+            </b-col>
 
             <b-col
               class="ml-4"
@@ -261,9 +264,17 @@
         </b-col>
       </b-row>
     </b-container>
+
     <b-container>
       <b-row cols="12" md="3">
-        <b-col class="mt-4">
+        <b-col>
+          <h1 id="h1_for_carousel_of_interest">
+            It might interest you:
+          </h1>
+        </b-col>
+      </b-row>
+      <b-row id="id_for_carousel_of_interest" cols="12" md="3">
+        <b-col class="mt-4 pb-4">
           <carousel-of-interest
             :booksInCarousel="this.$store.state.books.slice(0, 8)"
             title="New books"
@@ -445,6 +456,27 @@
 </script>
 
 <style scoped>
+  #id_for_carousel_of_interest {
+    margin: 0px 0px 0px;
+    background-color: rgba(255, 255, 255, 0.616);
+    /* border-bottom-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-width: 1px;
+    border-color: #dbd9d8; */
+  }
+  #id_for_main_container {
+    /* border-style: solid;
+    border-width: 1px;
+    border-color: #dbd9d8; */
+  }
+  #h1_for_carousel_of_interest {
+    margin: 55px 0px 0px;
+    background-color: rgba(255, 255, 255, 0.616);
+    border-bottom-style: solid;
+    border-width: 1px;
+    border-color: #dbd9d8;
+  }
   #plotStyle {
     border-style: solid;
     border-width: 1px;

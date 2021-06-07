@@ -74,37 +74,6 @@
       onSlideEnd() {
         this.sliding = false
       }
-
-      /*      lookingForRightObject() {
-        for (let i = 0; i < this.fireBooks.length; i++) {
-          if (this.fireBooks[i].isbn === this.isbn) {
-            this.oneObject = {
-              author: this.productsArr[i].author,
-              genre: this.productsArr[i].genre,
-
-              title: this.productsArr[i].title,
-              price: this.productsArr[i].price,
-              image: this.productsArr[i].image
-            }
-
-            console.log('MY OBJECT', this.oneObject)
-          }
-        }
-        return this.oneObject
-      }, */
-
-      /* localBooks() {
-        for (let i = 0; i < this.fireBooks.length; i++) {
-          if (
-            this.oneObject.genre === this.fireBooks.genre ||
-            this.oneObject.author === this.fireBooks.author
-          ) {
-            this.books.push(this.fireBooks[i])
-          }
-        }
-        console.log('THIS BOOK ON ALONA VUE', this.books)
-        return this.books
-      } */
     },
     computed: {
       showProducts() {
@@ -120,27 +89,4 @@
     }
   }
 </script>
-<style scoped>
-  .carousel >>> .carousel-item {
-    height: 375px;
-  }
-  .carousel >>> .carousel-indicators li {
-    background-color: #403042;
-  }
-  .carousel >>> .carousel-control-prev-icon {
-    height: 40px;
-    width: 40px;
-    outline: black;
-    background-size: 35%, 35%;
-    border-radius: 50%;
-    background-color: #403042;
-  }
-  .carousel >>> .carousel-control-next-icon {
-    height: 40px;
-    width: 40px;
-    outline: black;
-    background-size: 35%, 35%;
-    border-radius: 50%;
-    background-color: #403042;
-  }
-</style>
+<style scoped></style>
