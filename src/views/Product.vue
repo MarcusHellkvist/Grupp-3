@@ -339,34 +339,12 @@
 
       onClick() {
         if (this.$store.state.user.loggedIn === true) {
-          var docRef = firebase.usersCollection
-            .doc(this.$store.state.user.data.uid)
-            .collection('cart')
-            .doc(this.book.isbn)
-
-          docRef.get().then((doc) => {
-            if (!doc.exists) {
-              docRef
-                .set({
-                  title: this.book.title,
-                  quantity: 1,
-                  price: this.book.price,
-                  image: this.book.image,
-                  isbn: this.book.isbn
-                })
-                .then(() => {
-                  console.log('New book added!')
-                })
-            } else {
-              console.log('Quantity updated!')
-              docRef.update({ quantity: doc.data().quantity + 1 })
-            }
-          })
+          firebase.addItemToCartFirebase(
+            this.book,
+            this.$store.state.user.data.uid
+          )
         } else {
           this.$store.commit('addToCart', this.book)
-          // this.$store.commit("quantityInCart");
-          // this.$store.state.cart.length++;
-          // console.log(this.numberOfItemsInCart);
         }
       },
 
@@ -404,7 +382,6 @@
 
         // TODO - CHECK FORM VALIDATION!
 
-        // TODO - ADD REVIEW TO FIREBASE
         firebase.booksCollection
           .doc(this.book.isbn)
           .collection('reviews')

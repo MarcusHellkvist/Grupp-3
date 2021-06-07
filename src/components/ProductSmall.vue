@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import store from '../store'
+  import * as firebase from '../firebase.js'
   export default {
     data() {
       return {
@@ -47,9 +47,16 @@
     },
     methods: {
       buyProduct() {
-        console.log('you bought it!')
-        store.dispatch('addToCartFirestore')
-        //this.$store.commit("addToCart", this.book);
+        if (this.$store.state.user.loggedIn === true) {
+          console.log('You are signed in!')
+          firebase.addItemToCartFirebase(
+            this.book,
+            this.$store.state.user.data.uid
+          )
+        } else {
+          console.log('You are not signed in!')
+          this.$store.commit('addToCart', this.book)
+        }
       }
     }
   }
