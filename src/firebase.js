@@ -24,5 +24,34 @@ const booksCollection = db.collection('books')
 const genresCollection = db.collection('genres')
 const vouchersCollection = db.collection('voucher')
 
+// functions
+function addItemToCartFirebase(book, uid) {
+  var docRef = usersCollection
+    .doc(uid)
+    .collection('cart')
+    .doc(book.isbn)
+
+  docRef.get().then((doc) => {
+    if (!doc.exists) {
+      docRef
+        .set({
+          title: book.title,
+          quantity: 1,
+          price: book.price,
+          image: book.image,
+          isbn: book.isbn
+        })
+        .then(() => {
+          console.log('New book added!')
+        })
+    } else {
+      console.log('Quantity updated!')
+      docRef.update({ quantity: doc.data().quantity + 1 })
+    }
+  })
+}
+
 // export utils/ref
-export { auth, db, usersCollection, booksCollection, genresCollection, vouchersCollection }
+
+export { auth, db, usersCollection, booksCollection, genresCollection, vouchersCollection, addItemToCartFirebase }
+

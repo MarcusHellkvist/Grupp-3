@@ -334,7 +334,8 @@
     </div>
 
     <!-- success alert -->
-    <div :class="showAlert">
+
+    <div :class="showAlert" ref="successAlert">
       <b-alert show variant="success">
         <h4>SUCCESS!</h4>
         <p>Aww yeah, you will get order soon!!! yahhhh</p>
@@ -395,14 +396,18 @@ export default {
       voucherArray: [],
       rightVoucher: false,
       voucherCode: "",
+      //successAlert: this.$el.innerHTML,
+      div: null,
+      day: new Date().toDateString(),
       cart: [],
-      userUid: this.$store.state.user.data.uid,
-      loggedIn: this.$store.state.user.loggedIn,
+      //userUid: this.$store.state.user.data.uid,
+      //loggedIn: this.$store.state.user.loggedIn,
       products: this.$store.state.books,
       localCart: [],
       sum: 0,
       showAndHide: null,
       showAlert: "d-none",
+      item: "",
 
       cardDateMonth: [
         { value: null, text: "Month.." },
@@ -445,6 +450,7 @@ export default {
       },
     };
   },
+
   validations: {
     form: {
       name: {
@@ -476,6 +482,9 @@ export default {
     /* somchange() {
       return this.total();
     }, */
+  },
+  mounted() {
+    this.div = document.getElementById("test");
   },
 
   created() {
@@ -543,171 +552,224 @@ export default {
       window.print();
     },
 
-    validateState(input) {
-      const { $dirty, $error } = this.$v.form[input];
-      return $dirty ? !$error : null;
-    },
+    methods: {
+      sendEmail() {
+        var container = document.createElement("span");
+        container = "test container";
 
-    onSubmit() {
-      this.sendEmail();
-      this.addTolocalCart();
-      this.addOrder();
+        console.log(container);
 
-      this.clearFirebaseCart();
+        try {
+          emailjs.send(
+            "service_books",
+            "template_books",
 
-      // this.clearFirebaseCart()
-      /* this.$v.form.$touch();
-       if (this.$v.form.$anyError) {
-        return;
-      } */
-      if (this.cart.length > 0) {
-        console.log(this.form.name);
-        this.showAndHide = "d-none";
-        this.showAlert = "";
-        // this.clearCart()
-      }
-    },
+            {
+              sendToEmail: this.form.email,
+              userName: this.form.name,
+              HTML: `
+               <div>
+               <h1>ORDER CONFIRMATION</h1>
+                <h3>Thank you for your order</h3>
+                <h6>We have received your order and will contact you as soon as your package is shipped, You can find you purchase information below.</h6>
+                <h4>Order Summary</h4>
+                <h4>Date ${this.day}</h4>
+                <P>Book ${this.cart[0].title} and ${this.cart.length} item/s has shepped! to this address ${this.form.address}
+                <div >${container}</div>
+                .
+                For more info check your profile history orders</P>
+                </div>
+              `,
+            }
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      print() {
+        window.print();
+      },
 
-    /* Firebase */
-    deleteProduct(id) {
-      if (this.loggedIn && this.userUid !== null) {
-        firebace.usersCollection
-          .doc(this.userUid)
-          .collection("cart")
-          .doc(id)
-          .delete()
-          .then(() => {
-            console.log("Document successfully deleted!");
+      validateState(input) {
+        const { $dirty, $error } = this.$v.form[input];
+        return $dirty ? !$error : null;
+      },
 
-            this.total();
-          })
-          .catch((error) => {
-            console.error("Error removing document: ", error);
-          });
-      } else {
-        console.log(id);
-        this.$store.commit("deleteProduct", id);
+      onSubmit() {
+        console.log(this.cart[0].title);
+        console.log(this.localCart);
 
-        this.total();
-      }
-    },
+        this.addTolocalCart();
 
-    clearCart() {
-      this.$store.commit("clearCart");
-    },
+        this.addOrder();
+        this.sendEmail();
+        this.clearFirebaseCart();
 
-    total() {
-      this.sum = 0;
-      for (let i = 0; i < this.cart.length; i++) {
-        this.sum += this.cart[i].price * this.cart[i].quantity;
-      }
+        // this.clearFirebaseCart()
+        /* this.$v.form.$touch();
+        if (this.$v.form.$anyError) {
+         return;
+       } */
+        if (this.cart.length > 0) {
+          console.log(this.form.name);
+          this.showAndHide = "d-none";
+          this.showAlert = "";
+          // this.clearCart()
+        }
+      },
 
-      return this.sum;
-    },
-
-    addTolocalCart() {
-      this.localCart = [];
-      this.localCart = [...this.cart];
-      /* for (let i = 0; i < this.cart.length; i++) {
-          this.localCart.push(this.cart[i])
-        } */
-      return this.localCart;
-    },
-
-    getCart() {
-      if (this.loggedIn) {
-        firebace.usersCollection
-          .doc(this.userUid)
-          .collection("cart")
-          .onSnapshot((querySnapshot) => {
-            this.cart = [];
-
-            querySnapshot.forEach((doc) => {
-              this.cart.push(doc.data());
+      /* Firebase */
+      deleteProduct(id) {
+        if (this.loggedIn && this.$store.state.user.data.uid !== null) {
+          firebace.usersCollection
+            .doc(this.$store.state.user.data.uid)
+            .collection("cart")
+            .doc(id)
+            .delete()
+            .then(() => {
+              console.log("Document successfully deleted!");
 
               this.total();
+            })
+            .catch((error) => {
+              console.error("Error removing document: ", error);
             });
-          }),
-          (error) => {
-            console.log(error);
-          };
-      } else {
-        this.cart = [];
-        this.cart = this.$store.state.cart;
-      }
-    },
+        } else {
+          console.log(id);
+          this.$store.commit("deleteProduct", id);
 
-    clearFirebaseCart() {
-      for (let i = 0; i < this.cart.length; i++) {
-        const isbn = this.cart[i].isbn;
+          this.total();
+        }
+        // .catch((error) => {
+        //   console.error("Error removing document: ", error);
+        // });
+        // } else {
+        //   console.log(id);
+        //   this.$store.commit("deleteProduct", id);
+
+        //   this.total();
+        // }
+      },
+
+      clearCart() {
+        this.$store.commit("clearCart");
+      },
+
+      total() {
+        this.sum = 0;
+        for (let i = 0; i < this.cart.length; i++) {
+          this.sum += this.cart[i].price * this.cart[i].quantity;
+        }
+
+        return this.sum;
+      },
+
+      addTolocalCart() {
+        this.localCart = [];
+        this.localCart = [...this.cart];
+        /* for (let i = 0; i < this.cart.length; i++) {
+           this.localCart.push(this.cart[i])
+         } */
+        return this.localCart;
+      },
+
+      getCart() {
+        if (this.loggedIn) {
+          firebace.usersCollection
+            .doc(this.$store.state.user.data.uid)
+            .collection("cart")
+            .onSnapshot((querySnapshot) => {
+              this.cart = [];
+
+              querySnapshot.forEach((doc) => {
+                this.cart.push(doc.data());
+
+                this.total();
+              });
+            }),
+            (error) => {
+              console.log(error);
+            };
+        } else {
+          this.cart = [];
+          this.cart = this.$store.state.cart;
+        }
+      },
+
+      clearFirebaseCart() {
+        for (let i = 0; i < this.cart.length; i++) {
+          const isbn = this.cart[i].isbn;
+
+          firebace.usersCollection
+            .doc(this.$store.state.user.data.uid)
+            .collection("cart")
+            .doc(isbn)
+            .delete()
+            .then(() => {
+              console.log("Document successfully deleted!");
+            })
+            .catch((error) => {
+              console.error("Error removing document: ", error);
+            });
+        }
+      },
+      addBooksToOrder() {
+        for (let i = 0; i < this.cart.length; i++) {
+          const isbn = this.cart[i].isbn;
+          firebace.usersCollection
+            .doc(this.$store.state.user.data.uid)
+            .collection("orders")
+            .doc()
+            .collection("books")
+            .doc(isbn)
+            .set(this.cart[i])
+            .then(() => {
+              console.log("Document successfully written!");
+            })
+            .catch((error) => {
+              console.error("Error writing document: ", error);
+            });
+        }
+      },
+      addOrder() {
+        const day = new Date().toDateString();
 
         firebace.usersCollection
-          .doc(this.userUid)
-          .collection("cart")
-          .doc(isbn)
-          .delete()
-          .then(() => {
-            console.log("Document successfully deleted!");
+          .doc(this.$store.state.user.data.uid)
+          .collection("orders")
+          .doc()
+          .set({
+            date: day,
+
+            books: this.cart,
+            date: day,
+            userUid: this.$store.state.user.data.uid,
+            address: "Send to Me, Gatan 10 41345 Göteborg, Sweden",
           })
+          .then(() => {})
           .catch((error) => {
-            console.error("Error removing document: ", error);
+            console.error("Error writing document: ", error);
           });
-      }
-    },
-    addBooksToOrder() {
-      for (let i = 0; i < this.cart.length; i++) {
-        const isbn = this.cart[i].isbn;
+
+        //const isbn = this.cart[i].isbn
         firebace.usersCollection
           .doc(this.userUid)
           .collection("orders")
           .doc()
-          .collection("books")
-          .doc(isbn)
-          .set(this.cart[i])
+
+          .set({
+            books: this.cart,
+            date: day,
+            userUid: this.userUid,
+            address: "Send to Me, Gatan 10 41345 Göteborg, Sweden",
+          })
           .then(() => {
             console.log("Document successfully written!");
           })
           .catch((error) => {
             console.error("Error writing document: ", error);
           });
-      }
-    },
-    addOrder() {
-      const day = new Date().toISOString();
-
-      /*  firebace.usersCollection
-          .doc(this.userUid)
-          .collection('orders')
-          .doc()
-          .set({
-            date: day
-          })
-          .then(() => {
-
-          })
-          .catch((error) => {
-            console.error('Error writing document: ', error)
-          })
- */
-
-      //const isbn = this.cart[i].isbn
-      firebace.usersCollection
-        .doc(this.userUid)
-        .collection("orders")
-        .doc()
-
-        .set({
-          books: this.cart,
-          date: day,
-          userUid: this.userUid,
-          address: "Send to Me, Gatan 10 41345 Göteborg, Sweden",
-        })
-        .then(() => {
-          console.log("Document successfully written!");
-        })
-        .catch((error) => {
-          console.error("Error writing document: ", error);
-        });
+      },
     },
   },
 };
