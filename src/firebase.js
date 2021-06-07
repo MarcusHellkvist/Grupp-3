@@ -22,6 +22,7 @@ const db = firebase.firestore()
 const usersCollection = db.collection('users')
 const booksCollection = db.collection('books')
 const genresCollection = db.collection('genres')
+const vouchersCollection = db.collection('voucher')
 
 // export utils/ref
-export { auth, db, usersCollection, booksCollection, genresCollection }
+export { auth, db, usersCollection, booksCollection, genresCollection, vouchersCollection }
