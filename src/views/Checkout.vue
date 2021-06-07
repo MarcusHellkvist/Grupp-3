@@ -294,7 +294,8 @@
     </div>
 
     <!-- success alert -->
-    <div :class="showAlert">
+
+    <div :class="showAlert" ref="successAlert">
       <b-alert show variant="success">
         <h4>SUCCESS!</h4>
         <p>Aww yeah, you will get order soon!!! yahhhh</p>
@@ -351,14 +352,18 @@
     mixins: [validationMixin],
     data() {
       return {
+        //successAlert: this.$el.innerHTML,
+        div: null,
+        day: new Date().toDateString(),
         cart: [],
-        userUid: this.$store.state.user.data.uid,
-        loggedIn: this.$store.state.user.loggedIn,
+        //userUid: this.$store.state.user.data.uid,
+        //loggedIn: this.$store.state.user.loggedIn,
         products: this.$store.state.books,
         localCart: [],
         sum: 0,
         showAndHide: null,
         showAlert: 'd-none',
+        item: '',
 
         cardDateMonth: [
           { value: null, text: 'Month..' },
@@ -430,10 +435,12 @@
     },
     computed: {
       /* somchange() {
-      return this.total();
-    }, */
+       return this.total();
+     }, */
     },
-
+    mounted() {
+      this.div = document.getElementById('test')
+    },
     created() {
       this.getCart()
 
@@ -442,15 +449,32 @@
 
     methods: {
       sendEmail() {
+        var container = document.createElement('span')
+        container = 'test container'
+
+        console.log(container)
+
         try {
           emailjs.send(
             'service_books',
             'template_books',
 
             {
-              message: 'your order will arrive soon!! ',
               sendToEmail: this.form.email,
-              userName: this.form.name
+              userName: this.form.name,
+              HTML: `
+               <div>
+               <h1>ORDER CONFIRMATION</h1>
+                <h3>Thank you for your order</h3>
+                <h6>We have received your order and will contact you as soon as your package is shipped, You can find you purchase information below.</h6>
+                <h4>Order Summary</h4>
+                <h4>Date ${this.day}</h4>
+                <P>Book ${this.cart[0].title} and ${this.cart.length} item/s has shepped! to this address ${this.form.address}
+                <div >${container}</div>
+                .
+                For more info check your profile history orders</P>
+                </div>
+              `
             }
           )
         } catch (error) {
@@ -467,17 +491,20 @@
       },
 
       onSubmit() {
-        this.sendEmail()
-        this.addTolocalCart()
-        this.addOrder()
+        console.log(this.cart[0].title)
+        console.log(this.localCart)
 
+        this.addTolocalCart()
+
+        this.addOrder()
+        this.sendEmail()
         this.clearFirebaseCart()
 
         // this.clearFirebaseCart()
         /* this.$v.form.$touch();
-       if (this.$v.form.$anyError) {
-        return;
-      } */
+        if (this.$v.form.$anyError) {
+         return;
+       } */
         if (this.cart.length > 0) {
           console.log(this.form.name)
           this.showAndHide = 'd-none'
@@ -488,9 +515,9 @@
 
       /* Firebase */
       deleteProduct(id) {
-        if (this.loggedIn && this.userUid !== null) {
+        if (this.loggedIn && this.$store.state.user.data.uid !== null) {
           firebace.usersCollection
-            .doc(this.userUid)
+            .doc(this.$store.state.user.data.uid)
             .collection('cart')
             .doc(id)
             .delete()
@@ -527,15 +554,15 @@
         this.localCart = []
         this.localCart = [...this.cart]
         /* for (let i = 0; i < this.cart.length; i++) {
-          this.localCart.push(this.cart[i])
-        } */
+           this.localCart.push(this.cart[i])
+         } */
         return this.localCart
       },
 
       getCart() {
         if (this.loggedIn) {
           firebace.usersCollection
-            .doc(this.userUid)
+            .doc(this.$store.state.user.data.uid)
             .collection('cart')
             .onSnapshot((querySnapshot) => {
               this.cart = []
@@ -560,7 +587,7 @@
           const isbn = this.cart[i].isbn
 
           firebace.usersCollection
-            .doc(this.userUid)
+            .doc(this.$store.state.user.data.uid)
             .collection('cart')
             .doc(isbn)
             .delete()
@@ -576,7 +603,7 @@
         for (let i = 0; i < this.cart.length; i++) {
           const isbn = this.cart[i].isbn
           firebace.usersCollection
-            .doc(this.userUid)
+            .doc(this.$store.state.user.data.uid)
             .collection('orders')
             .doc()
             .collection('books')
@@ -591,33 +618,17 @@
         }
       },
       addOrder() {
-        const day = new Date().toISOString()
+        const day = new Date().toDateString()
 
-        /*  firebace.usersCollection
-          .doc(this.userUid)
-          .collection('orders')
-          .doc()
-          .set({
-            date: day
-          })
-          .then(() => {
-
-          })
-          .catch((error) => {
-            console.error('Error writing document: ', error)
-          })
- */
-
-        //const isbn = this.cart[i].isbn
         firebace.usersCollection
-          .doc(this.userUid)
+          .doc(this.$store.state.user.data.uid)
           .collection('orders')
           .doc()
 
           .set({
             books: this.cart,
             date: day,
-            userUid: this.userUid,
+            userUid: this.$store.state.user.data.uid,
             address: 'Send to Me, Gatan 10 41345 Göteborg, Sweden'
           })
           .then(() => {
