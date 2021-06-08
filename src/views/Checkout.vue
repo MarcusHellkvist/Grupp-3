@@ -4,6 +4,7 @@
       <!-- head -->
       <div class="text-center">
         <h1>Checkout</h1>
+
         <h5>add your address and card to checkout...</h5>
         {{ $v.form.name.$model }}
       </div>
@@ -540,23 +541,18 @@
           const bookTitle = this.cart[i].title
           const bookPrice = this.cart[i].price
 
-          htmlFormat += `<tr>
-            <td
-              style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;"
-              align="left"
-              width="75%"
-            >
-              ${bookTitle}
-            </td>
-            <td
-              style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;"
-              align="left"
-              width="25%"
-            >
-              ${bookPrice}
-            </td>
-          </tr>`
+          htmlFormat += `
+            <tr>
+                <td width="40%">
+                    <h5>${bookTitle}</h5>
+                </td>
+                <td width="20%">
+                    <h5>$${bookPrice}</h5>
+                </td>
+            </tr>
+`
         }
+
         return htmlFormat
       }
     },
@@ -591,7 +587,7 @@
         firebace.vouchersCollection.get().then((vouchers) => {
           vouchers.forEach((doc) => {
             this.voucherArray.push(doc.data())
-            console.log(doc.data())
+            //console.log(doc.data())
           })
         })
       },
@@ -631,10 +627,10 @@
             'template_books',
 
             {
-              sendToEmail: this.form.email,
               userName: this.form.name,
-              HTML: '',
-              row: this.orderList
+              row: this.orderList,
+              sum: this.sum,
+              sendToEmail: this.form.email
             }
           )
         } catch (error) {
@@ -651,20 +647,18 @@
       },
 
       onSubmit() {
-        this.addTolocalCart()
+        // this.addTolocalCart()
 
-        this.addOrder()
+        // this.addOrder()
         this.sendEmail()
-
-        this.clearFirebaseCart()
+        // this.clearFirebaseCart()
 
         // this.clearFirebaseCart()
         /* this.$v.form.$touch();
-        if (this.$v.form.$anyError) {
-         return;
-       } */
+          if (this.$v.form.$anyError) {
+           return;
+         } */
         if (this.cart.length > 0) {
-          console.log(this.form.name)
           this.showAndHide = 'd-none'
           this.showAlert = ''
           // this.clearCart()
@@ -724,8 +718,8 @@
         this.localCart = []
         this.localCart = [...this.cart]
         /* for (let i = 0; i < this.cart.length; i++) {
-           this.localCart.push(this.cart[i])
-         } */
+             this.localCart.push(this.cart[i])
+           } */
         return this.localCart
       },
 
