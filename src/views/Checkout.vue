@@ -479,9 +479,31 @@
       }
     },
     computed: {
-      /* somchange() {
-      return this.total();
-    }, */
+      orderList() {
+        var htmlFormat = ''
+        for (let i = 0; i < this.cart.length; i++) {
+          const bookTitle = this.cart[i].title
+          const bookPrice = this.cart[i].price
+
+          htmlFormat += `<tr>
+            <td
+              style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;"
+              align="left"
+              width="75%"
+            >
+              ${bookTitle}
+            </td>
+            <td
+              style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;"
+              align="left"
+              width="25%"
+            >
+              ${bookPrice}
+            </td>
+          </tr>`
+        }
+        return htmlFormat
+      }
     },
     mounted() {
       this.div = document.getElementById('test')
@@ -533,11 +555,6 @@
         // }
       },
       sendEmail() {
-        var container = document.createElement('span')
-        container = 'test container'
-
-        console.log(container)
-
         try {
           emailjs.send(
             'service_books',
@@ -546,19 +563,8 @@
             {
               sendToEmail: this.form.email,
               userName: this.form.name,
-              HTML: `
-               <div>
-               <h1>ORDER CONFIRMATION</h1>
-                <h3>Thank you for your order</h3>
-                <h6>We have received your order and will contact you as soon as your package is shipped, You can find you purchase information below.</h6>
-                <h4>Order Summary</h4>
-                <h4>Date ${this.day}</h4>
-                <P>Book ${this.cart[0].title} and ${this.cart.length} item/s has shepped! to this address ${this.form.address}
-                <div >${container}</div>
-                .
-                For more info check your profile history orders</P>
-                </div>
-              `
+              HTML: '',
+              row: this.orderList
             }
           )
         } catch (error) {
@@ -575,13 +581,11 @@
       },
 
       onSubmit() {
-        console.log(this.cart[0].title)
-        console.log(this.localCart)
-
         this.addTolocalCart()
 
         this.addOrder()
         this.sendEmail()
+
         this.clearFirebaseCart()
 
         // this.clearFirebaseCart()
@@ -666,6 +670,7 @@
               querySnapshot.forEach((doc) => {
                 this.cart.push(doc.data())
               })
+              this.total()
             }),
             (error) => {
               console.log(error)
@@ -673,8 +678,8 @@
         } else {
           this.cart = []
           this.cart = this.$store.state.cart
+          this.total()
         }
-        this.total()
       },
 
       clearFirebaseCart() {
@@ -726,25 +731,6 @@
             address: 'Send to Me, Gatan 10 41345 Göteborg, Sweden'
           })
           .then(() => {})
-          .catch((error) => {
-            console.error('Error writing document: ', error)
-          })
-
-        //const isbn = this.cart[i].isbn
-        firebace.usersCollection
-          .doc(this.userUid)
-          .collection('orders')
-          .doc()
-
-          .set({
-            books: this.cart,
-            date: day,
-            userUid: this.userUid,
-            address: 'Send to Me, Gatan 10 41345 Göteborg, Sweden'
-          })
-          .then(() => {
-            console.log('Document successfully written!')
-          })
           .catch((error) => {
             console.error('Error writing document: ', error)
           })
