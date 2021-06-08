@@ -19,10 +19,9 @@
       <b-row class="align-items-stretch" v-if="books2">
         <b-col
           cols="12"
-          sm="6"
-          md="4"
-          lg="3"
-          xl="2"
+          sm="4"
+          md="3"
+          lg="2"
           class="card-column"
           v-for="book in books2"
           :key="book.isbn"
