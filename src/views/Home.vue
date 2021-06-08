@@ -13,17 +13,29 @@
         <b-row>
           <b-col lg="9">
             <b-row>
-              <b-col>
+              <b-col style="padding: 0px;">
+                <trending-list
+                  class="custom-trending-list"
+                  title="New Books"
+                  :books="this.fireBooks.slice(0, 8)"
+                ></trending-list>
                 <carousel-trending
+                  class="custom-carousel"
                   :booksInCarousel="this.fireBooks.slice(0, 8)"
-                  title="New books"
+                  title="New Books"
                 ></carousel-trending>
               </b-col>
             </b-row>
 
             <b-row>
-              <b-col>
+              <b-col style="padding: 0px;">
+                <trending-list
+                  class="custom-trending-list"
+                  title="Trending"
+                  :books="this.fireBooks.slice(0, 8)"
+                ></trending-list>
                 <carousel-trending
+                  class="custom-carousel"
                   :booksInCarousel="this.fireBooks.slice(8, 16)"
                   title="Trending"
                 ></carousel-trending>
@@ -44,11 +56,13 @@
   import TopTenBooks from '../components/TopTenBooks.vue'
   import CarouselTrending from '../components/CarouselTrending'
   import * as firebase from '../firebase.js'
+  import TrendingList from '../components/TrendingList.vue'
   export default {
     components: {
       Carousel,
       TopTenBooks,
-      CarouselTrending
+      CarouselTrending,
+      TrendingList
     },
 
     name: 'Home',

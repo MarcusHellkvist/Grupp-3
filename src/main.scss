@@ -35,3 +35,22 @@ $theme-colors: (
 /* #app {
   color: unset;
 } */
+
+// Example: Hide starting at `min-width: 0`, and then show at the `sm` breakpoint
+.custom-carousel {
+  display: none;
+}
+@include media-breakpoint-up(md) {
+  .custom-carousel {
+    display: block;
+  }
+}
+
+.custom-trending-list {
+  display: block;
+}
+@include media-breakpoint-up(md) {
+  .custom-trending-list {
+    display: none;
+  }
+}
