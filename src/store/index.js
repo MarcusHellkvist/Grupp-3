@@ -16,6 +16,7 @@ export default new Vuex.Store({
     genres: [],
     products: [],
     cart: [],
+    wishlist: [],
     topTenBooks: [],
     defaultImage:
       'http://jbdiamonds.com/media/catalog/new-pp/placeholder/default/no-img-1000.jpg'
@@ -66,6 +67,19 @@ export default new Vuex.Store({
         }
       }
     },
+    deleteProductFromWishlist(state, id) {
+      for (let i = 0; i < state.wishlist.length; i++) {
+        if (state.wishlist[i].isbn === id) {
+          state.wishlist.splice(i, 1)
+          console.log('item deleted!' + id)
+          /* Alona */
+
+          /* Alona */
+
+          break
+        }
+      }
+    },
 
     addToCart(state, product) {
       for (let i = 0; i < state.cart.length; i++) {
@@ -85,6 +99,21 @@ export default new Vuex.Store({
       state.quantityItemsInCart += 1
       product.total = product.price
       state.cart.push(product)
+    },
+    addToWishlist(state, productWishlist) {
+      if (state.wishlist.length === 0) {
+        state.wishlist.push(productWishlist)
+        console.log('denna produkt WISHLIST PRODUCT', productWishlist)
+      } else {
+        for (let i = 0; i < state.wishlist.length; i++) {
+          if (state.wishlist[i].isbn != productWishlist.isbn) {
+            state.wishlist.push(productWishlist)
+          } else {
+            console.log('denna produkt ligger redan i WISHLIST', state.wishlist)
+          }
+        }
+      }
+      return
     },
 
     quantityPlus(state, id) {

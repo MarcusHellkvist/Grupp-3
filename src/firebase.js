@@ -49,6 +49,34 @@ function addItemToCartFirebase(book, uid) {
     }
   })
 }
+/* Alona */
+function addItemToWishlistFirebase(book, uid) {
+  var docRef = usersCollection
+    .doc(uid)
+    .collection('wishlist')
+    .doc(book.isbn)
+
+  docRef.get().then((doc) => {
+    if (!doc.exists) {
+      docRef
+        .set({
+          title: book.title,
+          author: book.author,
+          price: book.price,
+          image: book.image,
+          isbn: book.isbn,
+          genre: book.genre
+        })
+        .then(() => {
+          console.log('New book added to wishlist!')
+        })
+    } else {
+      console.log('This book is already added to wishlist')
+      /* docRef.update({ quantity: doc.data().quantity + 1 }) */
+    }
+  })
+}
+/* Alona */
 
 // export utils/ref
 export {
@@ -57,5 +85,6 @@ export {
   usersCollection,
   booksCollection,
   genresCollection,
-  addItemToCartFirebase
+  addItemToCartFirebase,
+  addItemToWishlistFirebase
 }
