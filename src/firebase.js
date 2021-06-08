@@ -22,6 +22,7 @@ const db = firebase.firestore()
 const usersCollection = db.collection('users')
 const booksCollection = db.collection('books')
 const genresCollection = db.collection('genres')
+const vouchersCollection = db.collection('voucher')
 
 // functions
 function addItemToCartFirebase(book, uid) {
@@ -76,15 +77,14 @@ function addItemToWishlistFirebase(book, uid) {
     }
   })
 }
-/* Alona */
 
-// export utils/ref
 export {
   auth,
   db,
   usersCollection,
   booksCollection,
   genresCollection,
-  addItemToCartFirebase,
-  addItemToWishlistFirebase
+  vouchersCollection,
+  addItemToWishlistFirebase,
+  addItemToCartFirebase
 }
