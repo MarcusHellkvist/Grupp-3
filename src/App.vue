@@ -13,27 +13,27 @@
 </template>
 
 <script>
-import FooterNavigation from "./components/FooterNavigation.vue";
-import NavigationBar from "./components/NavigationBar.vue";
-export default {
-  name: "App",
-  components: { NavigationBar, FooterNavigation },
-};
+  import FooterNavigation from './components/FooterNavigation.vue'
+  import NavigationBar from './components/NavigationBar.vue'
+  export default {
+    name: 'App',
+    components: { NavigationBar, FooterNavigation }
+  }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
 
-/* #nav {
+  /* #nav {
   padding: 0px;
 }
 
@@ -47,7 +47,7 @@ export default {
   color: #42b983;
 } */
 
-#main {
-  flex-grow: 1;
-}
+  #main {
+    flex-grow: 1;
+  }
 </style>
