@@ -3,7 +3,7 @@
     <div :class="showAndHide" class="container">
       <!-- head -->
       <div class="text-center">
-        <h1>Checkout</h1>
+        <h1>Checkout 1</h1>
         <h5>add your address and card to checkout...</h5>
         {{ $v.form.name.$model }}
       </div>
