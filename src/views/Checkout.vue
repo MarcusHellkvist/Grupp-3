@@ -373,180 +373,180 @@
 </template>
 
 <script>
-import { validationMixin } from "vuelidate";
-import {
-  required,
-  minLength,
-  maxLength,
-  email,
-  decimal,
-} from "vuelidate/lib/validators";
+  import { validationMixin } from 'vuelidate'
+  import {
+    required,
+    minLength,
+    maxLength,
+    email,
+    decimal
+  } from 'vuelidate/lib/validators'
 
-import * as firebace from "../firebase";
-import emailjs from "emailjs-com";
-import { init } from "emailjs-com";
-init("user_GROqJdzcqEARwCHGVqGmU");
+  import * as firebace from '../firebase'
+  import emailjs from 'emailjs-com'
+  import { init } from 'emailjs-com'
+  init('user_GROqJdzcqEARwCHGVqGmU')
 
-export default {
-  components: {},
-  mixins: [validationMixin],
-  data() {
-    return {
-      falseVoucher: false,
-      voucherArray: [],
-      rightVoucher: false,
-      voucherCode: "",
-      //successAlert: this.$el.innerHTML,
-      div: null,
-      day: new Date().toDateString(),
-      cart: [],
-      //userUid: this.$store.state.user.data.uid,
-      //loggedIn: this.$store.state.user.loggedIn,
-      products: this.$store.state.books,
-      localCart: [],
-      sum: 0,
-      showAndHide: null,
-      showAlert: "d-none",
-      item: "",
+  export default {
+    components: {},
+    mixins: [validationMixin],
+    data() {
+      return {
+        falseVoucher: false,
+        voucherArray: [],
+        rightVoucher: false,
+        voucherCode: '',
+        //successAlert: this.$el.innerHTML,
+        div: null,
+        day: new Date().toDateString(),
+        cart: [],
+        //userUid: this.$store.state.user.data.uid,
+        //loggedIn: this.$store.state.user.loggedIn,
+        products: this.$store.state.books,
+        localCart: [],
+        sum: 0,
+        showAndHide: null,
+        showAlert: 'd-none',
+        item: '',
 
-      cardDateMonth: [
-        { value: null, text: "Month.." },
-        { value: "01", text: "01" },
-        { value: "02", text: "02" },
-        { value: "03", text: "03" },
-        { value: "04", text: "04" },
-        { value: "05", text: "05" },
-        { value: "06", text: "06" },
-        { value: "07", text: "07" },
-        { value: "08", text: "08" },
-        { value: "08", text: "09" },
-        { value: "10", text: "10" },
-        { value: "11", text: "11" },
-        { value: "12", text: "12" },
-      ],
-      cardDateYear: [
-        { value: null, text: "Year.." },
-        { value: "2021", text: "2021" },
-        { value: "2022", text: "2022" },
-        { value: "2023", text: "2023" },
-        { value: "2024", text: "2024" },
-        { value: "2025", text: "2025" },
-        { value: "2026", text: "2026" },
-        { value: "2027", text: "2027" },
-      ],
-      form: {
-        name: null,
-        lastName: null,
-        email: null,
-        address: null,
-        country: null,
-        state: null,
-        zip: null,
-        cardName: null,
-        cardNumber: null,
-        cardDateMonth: null,
-        cardDateYear: null,
-        cardCVV: null,
-      },
-    };
-  },
-
-  validations: {
-    form: {
-      name: {
-        required,
-        minLength: minLength(3),
-      },
-      lastName: {
-        required,
-        minLength: minLength(3),
-      },
-      email: { required, email },
-      address: { required },
-      country: { required },
-      state: { required },
-      zip: { required },
-      cardName: { required, minLength: minLength(3) },
-      cardNumber: {
-        required,
-        minLength: minLength(16),
-        maxLength: maxLength(16),
-        decimal,
-      },
-      cardDateMonth: { required },
-      cardDateYear: { required },
-      cardCVV: { required, decimal, minlength: minLength(3) },
+        cardDateMonth: [
+          { value: null, text: 'Month..' },
+          { value: '01', text: '01' },
+          { value: '02', text: '02' },
+          { value: '03', text: '03' },
+          { value: '04', text: '04' },
+          { value: '05', text: '05' },
+          { value: '06', text: '06' },
+          { value: '07', text: '07' },
+          { value: '08', text: '08' },
+          { value: '08', text: '09' },
+          { value: '10', text: '10' },
+          { value: '11', text: '11' },
+          { value: '12', text: '12' }
+        ],
+        cardDateYear: [
+          { value: null, text: 'Year..' },
+          { value: '2021', text: '2021' },
+          { value: '2022', text: '2022' },
+          { value: '2023', text: '2023' },
+          { value: '2024', text: '2024' },
+          { value: '2025', text: '2025' },
+          { value: '2026', text: '2026' },
+          { value: '2027', text: '2027' }
+        ],
+        form: {
+          name: null,
+          lastName: null,
+          email: null,
+          address: null,
+          country: null,
+          state: null,
+          zip: null,
+          cardName: null,
+          cardNumber: null,
+          cardDateMonth: null,
+          cardDateYear: null,
+          cardCVV: null
+        }
+      }
     },
-  },
-  computed: {
-    /* somchange() {
+
+    validations: {
+      form: {
+        name: {
+          required,
+          minLength: minLength(3)
+        },
+        lastName: {
+          required,
+          minLength: minLength(3)
+        },
+        email: { required, email },
+        address: { required },
+        country: { required },
+        state: { required },
+        zip: { required },
+        cardName: { required, minLength: minLength(3) },
+        cardNumber: {
+          required,
+          minLength: minLength(16),
+          maxLength: maxLength(16),
+          decimal
+        },
+        cardDateMonth: { required },
+        cardDateYear: { required },
+        cardCVV: { required, decimal, minlength: minLength(3) }
+      }
+    },
+    computed: {
+      /* somchange() {
       return this.total();
     }, */
-  },
-  mounted() {
-    this.div = document.getElementById("test");
-  },
-
-  created() {
-    this.getCart();
-    this.fetchVouchers();
-
-    // this.addTolocalCart()
-  },
-
-  methods: {
-    fetchVouchers() {
-      firebace.vouchersCollection.get().then((vouchers) => {
-        vouchers.forEach((doc) => {
-          this.voucherArray.push(doc.data());
-          console.log(doc.data());
-        });
-      });
     },
-    deleteVoucher() {
-      for (let i = 0; i < this.voucherArray.length; i++) {
-        if (this.voucherCode === this.voucherArray[i].voucherCode) {
-          this.sum = this.sum / this.voucherArray[i].value;
-          this.rightVoucher = false;
-          this.falseVoucher = false;
-          this.voucherCode = "";
+    mounted() {
+      this.div = document.getElementById('test')
+    },
+
+    created() {
+      this.getCart()
+      this.fetchVouchers()
+
+      // this.addTolocalCart()
+    },
+
+    methods: {
+      fetchVouchers() {
+        firebace.vouchersCollection.get().then((vouchers) => {
+          vouchers.forEach((doc) => {
+            this.voucherArray.push(doc.data())
+            console.log(doc.data())
+          })
+        })
+      },
+      deleteVoucher() {
+        for (let i = 0; i < this.voucherArray.length; i++) {
+          if (this.voucherCode === this.voucherArray[i].voucherCode) {
+            this.sum = this.sum / this.voucherArray[i].value
+            this.rightVoucher = false
+            this.falseVoucher = false
+            this.voucherCode = ''
+          }
         }
-      }
-    },
-    voucher() {
-      for (let i = 0; i < this.voucherArray.length; i++) {
-        if (this.voucherCode === this.voucherArray[i].voucherCode) {
-          this.sum = this.sum * this.voucherArray[i].value;
-          this.rightVoucher = true;
-        } else {
-          this.falseVoucher = true;
+      },
+      voucher() {
+        for (let i = 0; i < this.voucherArray.length; i++) {
+          if (this.voucherCode === this.voucherArray[i].voucherCode) {
+            this.sum = this.sum * this.voucherArray[i].value
+            this.rightVoucher = true
+          } else {
+            this.falseVoucher = true
+          }
         }
-      }
 
-      // console.log(this.voucherCode);
-      // if (this.voucherCode === "book20") {
-      //   this.sum = this.sum * 0.8;
+        // console.log(this.voucherCode);
+        // if (this.voucherCode === "book20") {
+        //   this.sum = this.sum * 0.8;
 
-      //   this.rightVoucher = true;
-      // console.log(this.test);
-      // this.voucherCode = null;
-      // }
-    },
-    sendEmail() {
-      var container = document.createElement("span");
-      container = "test container";
+        //   this.rightVoucher = true;
+        // console.log(this.test);
+        // this.voucherCode = null;
+        // }
+      },
+      sendEmail() {
+        var container = document.createElement('span')
+        container = 'test container'
 
-      console.log(container);
+        console.log(container)
 
-      try {
-        emailjs.send(
-          "service_books",
-          "template_books",
+        try {
+          emailjs.send(
+            'service_books',
+            'template_books',
 
-          {
-            sendToEmail: this.form.email,
-            userName: this.form.name,
-            HTML: `
+            {
+              sendToEmail: this.form.email,
+              userName: this.form.name,
+              HTML: `
                <div>
                <h1>ORDER CONFIRMATION</h1>
                 <h3>Thank you for your order</h3>
@@ -558,218 +558,220 @@ export default {
                 .
                 For more info check your profile history orders</P>
                 </div>
-              `,
-          }
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    print() {
-      window.print();
-    },
+              `
+            }
+          )
+        } catch (error) {
+          console.log(error)
+        }
+      },
+      print() {
+        window.print()
+      },
 
-    validateState(input) {
-      const { $dirty, $error } = this.$v.form[input];
-      return $dirty ? !$error : null;
-    },
+      validateState(input) {
+        const { $dirty, $error } = this.$v.form[input]
+        return $dirty ? !$error : null
+      },
 
-    onSubmit() {
-      console.log(this.cart[0].title);
-      console.log(this.localCart);
+      onSubmit() {
+        console.log(this.cart[0].title)
+        console.log(this.localCart)
 
-      this.addTolocalCart();
+        this.addTolocalCart()
 
-      this.addOrder();
-      this.sendEmail();
-      this.clearFirebaseCart();
+        this.addOrder()
+        this.sendEmail()
+        this.clearFirebaseCart()
 
-      // this.clearFirebaseCart()
-      /* this.$v.form.$touch();
+        // this.clearFirebaseCart()
+        /* this.$v.form.$touch();
         if (this.$v.form.$anyError) {
          return;
        } */
-      if (this.cart.length > 0) {
-        console.log(this.form.name);
-        this.showAndHide = "d-none";
-        this.showAlert = "";
-        // this.clearCart()
-      }
-    },
+        if (this.cart.length > 0) {
+          console.log(this.form.name)
+          this.showAndHide = 'd-none'
+          this.showAlert = ''
+          // this.clearCart()
+        }
+      },
 
-    /* Firebase */
-    deleteProduct(id) {
-      if (this.loggedIn && this.$store.state.user.data.uid !== null) {
-        firebace.usersCollection
-          .doc(this.$store.state.user.data.uid)
-          .collection("cart")
-          .doc(id)
-          .delete()
-          .then(() => {
-            console.log("Document successfully deleted!");
+      /* Firebase */
+      deleteProduct(id) {
+        if (
+          this.$store.state.user.loggedIn &&
+          this.$store.state.user.data.uid !== null
+        ) {
+          firebace.usersCollection
+            .doc(this.$store.state.user.data.uid)
+            .collection('cart')
+            .doc(id)
+            .delete()
+            .then(() => {
+              console.log('Document successfully deleted!')
 
-            this.total();
-          })
-          .catch((error) => {
-            console.error("Error removing document: ", error);
-          });
-      } else {
-        console.log(id);
-        this.$store.commit("deleteProduct", id);
+              this.total()
+            })
+            .catch((error) => {
+              console.error('Error removing document: ', error)
+            })
+        } else {
+          console.log(id)
+          this.$store.commit('deleteProduct', id)
 
-        this.total();
-      }
-      // .catch((error) => {
-      //   console.error("Error removing document: ", error);
-      // });
-      // } else {
-      //   console.log(id);
-      //   this.$store.commit("deleteProduct", id);
+          this.total()
+        }
+        // .catch((error) => {
+        //   console.error("Error removing document: ", error);
+        // });
+        // } else {
+        //   console.log(id);
+        //   this.$store.commit("deleteProduct", id);
 
-      //   this.total();
-      // }
-    },
+        //   this.total();
+        // }
+      },
 
-    clearCart() {
-      this.$store.commit("clearCart");
-    },
+      clearCart() {
+        this.$store.commit('clearCart')
+      },
 
-    total() {
-      this.sum = 0;
-      for (let i = 0; i < this.cart.length; i++) {
-        this.sum += this.cart[i].price * this.cart[i].quantity;
-      }
+      total() {
+        this.sum = 0
+        for (let i = 0; i < this.cart.length; i++) {
+          this.sum += this.cart[i].price * this.cart[i].quantity
+        }
 
-      return this.sum;
-    },
+        return this.sum
+      },
 
-    addTolocalCart() {
-      this.localCart = [];
-      this.localCart = [...this.cart];
-      /* for (let i = 0; i < this.cart.length; i++) {
+      addTolocalCart() {
+        this.localCart = []
+        this.localCart = [...this.cart]
+        /* for (let i = 0; i < this.cart.length; i++) {
            this.localCart.push(this.cart[i])
          } */
-      return this.localCart;
-    },
+        return this.localCart
+      },
 
-    getCart() {
-      if (this.loggedIn) {
+      getCart() {
+        if (this.$store.state.user.loggedIn) {
+          firebace.usersCollection
+            .doc(this.$store.state.user.data.uid)
+            .collection('cart')
+            .onSnapshot((querySnapshot) => {
+              this.cart = []
+
+              querySnapshot.forEach((doc) => {
+                this.cart.push(doc.data())
+              })
+            }),
+            (error) => {
+              console.log(error)
+            }
+        } else {
+          this.cart = []
+          this.cart = this.$store.state.cart
+        }
+        this.total()
+      },
+
+      clearFirebaseCart() {
+        for (let i = 0; i < this.cart.length; i++) {
+          const isbn = this.cart[i].isbn
+
+          firebace.usersCollection
+            .doc(this.$store.state.user.data.uid)
+            .collection('cart')
+            .doc(isbn)
+            .delete()
+            .then(() => {
+              console.log('Document successfully deleted!')
+            })
+            .catch((error) => {
+              console.error('Error removing document: ', error)
+            })
+        }
+      },
+      addBooksToOrder() {
+        for (let i = 0; i < this.cart.length; i++) {
+          const isbn = this.cart[i].isbn
+          firebace.usersCollection
+            .doc(this.$store.state.user.data.uid)
+            .collection('orders')
+            .doc()
+            .collection('books')
+            .doc(isbn)
+            .set(this.cart[i])
+            .then(() => {
+              console.log('Document successfully written!')
+            })
+            .catch((error) => {
+              console.error('Error writing document: ', error)
+            })
+        }
+      },
+      addOrder() {
+        const day = new Date().toDateString()
+
         firebace.usersCollection
           .doc(this.$store.state.user.data.uid)
-          .collection("cart")
-          .onSnapshot((querySnapshot) => {
-            this.cart = [];
-
-            querySnapshot.forEach((doc) => {
-              this.cart.push(doc.data());
-
-              this.total();
-            });
-          }),
-          (error) => {
-            console.log(error);
-          };
-      } else {
-        this.cart = [];
-        this.cart = this.$store.state.cart;
-      }
-    },
-
-    clearFirebaseCart() {
-      for (let i = 0; i < this.cart.length; i++) {
-        const isbn = this.cart[i].isbn;
-
-        firebace.usersCollection
-          .doc(this.$store.state.user.data.uid)
-          .collection("cart")
-          .doc(isbn)
-          .delete()
-          .then(() => {
-            console.log("Document successfully deleted!");
-          })
-          .catch((error) => {
-            console.error("Error removing document: ", error);
-          });
-      }
-    },
-    addBooksToOrder() {
-      for (let i = 0; i < this.cart.length; i++) {
-        const isbn = this.cart[i].isbn;
-        firebace.usersCollection
-          .doc(this.$store.state.user.data.uid)
-          .collection("orders")
+          .collection('orders')
           .doc()
-          .collection("books")
-          .doc(isbn)
-          .set(this.cart[i])
+          .set({
+            books: this.cart,
+            date: day,
+            userUid: this.$store.state.user.data.uid,
+            address: 'Send to Me, Gatan 10 41345 Göteborg, Sweden'
+          })
+          .then(() => {})
+          .catch((error) => {
+            console.error('Error writing document: ', error)
+          })
+
+        //const isbn = this.cart[i].isbn
+        firebace.usersCollection
+          .doc(this.userUid)
+          .collection('orders')
+          .doc()
+
+          .set({
+            books: this.cart,
+            date: day,
+            userUid: this.userUid,
+            address: 'Send to Me, Gatan 10 41345 Göteborg, Sweden'
+          })
           .then(() => {
-            console.log("Document successfully written!");
+            console.log('Document successfully written!')
           })
           .catch((error) => {
-            console.error("Error writing document: ", error);
-          });
+            console.error('Error writing document: ', error)
+          })
       }
-    },
-    addOrder() {
-      const day = new Date().toDateString();
-
-      firebace.usersCollection
-        .doc(this.$store.state.user.data.uid)
-        .collection("orders")
-        .doc()
-        .set({
-          books: this.cart,
-          date: day,
-          userUid: this.$store.state.user.data.uid,
-          address: "Send to Me, Gatan 10 41345 Göteborg, Sweden",
-        })
-        .then(() => {})
-        .catch((error) => {
-          console.error("Error writing document: ", error);
-        });
-
-      //const isbn = this.cart[i].isbn
-      firebace.usersCollection
-        .doc(this.userUid)
-        .collection("orders")
-        .doc()
-
-        .set({
-          books: this.cart,
-          date: day,
-          userUid: this.userUid,
-          address: "Send to Me, Gatan 10 41345 Göteborg, Sweden",
-        })
-        .then(() => {
-          console.log("Document successfully written!");
-        })
-        .catch((error) => {
-          console.error("Error writing document: ", error);
-        });
-    },
-  },
-};
+    }
+  }
 </script>
 
 <style scoped>
-.container {
-  max-width: 960px;
-  text-align: left;
-  padding: 1rem;
-}
+  .container {
+    max-width: 960px;
+    text-align: left;
+    padding: 1rem;
+  }
 
-#name__BV_label_.d_block {
-  padding: 0px;
-  margin-bottom: 0 !important;
-}
-h6 {
-  margin-bottom: 0rem;
-}
-small {
-  margin-top: 0rem;
-}
-span {
-  margin-left: 0rem;
-  margin-top: 0rem;
-}
+  #name__BV_label_.d_block {
+    padding: 0px;
+    margin-bottom: 0 !important;
+  }
+  h6 {
+    margin-bottom: 0rem;
+  }
+  small {
+    margin-top: 0rem;
+  }
+  span {
+    margin-left: 0rem;
+    margin-top: 0rem;
+  }
 </style>
