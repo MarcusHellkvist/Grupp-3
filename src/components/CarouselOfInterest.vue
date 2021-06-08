@@ -57,7 +57,7 @@
             ) {
               this.fireBooks.push(books.data())
 
-              console.log(' BOOKS WITH RIGHT AUTHOR: ', this.fireBooks)
+              /* console.log(' BOOKS WITH RIGHT AUTHOR: ', this.fireBooks) */
             }
           })
         })

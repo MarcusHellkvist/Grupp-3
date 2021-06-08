@@ -51,7 +51,7 @@
                     word-spacing: -2px;
                   "
                   id="addToShopingCart"
-                  @click="onClick"
+                  @click="addToCart"
                   >ADD TO CART
                   <b-icon
                     id="icon-cart-check"
@@ -75,7 +75,7 @@
                   font-weight: bold;
                   word-spacing: -2px;
                 "
-                @click="onClick"
+                @click="addToWishlist"
               >
                 <b-icon
                   style="color: black; text-align: left"
@@ -293,6 +293,7 @@
   import { mapGetters } from 'vuex'
 
   import CarouselOfInterest from '../components/CarouselOfInterest.vue'
+
   export default {
     components: { CarouselOfInterest },
     name: 'Product',
@@ -351,7 +352,7 @@
           })
       },
 
-      onClick() {
+      addToCart() {
         if (this.$store.state.user.loggedIn === true) {
           firebase.addItemToCartFirebase(
             this.book,
@@ -359,6 +360,17 @@
           )
         } else {
           this.$store.commit('addToCart', this.book)
+        }
+      },
+
+      addToWishlist() {
+        if (this.$store.state.user.loggedIn === true) {
+          firebase.addItemToWishlistFirebase(
+            this.book,
+            this.$store.state.user.data.uid
+          )
+        } else {
+          this.$store.commit('addToWishlist', this.book)
         }
       },
 
