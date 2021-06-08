@@ -140,153 +140,158 @@
               <h4 class="text-left">Payment</h4>
 
               <!-- Radio button -->
-              <div class="form-check-inline">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="paymentOption"
-                  id="radioCard"
-                  @click="radioClick(true)"
-                  checked
-                />
-                <label class="form-check-label" for="radioCard">
-                  Credit Card
-                </label>
-              </div>
-              <div class="form-check-inline">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="paymentOption"
-                  id="radioInvoice"
-                  @click="radioClick(false)"
-                />
-                <label class="form-check-label" for="radioInvoice">
-                  Invoice
-                </label>
-              </div>
-              <div id="cardPayElement">
-                <br />
-                <b-row class="text-left">
-                  <b-col cols="6" md="6">
-                    <h6>Name on Card</h6>
-                    <b-form-group id="cardName">
-                      <b-form-input
-                        id="cc-name-input"
-                        name="cc-name-input"
-                        placeholder="Full name as displayed on card"
-                        v-model="$v.form.cardName.$model"
-                        :state="validateState('cardName')"
-                        aria-describedby="cc-name-feedback"
-                      ></b-form-input>
-
-                      <b-form-invalid-feedback id="cc-name-feedback"
-                        >Credit card name is required.</b-form-invalid-feedback
-                      >
-                    </b-form-group>
-                  </b-col>
-                  <b-col cols="6" md="6">
-                    <h6>Credit Card Number</h6>
-                    <b-form-group id="cardNumber">
-                      <b-form-input
-                        id="cc-number-input"
-                        name="cc-number-input"
-                        type="text"
-                        pattern="\d*"
-                        maxlength="16"
-                        minlength="16"
-                        placeholder="1234 5678 9101 1213"
-                        v-model="$v.form.cardNumber.$model"
-                        :state="validateState('cardNumber')"
-                        aria-describedby="cc-number-feedback"
-                      ></b-form-input>
-
-                      <b-form-invalid-feedback id="cc-number-feedback"
-                        >Credit card number is
-                        required.</b-form-invalid-feedback
-                      >
-                    </b-form-group>
-                  </b-col>
-                  <b-col cols="3" md="3">
-                    <h6>Expiration</h6>
-                    <b-form-group id="cardDateMonth">
-                      <b-form-select
-                        id="month-input"
-                        name="month-input"
-                        placeholder="Month"
-                        v-model="$v.form.cardDateMonth.$model"
-                        :options="cardDateMonth"
-                        :state="validateState('cardDateMonth')"
-                        aria-describedby="month-feedback"
-                      ></b-form-select>
-
-                      <b-form-invalid-feedback id="month-feedback"
-                        >Expiration date required.</b-form-invalid-feedback
-                      >
-                    </b-form-group></b-col
+              <div>
+                <b-form-radio-group
+                  v-model="valueRadioButton"
+                  :options="optionsRadioButton"
+                  :state="state"
+                  name="radio-validation"
+                >
+                  <b-form-invalid-feedback :state="state"
+                    >Please select one payment method</b-form-invalid-feedback
                   >
-                  <b-col cols="3" md="3">
-                    <h6>Date</h6>
-                    <b-form-group id="cardDateYear">
-                      <b-form-select
-                        id="year-input"
-                        name="year-input"
-                        placeholder="Year"
-                        v-model="$v.form.cardDateYear.$model"
-                        :options="cardDateYear"
-                        :state="validateState('cardDateYear')"
-                        aria-describedby="year-feedback"
-                      ></b-form-select>
-
-                      <b-form-invalid-feedback id="year-feedback"
-                        >Expiration date required.</b-form-invalid-feedback
-                      >
-                    </b-form-group></b-col
+                  <b-form-valid-feedback :state="state"
+                    >You have chosen
+                    {{ this.valueRadioButton }} payment</b-form-valid-feedback
                   >
-                  <b-col cols="6" md="6">
-                    <h6>CVV</h6>
-                    <b-form-group id="cardCVV">
-                      <b-form-input
-                        id="cvv-input"
-                        name="cvv-input"
-                        placeholder="123"
-                        type="text"
-                        pattern="\d*"
-                        maxlength="3"
-                        v-model="$v.form.cardCVV.$model"
-                        :state="validateState('cardCVV')"
-                        aria-describedby="cvv-feedback"
-                      ></b-form-input>
+                </b-form-radio-group>
+                <div
+                  id="invoicePayElement"
+                  v-if="valueRadioButton === 'invoice'"
+                >
+                  <div id="invoicePayElement">
+                    <b-col md="12">
+                      <br />
+                      <h6>Billing Address</h6>
+                      <b-form-group id="billing-address">
+                        <b-form-input
+                          id="billing-address-input"
+                          name="address-input"
+                          v-model="$v.form.billingaddress.$model"
+                          :state="validateState('address')"
+                          aria-describedby="address-feedback"
+                        ></b-form-input>
 
-                      <b-form-invalid-feedback id="cvv-feedback"
-                        >Security code required.</b-form-invalid-feedback
-                      >
-                    </b-form-group></b-col
-                  >
-                </b-row>
-              </div>
-              <br />
-              <div id="invoicePayElement">
-                <span><strong>You have chosen an invoice payment</strong></span>
-                <b-col md="12">
+                        <b-form-invalid-feedback id="address-feedback"
+                          >Required field.</b-form-invalid-feedback
+                        >
+                      </b-form-group>
+                    </b-col>
+                  </div>
                   <br />
-                  <h6>Billing Address</h6>
-                  <b-form-group id="billing-address">
-                    <b-form-input
-                      id="billing-address-input"
-                      name="address-input"
-                      v-model="$v.form.billingaddress.$model"
-                      :state="validateState('address')"
-                      aria-describedby="address-feedback"
-                    ></b-form-input>
+                </div>
+                <div
+                  id="cardPayElement"
+                  v-if="valueRadioButton === 'credit card'"
+                >
+                  - Form with credit card information -
 
-                    <b-form-invalid-feedback id="address-feedback"
-                      >Required field.</b-form-invalid-feedback
-                    >
-                  </b-form-group>
-                </b-col>
+                  <div id="cardPayElement">
+                    <br />
+                    <b-row class="text-left">
+                      <b-col cols="6" md="6">
+                        <h6>Name on Card</h6>
+                        <b-form-group id="cardName">
+                          <b-form-input
+                            id="cc-name-input"
+                            name="cc-name-input"
+                            placeholder="Full name as displayed on card"
+                            v-model="$v.form.cardName.$model"
+                            :state="validateState('cardName')"
+                            aria-describedby="cc-name-feedback"
+                          ></b-form-input>
+
+                          <b-form-invalid-feedback id="cc-name-feedback"
+                            >Credit card name is
+                            required.</b-form-invalid-feedback
+                          >
+                        </b-form-group>
+                      </b-col>
+                      <b-col cols="6" md="6">
+                        <h6>Credit Card Number</h6>
+                        <b-form-group id="cardNumber">
+                          <b-form-input
+                            id="cc-number-input"
+                            name="cc-number-input"
+                            type="text"
+                            pattern="\d*"
+                            maxlength="16"
+                            minlength="16"
+                            placeholder="1234 5678 9101 1213"
+                            v-model="$v.form.cardNumber.$model"
+                            :state="validateState('cardNumber')"
+                            aria-describedby="cc-number-feedback"
+                          ></b-form-input>
+
+                          <b-form-invalid-feedback id="cc-number-feedback"
+                            >Credit card number is
+                            required.</b-form-invalid-feedback
+                          >
+                        </b-form-group>
+                      </b-col>
+                      <b-col cols="3" md="3">
+                        <h6>Expiration</h6>
+                        <b-form-group id="cardDateMonth">
+                          <b-form-select
+                            id="month-input"
+                            name="month-input"
+                            placeholder="Month"
+                            v-model="$v.form.cardDateMonth.$model"
+                            :options="cardDateMonth"
+                            :state="validateState('cardDateMonth')"
+                            aria-describedby="month-feedback"
+                          ></b-form-select>
+
+                          <b-form-invalid-feedback id="month-feedback"
+                            >Expiration date required.</b-form-invalid-feedback
+                          >
+                        </b-form-group></b-col
+                      >
+                      <b-col cols="3" md="3">
+                        <h6>Date</h6>
+                        <b-form-group id="cardDateYear">
+                          <b-form-select
+                            id="year-input"
+                            name="year-input"
+                            placeholder="Year"
+                            v-model="$v.form.cardDateYear.$model"
+                            :options="cardDateYear"
+                            :state="validateState('cardDateYear')"
+                            aria-describedby="year-feedback"
+                          ></b-form-select>
+
+                          <b-form-invalid-feedback id="year-feedback"
+                            >Expiration date required.</b-form-invalid-feedback
+                          >
+                        </b-form-group></b-col
+                      >
+                      <b-col cols="6" md="6">
+                        <h6>CVV</h6>
+                        <b-form-group id="cardCVV">
+                          <b-form-input
+                            id="cvv-input"
+                            name="cvv-input"
+                            placeholder="123"
+                            type="text"
+                            pattern="\d*"
+                            maxlength="3"
+                            v-model="$v.form.cardCVV.$model"
+                            :state="validateState('cardCVV')"
+                            aria-describedby="cvv-feedback"
+                          ></b-form-input>
+
+                          <b-form-invalid-feedback id="cvv-feedback"
+                            >Security code required.</b-form-invalid-feedback
+                          >
+                        </b-form-group></b-col
+                      >
+                    </b-row>
+                  </div>
+                </div>
               </div>
+
               <br />
+
               <!-- Radio button END -->
               <hr class="my-4" />
               <b-button
@@ -461,6 +466,7 @@
         showAndHide: null,
         showAlert: 'd-none',
         item: '',
+        valueRadioButton: null,
 
         cardDateMonth: [
           { value: null, text: 'Month..' },
@@ -534,34 +540,18 @@
       }
     },
     computed: {
-      orderList() {
-        var htmlFormat = ''
-        for (let i = 0; i < this.cart.length; i++) {
-          const bookTitle = this.cart[i].title
-          const bookPrice = this.cart[i].price
-
-          htmlFormat += `<tr>
-            <td
-              style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;"
-              align="left"
-              width="75%"
-            >
-              ${bookTitle}
-            </td>
-            <td
-              style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;"
-              align="left"
-              width="25%"
-            >
-              ${bookPrice}
-            </td>
-          </tr>`
-        }
-        return htmlFormat
+      state() {
+        return Boolean(this.valueRadioButton)
+      },
+      optionsRadioButton() {
+        return [
+          { text: 'Credit Card', value: 'credit card' },
+          { text: 'Invoice', value: 'invoice' }
+        ]
       }
-    },
-    mounted() {
-      this.radioClick(true)
+      /* somchange() {
+      return this.total();
+    }, */
     },
 
     created() {
@@ -572,21 +562,6 @@
     },
 
     methods: {
-      /* Choose what paymentmethod to be shown */
-      radioClick(x) {
-        const cardPayElement = document.getElementById('cardPayElement')
-        const invoicePayElement = document.getElementById('invoicePayElement')
-
-        if (x === true) {
-          cardPayElement.style.display = 'block'
-          invoicePayElement.style.display = 'none'
-        }
-        if (x === false) {
-          cardPayElement.style.display = 'none'
-          invoicePayElement.style.display = 'block'
-        }
-      },
-
       fetchVouchers() {
         firebace.vouchersCollection.get().then((vouchers) => {
           vouchers.forEach((doc) => {
@@ -625,6 +600,11 @@
         // }
       },
       sendEmail() {
+        var container = document.createElement('span')
+        container = 'test container'
+
+        console.log(container)
+
         try {
           emailjs.send(
             'service_books',
@@ -633,8 +613,19 @@
             {
               sendToEmail: this.form.email,
               userName: this.form.name,
-              HTML: '',
-              row: this.orderList
+              HTML: `
+               <div>
+               <h1>ORDER CONFIRMATION</h1>
+                <h3>Thank you for your order</h3>
+                <h6>We have received your order and will contact you as soon as your package is shipped, You can find you purchase information below.</h6>
+                <h4>Order Summary</h4>
+                <h4>Date ${this.day}</h4>
+                <P>Book ${this.cart[0].title} and ${this.cart.length} item/s has shepped! to this address ${this.form.address}
+                <div >${container}</div>
+                .
+                For more info check your profile history orders</P>
+                </div>
+              `
             }
           )
         } catch (error) {
@@ -651,11 +642,13 @@
       },
 
       onSubmit() {
+        console.log(this.cart[0].title)
+        console.log(this.localCart)
+
         this.addTolocalCart()
 
         this.addOrder()
         this.sendEmail()
-
         this.clearFirebaseCart()
 
         // this.clearFirebaseCart()
@@ -740,7 +733,6 @@
               querySnapshot.forEach((doc) => {
                 this.cart.push(doc.data())
               })
-              this.total()
             }),
             (error) => {
               console.log(error)
@@ -748,8 +740,8 @@
         } else {
           this.cart = []
           this.cart = this.$store.state.cart
-          this.total()
         }
+        this.total()
       },
 
       clearFirebaseCart() {
@@ -801,6 +793,25 @@
             address: 'Send to Me, Gatan 10 41345 Göteborg, Sweden'
           })
           .then(() => {})
+          .catch((error) => {
+            console.error('Error writing document: ', error)
+          })
+
+        //const isbn = this.cart[i].isbn
+        firebace.usersCollection
+          .doc(this.userUid)
+          .collection('orders')
+          .doc()
+
+          .set({
+            books: this.cart,
+            date: day,
+            userUid: this.userUid,
+            address: 'Send to Me, Gatan 10 41345 Göteborg, Sweden'
+          })
+          .then(() => {
+            console.log('Document successfully written!')
+          })
           .catch((error) => {
             console.error('Error writing document: ', error)
           })
