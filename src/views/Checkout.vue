@@ -334,25 +334,66 @@
               </b-list-group-item>
             </b-list-group>
             <b-list-group>
-              <b-list-group-item class="d-flex justify-content-between ">
+              <b-list-group-item class="d-flex justify-content-between">
                 <span>Total (USD)</span>
                 <strong>${{ sum }} </strong>
               </b-list-group-item>
             </b-list-group>
+
+            <!-- Vouche -->
+
+            <b-list-group-item class="d-flex justify-content-between">
+              <div>
+                <b-input-group class="mt-3">
+                  <b-form-input
+                    id="voucher"
+                    data=""
+                    v-model="voucherCode"
+                    :disabled="rightVoucher"
+                    placeholder="Voucher"
+                  ></b-form-input>
+                  <b-input-group-append>
+                    <b-button
+                      class="btn btn-secondary"
+                      :disabled="rightVoucher"
+                      @click="voucher"
+                      >Add</b-button
+                    >
+                  </b-input-group-append>
+                </b-input-group>
+
+                <h6 v-if="rightVoucher">
+                  <hr />
+                  Approved voucher: {{ voucherCode }}
+                  <b-icon
+                    variant="danger"
+                    icon="x-circle-fill"
+                    @click="deleteVoucher"
+                  ></b-icon>
+                </h6>
+                <h6 v-else-if="falseVoucher">
+                  <hr />
+                  Wrong code
+                </h6>
+              </div>
+            </b-list-group-item>
+            <!-- Vouche -->
           </b-col>
           <!-- Cart -->
         </b-form-row>
       </b-container>
+
       <!-- Address and card -->
     </div>
 
     <!-- success alert -->
-    <div :class="showAlert">
+
+    <div :class="showAlert" ref="successAlert">
       <b-alert show variant="success">
         <h4>SUCCESS!</h4>
         <p>Aww yeah, you will get order soon!!! yahhhh</p>
         <hr />
-        <div class="d-flex justify-content-between ">
+        <div class="d-flex justify-content-between">
           <h5>Invoice..</h5>
 
           <button @click="print" variant="outline-dark" class="btn float-right">
@@ -363,13 +404,13 @@
           <b-list-group-item
             v-for="product in localCart"
             :key="product.productId"
-            class="list-group-item d-flex justify-content-between "
+            class="list-group-item d-flex justify-content-between"
           >
             <h6 class="my-0">Product name {{ product.title }}</h6>
             <span class="text-muted">${{ product.price }}</span>
           </b-list-group-item>
           <b-list-group-item
-            class="list-group-item d-flex justify-content-between "
+            class="list-group-item d-flex justify-content-between"
           >
             <span>Total (USD)</span>
             <strong>${{ sum }} </strong>
@@ -404,14 +445,22 @@
     mixins: [validationMixin],
     data() {
       return {
+        falseVoucher: false,
+        voucherArray: [],
+        rightVoucher: false,
+        voucherCode: '',
+        //successAlert: this.$el.innerHTML,
+        div: null,
+        day: new Date().toDateString(),
         cart: [],
-        userUid: this.$store.state.user.data.uid,
-        loggedIn: this.$store.state.user.loggedIn,
+        //userUid: this.$store.state.user.data.uid,
+        //loggedIn: this.$store.state.user.loggedIn,
         products: this.$store.state.books,
         localCart: [],
         sum: 0,
         showAndHide: null,
         showAlert: 'd-none',
+        item: '',
 
         cardDateMonth: [
           { value: null, text: 'Month..' },
@@ -455,6 +504,7 @@
         }
       }
     },
+
     validations: {
       form: {
         name: {
@@ -494,6 +544,7 @@
 
     created() {
       this.getCart()
+      this.fetchVouchers()
 
       // this.addTolocalCart()
     },
@@ -513,16 +564,71 @@
           invoicePayElement.style.display = 'block'
         }
       },
+
+      fetchVouchers() {
+        firebace.vouchersCollection.get().then((vouchers) => {
+          vouchers.forEach((doc) => {
+            this.voucherArray.push(doc.data())
+            console.log(doc.data())
+          })
+        })
+      },
+      deleteVoucher() {
+        for (let i = 0; i < this.voucherArray.length; i++) {
+          if (this.voucherCode === this.voucherArray[i].voucherCode) {
+            this.sum = this.sum / this.voucherArray[i].value
+            this.rightVoucher = false
+            this.falseVoucher = false
+            this.voucherCode = ''
+          }
+        }
+      },
+      voucher() {
+        for (let i = 0; i < this.voucherArray.length; i++) {
+          if (this.voucherCode === this.voucherArray[i].voucherCode) {
+            this.sum = this.sum * this.voucherArray[i].value
+            this.rightVoucher = true
+          } else {
+            this.falseVoucher = true
+          }
+        }
+
+        // console.log(this.voucherCode);
+        // if (this.voucherCode === "book20") {
+        //   this.sum = this.sum * 0.8;
+
+        //   this.rightVoucher = true;
+        // console.log(this.test);
+        // this.voucherCode = null;
+        // }
+      },
       sendEmail() {
+        var container = document.createElement('span')
+        container = 'test container'
+
+        console.log(container)
+
         try {
           emailjs.send(
             'service_books',
             'template_books',
 
             {
-              message: 'your order will arrive soon!! ',
               sendToEmail: this.form.email,
-              userName: this.form.name
+              userName: this.form.name,
+              HTML: `
+               <div>
+               <h1>ORDER CONFIRMATION</h1>
+                <h3>Thank you for your order</h3>
+                <h6>We have received your order and will contact you as soon as your package is shipped, You can find you purchase information below.</h6>
+                <h4>Order Summary</h4>
+                <h4>Date ${this.day}</h4>
+                <P>Book ${this.cart[0].title} and ${this.cart.length} item/s has shepped! to this address ${this.form.address}
+                <div >${container}</div>
+                .
+                For more info check your profile history orders</P>
+                </div>
+              `
             }
           )
         } catch (error) {
@@ -539,17 +645,20 @@
       },
 
       onSubmit() {
-        this.sendEmail()
-        this.addTolocalCart()
-        this.addOrder()
+        console.log(this.cart[0].title)
+        console.log(this.localCart)
 
+        this.addTolocalCart()
+
+        this.addOrder()
+        this.sendEmail()
         this.clearFirebaseCart()
 
         // this.clearFirebaseCart()
         /* this.$v.form.$touch();
-       if (this.$v.form.$anyError) {
-        return;
-      } */
+        if (this.$v.form.$anyError) {
+         return;
+       } */
         if (this.cart.length > 0) {
           console.log(this.form.name)
           this.showAndHide = 'd-none'
@@ -560,9 +669,12 @@
 
       /* Firebase */
       deleteProduct(id) {
-        if (this.loggedIn && this.userUid !== null) {
+        if (
+          this.$store.state.user.loggedIn &&
+          this.$store.state.user.data.uid !== null
+        ) {
           firebace.usersCollection
-            .doc(this.userUid)
+            .doc(this.$store.state.user.data.uid)
             .collection('cart')
             .doc(id)
             .delete()
@@ -580,6 +692,15 @@
 
           this.total()
         }
+        // .catch((error) => {
+        //   console.error("Error removing document: ", error);
+        // });
+        // } else {
+        //   console.log(id);
+        //   this.$store.commit("deleteProduct", id);
+
+        //   this.total();
+        // }
       },
 
       clearCart() {
@@ -599,23 +720,21 @@
         this.localCart = []
         this.localCart = [...this.cart]
         /* for (let i = 0; i < this.cart.length; i++) {
-          this.localCart.push(this.cart[i])
-        } */
+           this.localCart.push(this.cart[i])
+         } */
         return this.localCart
       },
 
       getCart() {
-        if (this.loggedIn) {
+        if (this.$store.state.user.loggedIn) {
           firebace.usersCollection
-            .doc(this.userUid)
+            .doc(this.$store.state.user.data.uid)
             .collection('cart')
             .onSnapshot((querySnapshot) => {
               this.cart = []
 
               querySnapshot.forEach((doc) => {
                 this.cart.push(doc.data())
-
-                this.total()
               })
             }),
             (error) => {
@@ -625,6 +744,7 @@
           this.cart = []
           this.cart = this.$store.state.cart
         }
+        this.total()
       },
 
       clearFirebaseCart() {
@@ -632,7 +752,7 @@
           const isbn = this.cart[i].isbn
 
           firebace.usersCollection
-            .doc(this.userUid)
+            .doc(this.$store.state.user.data.uid)
             .collection('cart')
             .doc(isbn)
             .delete()
@@ -648,7 +768,7 @@
         for (let i = 0; i < this.cart.length; i++) {
           const isbn = this.cart[i].isbn
           firebace.usersCollection
-            .doc(this.userUid)
+            .doc(this.$store.state.user.data.uid)
             .collection('orders')
             .doc()
             .collection('books')
@@ -663,22 +783,22 @@
         }
       },
       addOrder() {
-        const day = new Date().toISOString()
+        const day = new Date().toDateString()
 
-        /*  firebace.usersCollection
-          .doc(this.userUid)
+        firebace.usersCollection
+          .doc(this.$store.state.user.data.uid)
           .collection('orders')
           .doc()
           .set({
-            date: day
+            books: this.cart,
+            date: day,
+            userUid: this.$store.state.user.data.uid,
+            address: 'Send to Me, Gatan 10 41345 Göteborg, Sweden'
           })
-          .then(() => {
-
-          })
+          .then(() => {})
           .catch((error) => {
             console.error('Error writing document: ', error)
           })
- */
 
         //const isbn = this.cart[i].isbn
         firebace.usersCollection
