@@ -16,14 +16,15 @@
         </b-col>
       </b-row>
 
-      <b-row class="align-items-stretch" v-if="books2">
+      <b-row class="align-items-stretch" v-if="books">
         <b-col
           cols="12"
-          sm="4"
-          md="3"
-          lg="2"
+          sm="6"
+          md="4"
+          lg="3"
+          xl="2"
           class="card-column"
-          v-for="book in books2"
+          v-for="book in books"
           :key="book.isbn"
         >
           <product-small
@@ -72,14 +73,8 @@
     },
     computed: {
       books() {
-        console.log(this.$route.params.slug)
-        const books = []
+        const books = this.books2
 
-        this.$store.state.books.forEach((element) => {
-          if (this.$route.params.slug === element.genre) {
-            books.push(element)
-          }
-        })
         switch (this.selected) {
           case 'minPrice':
             books.sort(function(a, b) {
@@ -92,11 +87,13 @@
             books.sort(function(a, b) {
               return b.price - a.price
             })
+
             break
 
           default:
             break
         }
+
         return books
       },
       formatSlug() {
