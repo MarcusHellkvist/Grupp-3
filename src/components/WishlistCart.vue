@@ -21,8 +21,6 @@
             </b-card>
           </div>
 
-          <!-- <div v-else-if="myBooks.length > 0"> -->
-          <!-- <div> -->
           <div v-else>
             <b-container>
               <b-list-group>
@@ -52,7 +50,6 @@
                       >
                     </b-card-text>
                     <b-card-text>
-                      <!--   <b-container> -->
                       <b-row>
                         <b-row class="ml-2" style="text-align: left;">
                           <b-col cols="12" md="12" lg="12">
@@ -66,8 +63,7 @@
                             >Price: {{ product.price }} $</b-col
                           >
                         </b-row>
-                        <!-- <b-col cols="12" md="6" lg="3"></b-col> -->
-                        <!-- <b-row> -->
+
                         <b-col>
                           <b-col cols="12" md="12" lg="12"
                             ><b-button
@@ -97,9 +93,7 @@
                             ></b-icon>
                           </b-col>
                         </b-col>
-                        <!-- </b-row> -->
                       </b-row>
-                      <!--  </b-container> -->
                     </b-card-text>
                   </b-card>
                 </b-list-group-item>
@@ -126,36 +120,6 @@
               </b-list-group>
             </b-container>
           </div>
-
-          <!-- <div v-else-if="$store.state.wishlist">
-            <b-list-group>
-              <b-list-group-item
-                v-for="product in this.$store.state.wishlist"
-                :key="product.isbn"
-              >
-              </b-list-group-item>
-
-              <b-row align-h="between">
-                <b-col cols="12" md="4" lg="4"
-                  ><b-button
-                    class="btn btn-primary btn-lg btn-block"
-                    variant="primary"
-                    @click="$router.push('/')"
-                    >Continue shopping</b-button
-                  ></b-col
-                >
-                <b-col cols="12" md="4" lg="4"
-                  ><b-button
-                    class="btn btn-primary btn-lg btn-block"
-                    variant="primary"
-                    @click="$router.push('/checkout')"
-                  >
-                    Go to checkout</b-button
-                  ></b-col
-                >
-              </b-row>
-            </b-list-group>
-          </div> -->
         </b-col>
       </b-row>
     </b-container>
@@ -180,7 +144,6 @@
     },
     data() {
       return {
-        /* product: {}, */
         myBooks: [],
         bild:
           'https://listimg.pinclipart.com/picdir/s/201-2018325_img-empty-shopping-cart-gif-clipart.png'
@@ -206,7 +169,7 @@
             product,
             this.$store.state.user.data.uid
           )
-          console.log('I WANT TO LOOCK A PRODUCT IN WISHLIST', product)
+
           this.deleteProductFromWishlist(id)
         } else {
           this.$store.commit('addToCart', product)
@@ -238,6 +201,7 @@
           this.allBooks()
         } else {
           this.myBooks = this.$store.state.wishlist
+          console.log('WishList. WAtch. user data')
         }
       },
       userDataNull() {
@@ -245,6 +209,7 @@
           this.myBooks = this.$store.state.wishlist
         } else {
           this.allBooks()
+          console.log('WishList. WAtch. user data null')
         }
       }
     }

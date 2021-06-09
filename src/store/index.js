@@ -58,10 +58,8 @@ export default new Vuex.Store({
           var counter = state.cart[i].quantity
           state.cart.splice(i, 1)
           console.log('item deleted!' + id)
-          /* Alona */
 
           state.quantityItemsInCart -= counter
-          /* Alona */
 
           break
         }
@@ -71,10 +69,6 @@ export default new Vuex.Store({
       for (let i = 0; i < state.wishlist.length; i++) {
         if (state.wishlist[i].isbn === id) {
           state.wishlist.splice(i, 1)
-          console.log('item deleted!' + id)
-          /* Alona */
-
-          /* Alona */
 
           break
         }
@@ -103,7 +97,6 @@ export default new Vuex.Store({
     addToWishlist(state, productWishlist) {
       if (state.wishlist.length === 0) {
         state.wishlist.push(productWishlist)
-        console.log('denna produkt WISHLIST PRODUCT', productWishlist)
       } else {
         for (let i = 0; i < state.wishlist.length; i++) {
           if (state.wishlist[i].isbn != productWishlist.isbn) {
@@ -124,9 +117,8 @@ export default new Vuex.Store({
             quantity: (state.cart[i].quantity += 1),
             total: state.cart[i].price * state.cart[i].quantity
           })
-          /* Alona */
+
           state.quantityItemsInCart += 1
-          /* Alona */
         }
       }
     },
@@ -134,10 +126,8 @@ export default new Vuex.Store({
     quantityMinus(state, id) {
       for (let i = 0; i < state.cart.length; i++) {
         if (state.cart[i].isbn === id) {
-          /* Alona */
           state.quantityItemsInCart -= 1
 
-          /* Alona */
           state.cart[i].total = state.cart[i].price * state.cart[i].quantity
 
           // state.cart[i].quantity -= 1;
@@ -161,10 +151,7 @@ export default new Vuex.Store({
 
     changeQuantityInCart(state, counter) {
       state.quantityItemsInCartFirebase = counter
-      console.log(
-        'state.quantityItemsInCartFirebase',
-        state.quantityItemsInCartFirebase
-      )
+
       return state.quantityItemsInCartFirebase
     }
   },

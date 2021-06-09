@@ -33,11 +33,7 @@
     name: 'CarouselOfInterest',
     data() {
       return {
-        slide: 0,
-        sliding: null,
         defaultImage: this.$store.state.defaultImage,
-        sliceStartValue: 0,
-        sliceEndValue: 4,
         fireBooks: [],
         oneObject: {}
       }
@@ -56,30 +52,12 @@
                 books.data().genre === this.genre)
             ) {
               this.fireBooks.push(books.data())
-
-              /* console.log(' BOOKS WITH RIGHT AUTHOR: ', this.fireBooks) */
             }
           })
         })
-      },
-      onSlideStart() {
-        this.sliceStartValue += 4
-        this.sliceEndValue += 4
-        this.sliding = true
-        if (this.sliceStartValue > 4) {
-          this.sliceStartValue = 0
-          this.sliceEndValue = 4
-        }
-      },
-      onSlideEnd() {
-        this.sliding = false
       }
     },
-    computed: {
-      showProducts() {
-        return this.fireBooks.slice(this.sliceStartValue, this.sliceEndValue)
-      }
-    },
+
     props: {
       booksInCarousel: Array,
       title: String,

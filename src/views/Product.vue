@@ -105,13 +105,7 @@
               Delivery within 1-2 days with PREMIUM delivery
             </b-col>
           </b-row>
-          <!-- <b-col id="descriptionStyle" class="mt-2" cols="12" md="12"
-            >Description
-          </b-col>
 
-          <b-col id="plotStyle" class="mb-4" cols="12" md="12">
-            {{ book.plot }}</b-col
-          > -->
           <b-col class="mb-3 mt-3" cols="12" md="12"
             ><div class="accordion" role="tablist">
               <b-card id="plot-card" no-body class="mb-1">
@@ -309,11 +303,7 @@
         reviews: []
       }
     },
-    /* computed: {
-      id() {
-        return this.$route.params.isbn
-      }
-    }, */
+
     created() {
       this.getBook()
       this.getReviews()
@@ -330,7 +320,6 @@
           .get()
           .then((doc) => {
             if (doc.exists) {
-              console.log('Document data:', doc.data())
               this.book = doc.data()
             } else {
               console.log('No such document!')
@@ -448,17 +437,8 @@
   #id_for_carousel_of_interest {
     margin: 0px 0px 0px;
     background-color: rgba(255, 255, 255, 0.616);
-    /* border-bottom-style: solid;
-    border-right-style: solid;
-    border-left-style: solid;
-    border-width: 1px;
-    border-color: #dbd9d8; */
   }
-  #id_for_main_container {
-    /* border-style: solid;
-    border-width: 1px;
-    border-color: #dbd9d8; */
-  }
+
   #h1_for_carousel_of_interest {
     margin: 55px 0px 0px;
     background-color: rgba(255, 255, 255, 0.616);
@@ -480,9 +460,6 @@
 
   #authorStyle {
     text-align: left;
-    /*  border-width: 1px;
-    border-color: #dbd9d8;
-    border-bottom-style: solid; */
   }
   #descriptionStyle {
     font-weight: bold;
@@ -492,80 +469,12 @@
     border-right-style: solid;
     border-left-style: solid;
   }
-  #nameForSite {
-    color: white;
-    font-size: 250%;
-    /* background-image: linear-gradient(to bottom, #4b3b40, #31563a); */
-    background-image: linear-gradient(
-      to top,
-      rgba(255, 0, 0, 0),
-      rgb(75, 177, 55)
-    );
-    /*  margin: 0px 0px 20px; */
-    /* border: 0px solid #8eb8a0; */
-  }
 
-  .first {
-    font-size: 150%;
-    margin: 35px 0px;
-    /* background-color: pink; */
-    /* background-image: url('../assets/books.jpg'); */
-    background-size: 100% 100%;
-    font-family: 'Courier New', Courier, monospace;
-    color: white;
-    font-weight: bold;
-    box-shadow: rgba(17, 17, 26, 0.452) 0px 8px 24px,
-      rgba(17, 17, 26, 0.5) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
-    /* border-radius: 25px; */
-    /*  border: 15px solid #8eb8a0; */
-  }
-
-  #category1 {
-    color: ivory;
-    border-radius: 25px;
-    background-color: white;
-    border: 5px solid #8eb8a0;
-    /* box-shadow: rgba(0.8, 0.8, 0.8, 0.8) 10px 5px 10px 10px; */
-    box-shadow: rgba(103, 245, 74, 0.425) 10px 5px 10px 10px;
-
-    /* margin: 5px 5px 20px; */
-  }
-  #category2 {
-    color: ivory;
-    border-radius: 25px;
-    background-color: white;
-    border: 5px solid #8eb8a0;
-    box-shadow: rgba(103, 245, 74, 0.425) 10px 5px 10px 10px;
-    /* margin: 5px 5px 20px; */
-  }
-
-  #category3 {
-    color: ivory;
-    border-radius: 25px;
-    background-color: white;
-    border: 5px solid #8eb8a0;
-    box-shadow: rgba(103, 245, 74, 0.425) 10px 5px 10px 10px;
-    /* margin: 5px 5px 0px; */
-  }
-
-  #shopping-cart {
-    padding: 0%;
-    /* box-shadow: rgba(103, 245, 74, 0.425) 10px 5px 10px 10px; */
-  }
-
-  .mr-2 {
-    margin-left: (2 * 0.25) !important;
-    width: 700px;
-  }
   hr {
     margin: 5px 5px;
     color: black;
   }
 
-  #picture {
-    background-color: darksalmon;
-    /*  max-width: 300px; */
-  }
   #main {
     background-color: azure;
   }

@@ -32,18 +32,12 @@
         cartQuantity: []
       }
     },
-    /* props: {
-      numberOfItems: {
-        type: Number
-      }
-    }, */
+
     created() {
       if (this.userData !== null) {
         this.quantityInCart()
-        console.log('this.userData', this.userData)
       } else if (this.userData === null) {
         this.numberOnCart = this.$store.state.quantityItemsInCart
-        console.log('IF NOT INLOG', this.$store.state.quantityItemsInCart)
       }
     },
 
@@ -68,12 +62,12 @@
                 this.cartQuantity.push(doc.data().quantity)
                 this.countAllBooksInCart()
               })
-              console.log('ALO TRY CART FIREBASE', this.cartQuantity)
+              if (this.cartQuantity.length === 0) {
+                this.numberOnCart = 0
+              }
             })
         } else {
           this.numberOnCart = this.$store.state.quantityItemsInCart
-
-          console.log('SHOPING CART AS A GUEST!!!')
         }
       },
 
@@ -83,7 +77,7 @@
           counter = counter + this.cartQuantity[i]
           this.quantityinCart = counter
           this.$store.commit('changeQuantityInCart', this.quantityinCart)
-          console.log('SHOPPING CART COUNTER', counter)
+
           this.numberOnCart = this.$store.state.quantityItemsInCartFirebase
         }
       }
@@ -94,13 +88,11 @@
           this.quantityInCart()
         } else {
           this.numberOnCart = this.$store.state.quantityItemsInCart
-          console.log('IF NOT INLOG', this.$store.state.quantityItemsInCart)
         }
       },
       userDataNull() {
         if (this.userData === null) {
           this.numberOnCart = this.$store.state.quantityItemsInCart
-          console.log('IF NOT INLOG', this.$store.state.quantityItemsInCart)
         } else {
           this.quantityInCart()
         }
@@ -108,32 +100,3 @@
     }
   }
 </script>
-
-<style scoped>
-  /* #goToShoppingCartButton {
-    background-color: green;
-    height: 100px;
-    width: 200px;
-    margin-left: 800px;
-    font-family: Marker Felt;
-    font-size: 30px;
-  } */
-  /* #cart {
-    background-color: grey;
-    height: 200px;
-    width: 200px;
-
-    position: relative;
-  }
-  #number {
-    background-color: purple;
-    border-radius: 100%;
-    color: white;
-    font-size: 2em;
-    padding: 0.5em;
-
-    position: absolute;
-    bottom: -5px;
-    right: -15px;
-  } */
-</style>
