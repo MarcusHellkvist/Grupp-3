@@ -434,7 +434,7 @@
             class="list-group-item d-flex justify-content-between"
           >
             <span>Total (USD)</span>
-            <strong>${{ sum }} </strong>
+            <strong>${{ localSum }} </strong>
           </b-list-group-item>
         </b-list-group>
         <hr />
@@ -480,6 +480,7 @@
         products: this.$store.state.books,
         localCart: [],
         sum: 0,
+        localSum: 0,
         showAndHide: null,
         showAlert: 'd-none',
         item: '',
@@ -738,6 +739,7 @@
         /* for (let i = 0; i < this.cart.length; i++) {
                this.localCart.push(this.cart[i])
              } */
+        this.localSum = this.sum
         return this.localCart
       },
 
