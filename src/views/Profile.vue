@@ -81,12 +81,15 @@
         ></b-col>
       </b-row>
     </b-container>
+    <wishlist-cart></wishlist-cart>
   </div>
 </template>
 
 <script>
   import * as firebase from '../firebase'
+  import WishlistCart from '../components/WishlistCart.vue'
   export default {
+    components: { WishlistCart },
     data() {
       return {
         userInfo: '',
