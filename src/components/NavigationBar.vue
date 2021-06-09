@@ -139,7 +139,7 @@ export default {
     signOut() {
       console.log("sign out");
       firebase.auth.signOut().then(() => {
-        //this.$router.replace({ name: 'Home' })
+        this.$router.replace({ name: "Home" });
       });
     },
     onSubmit() {
