@@ -174,96 +174,88 @@
 </template>
 
 <script>
-  import * as firebase from '../firebase.js'
-  import firebase2 from 'firebase'
-  export default {
-    created() {
-      if (this.userData !== null) {
-        this.allBooks()
-      }
-      // while (this.$store.state.user.data.uid === null) {
-      //   this.allBooks();
-      // }
+import * as firebase from "../firebase.js";
+import firebase2 from "firebase";
+export default {
+  created() {
+    if (this.userData !== null) {
+      this.allBooks();
+    }
+  },
+  computed: {
+    userData() {
+      return this.$store.state.user.data;
     },
-    computed: {
-      userData() {
-        return this.$store.state.user.data
-      }
+  },
+  data() {
+    return {
+      myBooks: [],
+      bild: "https://listimg.pinclipart.com/picdir/s/201-2018325_img-empty-shopping-cart-gif-clipart.png",
+    };
+  },
+  methods: {
+    allBooks() {
+      firebase.usersCollection
+        .doc(this.$store.state.user.data.uid)
+        .collection("cart")
+        .onSnapshot((querySnapshot) => {
+          this.myBooks = [];
+          querySnapshot.forEach((doc) => {
+            this.myBooks.push(doc.data());
+          });
+        });
     },
-    data() {
-      return {
-        myBooks: [],
-        bild:
-          'https://listimg.pinclipart.com/picdir/s/201-2018325_img-empty-shopping-cart-gif-clipart.png'
-      }
-    },
-    methods: {
-      allBooks() {
+    quantityPlus(id) {
+      if (this.$store.state.user.loggedIn === true) {
         firebase.usersCollection
           .doc(this.$store.state.user.data.uid)
-          .collection('cart')
-          .onSnapshot((querySnapshot) => {
-            this.myBooks = []
-            querySnapshot.forEach((doc) => {
-              this.myBooks.push(doc.data())
-            })
-          })
-      },
-      quantityPlus(id) {
-        if (this.$store.state.user.loggedIn === true) {
-          firebase.usersCollection
-            .doc(this.$store.state.user.data.uid)
-            .collection('cart')
-            .doc(id)
-            .update({
-              quantity: firebase2.firestore.FieldValue.increment(1)
-            })
-          // this.myBooks.quantity = this.myBooks.quantity + 1;
-          console.log(this.myBooks.quantity)
-        } else {
-          this.$store.commit('quantityPlus', id)
-        }
-      },
-      quantityMinus(id) {
-        if (this.$store.state.user.loggedIn === true) {
-          firebase.usersCollection
-            .doc(this.$store.state.user.data.uid)
-            .collection('cart')
-            .doc(id)
-            .update({
-              quantity: firebase2.firestore.FieldValue.increment(-1)
-            })
-          // this.myBooks.quantity = this.myBooks.quantity + 1;
-          console.log(this.myBooks.quantity)
-        } else {
-          this.$store.commit('quantityMinus', id)
-        }
-      },
-      deleteProduct(id) {
-        if (this.$store.state.user.loggedIn === true) {
-          firebase.usersCollection
-            .doc(this.$store.state.user.data.uid)
-            .collection('cart')
-            .doc(id)
-            .delete()
-            .then(() => {
-              console.log('Document successfully deleted!')
-            })
-            .catch((error) => {
-              console.error('Error removing document: ', error)
-            })
-        }
-        this.$store.commit('deleteProduct', id)
+          .collection("cart")
+          .doc(id)
+          .update({
+            quantity: firebase2.firestore.FieldValue.increment(1),
+          });
+      } else {
+        this.$store.commit("quantityPlus", id);
       }
     },
-    watch: {
-      userData() {
-        if (this.userData !== null) {
-          this.allBooks()
-        }
+    quantityMinus(id) {
+      if (this.$store.state.user.loggedIn === true) {
+        firebase.usersCollection
+          .doc(this.$store.state.user.data.uid)
+          .collection("cart")
+          .doc(id)
+          .update({
+            quantity: firebase2.firestore.FieldValue.increment(-1),
+          });
+      } else {
+        this.$store.commit("quantityMinus", id);
       }
-    }
-  }
+    },
+    deleteProduct(id) {
+      if (this.$store.state.user.loggedIn === true) {
+        firebase.usersCollection
+          .doc(this.$store.state.user.data.uid)
+          .collection("cart")
+          .doc(id)
+          .delete()
+          .then(() => {
+            console.log("Document successfully deleted!");
+          })
+          .catch((error) => {
+            console.error("Error removing document: ", error);
+          });
+      }
+      this.$store.commit("deleteProduct", id);
+    },
+  },
+  watch: {
+    userData() {
+      if (this.userData !== null) {
+        this.allBooks();
+      }
+    },
+  },
+};
 </script>
 
 <style></style>
