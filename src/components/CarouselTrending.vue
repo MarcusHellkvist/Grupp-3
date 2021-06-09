@@ -24,6 +24,7 @@
                   :author="book.author"
                   :price="book.price"
                   :image="book.image"
+                  @book-to-cart="onBookToCart"
                 ></product-small>
               </b-card-group>
             </div>
@@ -41,6 +42,7 @@
                   :author="book.author"
                   :price="book.price"
                   :image="book.image || defaultImage"
+                  @book-to-cart="onBookToCart"
                 ></product-small>
               </b-card-group>
             </div>
@@ -78,6 +80,13 @@
       },
       onSlideEnd() {
         this.sliding = false
+      },
+      onBookToCart(book) {
+        this.$notify({
+          group: 'alert-template',
+          title: 'Shopping Cart',
+          text: `${book.title} by ${book.author} was added to your cart`
+        })
       }
     },
     computed: {

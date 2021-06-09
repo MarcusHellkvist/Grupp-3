@@ -32,21 +32,11 @@
             :author="book.author"
             :price="book.price"
             :image="book.image"
+            @book-to-cart="onBookToCart"
           ></product-small>
         </b-col>
       </b-row>
     </b-container>
-
-    <div class="overflow-auto">
-      <b-pagination
-        v-if="this.$route.params.categoryId !== undefined"
-        class="mt-3"
-        v-model="currentPageFiltered"
-        :total-rows="filterRows"
-        :per-page="perPage"
-        align="center"
-      ></b-pagination>
-    </div>
   </div>
 </template>
 
@@ -104,18 +94,6 @@
         const temp = header.charAt(0).toUpperCase() + header.slice(1)
         return temp.replaceAll('-', ' ')
       }
-      //this.$route.params.slug
-
-      /* Slice the filtered array to work with the pagination */
-      // sliceFilteredArray() {
-      //   return this.filteredArray.slice(
-      //     (this.currentPageFiltered - 1) * this.perPage,
-      //     this.currentPageFiltered * this.perPage
-      //   );
-      // },
-      // filterRows() {
-      //   return this.filteredArray.length;
-      // },
     },
 
     methods: {
@@ -131,14 +109,11 @@
           })
       },
 
-      onBookToCartToast(book) {
-        this.$bvToast.toast(`${book.title} was added to your cart`, {
-          title: 'Success',
-          autoHideDelay: 2000,
-          appendToast: true,
-          variant: 'success',
-          solid: true,
-          toaster: 'b-toaster-top-center'
+      onBookToCart(book) {
+        this.$notify({
+          group: 'alert-template',
+          title: 'Shopping Cart',
+          text: `${book.title} by ${book.author} was added to your cart`
         })
       }
     },

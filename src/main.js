@@ -4,6 +4,7 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import * as firebase from './firebase.js'
+import Notifications from 'vue-notification'
 
 // vue-typeahead
 import VueTypeaheadBootstrap from 'vue-typeahead-bootstrap'
@@ -22,6 +23,7 @@ Vue.use(Vuelidate)
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+Vue.use(Notifications)
 
 firebase.auth.onAuthStateChanged((user) => {
   store.dispatch('fetchUser', user)

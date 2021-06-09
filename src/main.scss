@@ -44,3 +44,25 @@ $theme-colors: (
     display: none;
   }
 }
+
+// SCSS:
+
+.alert-style {
+  background-color: seashell;
+  margin: 10px;
+  border-radius: 4px;
+
+  .notification-title {
+    padding-top: 10px;
+    padding-left: 10px;
+    font-size: 16px;
+    color: black;
+  }
+
+  .notification-content {
+    padding-bottom: 10px;
+    padding-left: 10px;
+    font-size: 14px;
+    color: black;
+  }
+}

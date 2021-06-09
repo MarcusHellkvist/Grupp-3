@@ -107,17 +107,6 @@
         this.fireBooks.sort(function(a, b) {
           return a.price - b.price
         })
-      },
-
-      onBookToCartToast(book) {
-        this.$bvToast.toast(`${book.title} was added to your cart`, {
-          title: 'Success',
-          autoHideDelay: 2000,
-          appendToast: true,
-          variant: 'success',
-          solid: true,
-          toaster: 'b-toaster-top-center'
-        })
       }
     }
   }

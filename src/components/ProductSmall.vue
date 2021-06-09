@@ -53,6 +53,7 @@
             this.book,
             this.$store.state.user.data.uid
           )
+          this.$emit('book-to-cart', this.book)
         } else {
           console.log('You are not signed in!')
           this.$store.commit('addToCart', this.book)

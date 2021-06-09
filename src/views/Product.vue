@@ -350,6 +350,12 @@
         } else {
           this.$store.commit('addToCart', this.book)
         }
+
+        this.$notify({
+          group: 'alert-template',
+          title: 'Shopping Cart',
+          text: `${this.book.title} by ${this.book.author} was added to your cart`
+        })
       },
 
       addToWishlist() {

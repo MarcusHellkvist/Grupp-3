@@ -9,6 +9,13 @@
     <div id="footer">
       <footer-navigation></footer-navigation>
     </div>
+    <notifications
+      group="alert-template"
+      position="bottom center"
+      width="100%"
+      :max="1"
+      classes="alert-style"
+    />
   </div>
 </template>
 
