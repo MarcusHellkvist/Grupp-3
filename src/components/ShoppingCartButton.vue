@@ -67,7 +67,11 @@
               }
             })
         } else {
-          this.numberOnCart = this.$store.state.quantityItemsInCart
+          if (this.cartQuantity.length === 0) {
+            this.numberOnCart = 0
+          } else {
+            this.numberOnCart = this.$store.state.quantityItemsInCart
+          }
         }
       },
 

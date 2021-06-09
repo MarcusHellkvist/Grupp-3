@@ -129,8 +129,6 @@ export default new Vuex.Store({
           state.quantityItemsInCart -= 1
 
           state.cart[i].total = state.cart[i].price * state.cart[i].quantity
-
-
           Vue.set(state.cart, i, {
             ...state.cart[i],
             quantity: (state.cart[i].quantity -= 1),
@@ -150,7 +148,6 @@ export default new Vuex.Store({
 
     changeQuantityInCart(state, counter) {
       state.quantityItemsInCartFirebase = counter
-
       return state.quantityItemsInCartFirebase
     }
   },
