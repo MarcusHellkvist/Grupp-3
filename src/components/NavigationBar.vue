@@ -1,9 +1,5 @@
 <template>
   <div>
-    <div v-if="user.loggedIn">
-      {{ user.data.uid }} {{ user.data.displayName }}
-      <b-button @click="signOut">Sign Out</b-button>
-    </div>
     <b-container fluid class="nav-container">
       <b-row>
         <b-col class="my-border" cols="2"
@@ -31,7 +27,7 @@
                   <router-link
                     :to="{
                       name: 'Category',
-                      params: { slug: genre.slug }
+                      params: { slug: genre.slug },
                     }"
                     >{{ genre.name }}</router-link
                   >
@@ -50,7 +46,7 @@
               v-if="user.loggedIn"
               :to="{
                 name: 'Profile',
-                params: { uid: $store.state.user.data.uid }
+                params: { uid: $store.state.user.data.uid },
               }"
             >
               Profile
@@ -103,101 +99,101 @@
 </template>
 
 <script>
-  import ShoppingCartButton from './ShoppingCartButton.vue'
-  import * as firebase from '../firebase.js'
-  import { mapGetters } from 'vuex'
+import ShoppingCartButton from "./ShoppingCartButton.vue";
+import * as firebase from "../firebase.js";
+import { mapGetters } from "vuex";
 
-  export default {
-    components: { ShoppingCartButton },
-    created() {
-      this.getGenre()
+export default {
+  components: { ShoppingCartButton },
+  created() {
+    this.getGenre();
+  },
+  computed: {
+    ...mapGetters({
+      user: "user",
+    }),
+    bookNames() {
+      const bookNames = [];
+      this.$store.state.books.forEach((element) => {
+        bookNames.push(element.title);
+      });
+      return bookNames;
     },
-    computed: {
-      ...mapGetters({
-        user: 'user'
-      }),
-      bookNames() {
-        const bookNames = []
-        this.$store.state.books.forEach((element) => {
-          bookNames.push(element.title)
-        })
-        return bookNames
-      }
+  },
+  data() {
+    return {
+      searchQuery: null,
+      genres: [],
+    };
+  },
+  methods: {
+    getGenre() {
+      firebase.genresCollection.get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          //   console.log(doc.id, doc.data(), doc.data().name)
+          this.genres.push(doc.data());
+          //   console.log(this.genres)
+        });
+      });
     },
-    data() {
-      return {
-        searchQuery: null,
-        genres: []
-      }
+    signOut() {
+      console.log("sign out");
+      firebase.auth.signOut().then(() => {
+        //this.$router.replace({ name: 'Home' })
+      });
     },
-    methods: {
-      getGenre() {
-        firebase.genresCollection.get().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            //   console.log(doc.id, doc.data(), doc.data().name)
-            this.genres.push(doc.data())
-            //   console.log(this.genres)
-          })
-        })
-      },
-      signOut() {
-        console.log('sign out')
-        firebase.auth.signOut().then(() => {
-          //this.$router.replace({ name: 'Home' })
-        })
-      },
-      onSubmit() {
-        var isbn = this.getIsbnFromTitle(this.searchQuery)
-        this.$router.push({ name: 'Product', params: { isbn: isbn } })
-        this.searchQuery = ''
-      },
-      getIsbnFromTitle(title) {
-        var isbn = ''
-        this.$store.state.books.forEach((element) => {
-          if (title === element.title) {
-            isbn = element.isbn
-          }
-        })
-        return isbn
-      }
-    }
-  }
+    onSubmit() {
+      var isbn = this.getIsbnFromTitle(this.searchQuery);
+      this.$router.push({ name: "Product", params: { isbn: isbn } });
+      this.searchQuery = "";
+    },
+    getIsbnFromTitle(title) {
+      var isbn = "";
+      this.$store.state.books.forEach((element) => {
+        if (title === element.title) {
+          isbn = element.isbn;
+        }
+      });
+      return isbn;
+    },
+  },
+};
 </script>
 
 <style scoped>
-  .nav-container {
-    background: #403042;
-    text-align: start;
-  }
+.nav-container {
+  background: #403042;
+  text-align: start;
+}
 
-  .nav-link {
-    list-style: none;
-  }
+.nav-link {
+  list-style: none;
+}
 
-  .nav-link li {
-    display: inline-block;
-    padding: 0px 15px;
-  }
+.nav-link li {
+  display: inline-block;
+  padding: 0px 15px;
+}
 
-  .nav-link li a {
-    transition: all 0.3s ease 0s;
-  }
+.nav-link li a {
+  transition: all 0.3s ease 0s;
+}
 
-  .nav-link li a:hover {
-    color: #9cc4b2;
-    text-decoration: none;
-  }
+.nav-link li a:hover {
+  color: #9cc4b2;
+  text-decoration: none;
+}
 
-  ul {
-    padding: 8px 0px;
-    margin: 0;
-  }
+ul {
+  padding: 8px 0px;
+  margin: 0;
+}
 
-  li,
-  a,
-  button {
-    font-size: 12px;
-    color: #edf0f1;
-    text-decoration: none;
-  }
+li,
+a,
+button {
+  font-size: 12px;
+  color: #edf0f1;
+  text-decoration: none;
+}
 </style>
