@@ -535,7 +535,7 @@
         },
         email: { required, email },
         address: { required },
-        billingaddress: {},
+
         country: { required },
         state: { required },
         zip: { required },
@@ -630,7 +630,11 @@
               userName: this.form.name,
               row: this.orderList,
               sum: this.sum,
-              sendToEmail: this.form.email
+              sendToEmail: this.form.email,
+              address: this.form.address,
+              state: this.form.state,
+              zip: this.form.zip,
+              country: this.form.country
             }
           )
         } catch (error) {
@@ -647,20 +651,18 @@
       },
 
       onSubmit() {
-        this.addTolocalCart()
-
-        this.addOrder()
-        this.sendEmail()
-
-        this.clearFirebaseCart()
-
-        /* this.$v.form.$touch();
-          if (this.$v.form.$anyError) {
-           return;
-         } */
-        if (this.cart.length > 0) {
+        this.$v.form.$touch()
+        if (this.$v.form.$anyError) {
+          return
+        } else if (this.cart.length > 0) {
           this.showAndHide = 'd-none'
           this.showAlert = ''
+          this.addTolocalCart()
+
+          this.addOrder()
+          this.sendEmail()
+
+          this.clearFirebaseCart()
           this.clearCart()
         }
       },
