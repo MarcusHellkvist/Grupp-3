@@ -171,7 +171,7 @@
                           id="billing-address-input"
                           name="address-input"
                           v-model="$v.form.billingaddress.$model"
-                          :state="validateState('address')"
+                          :state="validateState('billingaddress')"
                           aria-describedby="address-feedback"
                         ></b-form-input>
 
@@ -535,7 +535,7 @@
         },
         email: { required, email },
         address: { required },
-
+        billingaddress: { required },
         country: { required },
         state: { required },
         zip: { required },
@@ -651,10 +651,34 @@
       },
 
       onSubmit() {
+        if (this.valueFromRadioButton === 'credit card') {
+          this.form.billingaddress = 'a'
+          console.log(this.state)
+        } else {
+          console.log()
+          this.form.cardNumber = 2121212121212121
+          this.form.cardName = 'no card'
+          this.form.cardCVV = 100
+          this.form.cardDateMonth = 0
+          this.form.cardDateYear = 0
+        }
+        //this.form.billingaddress = 'test'
+        console.log(this.form.billingaddress)
         this.$v.form.$touch()
         if (this.$v.form.$anyError) {
           return
-        } else if (this.cart.length > 0) {
+        }
+        this.showAndHide = 'd-none'
+        this.showAlert = ''
+        this.addTolocalCart()
+
+        this.addOrder()
+        this.sendEmail()
+
+        this.clearFirebaseCart()
+        this.clearCart()
+
+        /* if (this.cart.length > 0) {
           this.showAndHide = 'd-none'
           this.showAlert = ''
           this.addTolocalCart()
@@ -664,7 +688,7 @@
 
           this.clearFirebaseCart()
           this.clearCart()
-        }
+        } */
       },
 
       /* Firebase */
