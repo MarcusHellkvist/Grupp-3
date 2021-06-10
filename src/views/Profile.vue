@@ -70,8 +70,9 @@
 
     <b-container class="mt-4">
       <b-row>
-        <b-col
-          ><b-table
+        <b-col>
+          <h3 class="test-left">My Orders</h3>
+          <b-table
             striped
             hover
             :items="items"
